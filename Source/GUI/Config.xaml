@@ -4,12 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Settings" Height="280" Width="400" ResizeMode="NoResize" Closing="Config_Closing" WindowStartupLocation="CenterScreen">
+        Title="Settings" Width="400" Height="280" ResizeMode="NoResize" Closing="Config_Closing" WindowStartupLocation="CenterScreen">
     <Grid x:Name="mainGrid" Margin="5">
         <TextBlock Text="_username" Margin="10,10,294,209"/>
         <TextBox x:Name="userName" Margin="90,10,150,209" MaxLength="10" TextChanged="UserName_TextChanged"/>
         <TextBlock Text="_password" Margin="10,44,294,175"/>
-        <PasswordBox x:Name="passWord" PasswordChar="*" PasswordChanged="PassWord_PasswordChanged" MaxLength="6" HorizontalAlignment="Left" Height="22" Margin="90,44,0,0" VerticalAlignment="Top" Width="144"/>
+        <PasswordBox x:Name="passWord" PasswordChar="*" Margin="90,44,150,175" MaxLength="6" PasswordChanged="PassWord_PasswordChanged" />
         <TextBlock Text="_language" Margin="10,77,294,142"/>
         <ComboBox x:Name="languageList" Margin="90,77,150,142" SelectionChanged="LanguageList_SelectionChanged"/>
         <ListView x:Name="ServerInfo" Margin="249,10,10,142" SelectionChanged="Server_Changed">
@@ -20,12 +20,13 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <TextBlock Text="_custom_args" Margin="9,110,197,111"/>
+        <TextBlock Text="_save_hint" Margin="249,108,10,111"/>
+        <TextBlock Text="_custom_args" Margin="10,108,196,111"/>
         <TextBox x:Name="customArgs" Margin="9,130,10,89" TextChanged="CustomArgs_TextChanged"/>
-        <TextBlock Text="_launcher_settings" Margin="10,160,238,59"/>
-        <CheckBox x:Name="disableSomeCheck" Content="_disable_unnecessary_check" Margin="10,185,197,36" Click="DisableSomeCheck_Click"/>
-        <TextBlock Text="_game_settings" Margin="192,160,56,59"/>
-        <CheckBox x:Name="noautoLogin" Content="_no_auto_login" Margin="192,185,10,36" Click="NoAutoLogin_Click"/>
-        <CheckBox x:Name="enableConsole" Content="_enable_console" Margin="192,210,10,11" Click="EnableConsole_Click"/>
+        <TextBlock Text="_launcher_settings" Margin="10,160,197,59"/>
+        <CheckBox x:Name="disableSomeCheck" Content="_disable_unnecessary_check" Margin="10,185,197,34" Click="DisableSomeCheck_Click"/>
+        <TextBlock Text="_game_settings" Margin="192,160,15,59"/>
+        <CheckBox x:Name="noautoLogin" Content="_no_auto_login" Margin="192,185,15,34" Click="NoAutoLogin_Click"/>
+        <CheckBox x:Name="enableConsole" Content="_enable_console" Margin="192,210,15,9" Click="EnableConsole_Click"/>
     </Grid>
 </Window>

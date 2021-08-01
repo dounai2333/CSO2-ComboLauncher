@@ -296,7 +296,7 @@ namespace CSO2_ComboLauncher
             Log.Clear();
 
             Log.Write(LStr.Get("_openvpn_message"), "red");
-            Log.Write(LStr.Get("_open_source_link") + "\n");
+            Log.Write(LStr.Get("_open_source_link"));
 
             connecterror = false;
             MainButtonStatus(false);

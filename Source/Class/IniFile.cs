@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
@@ -8,7 +7,8 @@ namespace CSO2_ComboLauncher
     // 马卡大大遗物
     public class IniParser
     {
-        private string _path;
+        private string _path { get; set; }
+
         private struct SectionPair
         {
             public string Section;
@@ -22,12 +22,12 @@ namespace CSO2_ComboLauncher
             _path = path;
             if (File.Exists(path))
             {
-                TextReader reader = new StreamReader(path);
-                string strLine = null;
-                string currentRoot = null;
-                string[] keyPair = null;
-                try
+                using (TextReader reader = new StreamReader(path))
                 {
+                    string strLine = "";
+                    string currentRoot = "";
+                    string[] keyPair = { };
+
                     for (strLine = reader.ReadLine(); strLine != null; strLine = reader.ReadLine())
                     {
                         strLine = strLine.Trim();
@@ -66,18 +66,6 @@ namespace CSO2_ComboLauncher
                         }
                     }
                 }
-                catch (Exception)
-                {
-                    throw;
-                }
-                finally
-                {
-                    reader.Close();
-                }
-            }
-            else
-            {
-                //throw new FileNotFoundException("Unable to locate " + path);
             }
         }
 
@@ -91,7 +79,7 @@ namespace CSO2_ComboLauncher
 
                 return keyPair[sectionPair];
             }
-            catch (Exception)
+            catch
             {
                 return string.Empty;
             }
@@ -138,7 +126,7 @@ namespace CSO2_ComboLauncher
 
             foreach (string section in sections)
             {
-                strToSave += ("[" + section + "]\r\n");
+                strToSave += "[" + section + "]\r\n";
 
                 foreach (SectionPair sectionPair in keyPair.Keys)
                 {
@@ -156,16 +144,8 @@ namespace CSO2_ComboLauncher
                 strToSave += "\r\n";
             }
 
-            try
-            {
-                TextWriter tw = new StreamWriter(filepath);
+            using (TextWriter tw = new StreamWriter(filepath))
                 await tw.WriteAsync(strToSave);
-                tw.Close();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
         }
 
         public async void SaveSettings()

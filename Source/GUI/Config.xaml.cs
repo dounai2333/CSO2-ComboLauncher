@@ -5,9 +5,6 @@ using System.Windows.Controls;
 
 namespace CSO2_ComboLauncher
 {
-    /// <summary>
-    /// Config.xaml 的交互逻辑
-    /// </summary>
     public partial class Config : Window
     {
         public static Config Instance { get; private set; }

@@ -79,6 +79,10 @@ namespace CSO2_ComboLauncher
                 AddKeyWords("schinese", "_language", "游戏语言:");
                 AddKeyWords("tchinese", "_language", "遊戲語言:");
 
+                AddKeyWords("english", "_save_hint", "Ps: Click 'X' To Save");
+                AddKeyWords("schinese", "_save_hint", "注: 点击上方的'X'保存");
+                AddKeyWords("tchinese", "_save_hint", "註: 點擊上方的'X'保存");
+
                 AddKeyWords("english", "_custom_args", "Custom Startup Arguments");
                 AddKeyWords("schinese", "_custom_args", "自定义启动项");
                 AddKeyWords("tchinese", "_custom_args", "自訂義啟動參數");
