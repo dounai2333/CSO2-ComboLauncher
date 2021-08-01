@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="CSO2 Combo Launcher" Height="412" Width="496" Loaded="Main_Loaded" ResizeMode="CanMinimize" Closing="Main_Closing" AllowsTransparency="True" WindowStyle="None" Background="{x:Null}" WindowStartupLocation="CenterScreen">
+        Title="CSO2 Combo Launcher" Width="496" Height="412" Loaded="Main_Loaded" ResizeMode="CanMinimize" Closing="Main_Closing" AllowsTransparency="True" WindowStyle="None" Background="{x:Null}" WindowStartupLocation="CenterScreen">
     <Grid x:Name="mainGrid" Background="#FFEEEEEE" Margin="10">
         <Grid.Effect>
             <DropShadowEffect ShadowDepth="2" Opacity="0.4" Direction="270" BlurRadius="10"/>
