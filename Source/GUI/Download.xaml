@@ -1,0 +1,14 @@
+﻿<Window x:Class="CSO2_ComboLauncher.Download"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Downloading" Height="125" Width="300" WindowStyle="None" AllowsTransparency="True" Background="#7F7F7F7F" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Closing="Window_Closing" MouseDown="Window_MouseDown">
+    <Grid>
+        <TextBlock x:Name="dw" Text="Downloading" Margin="5,0,6,90" TextAlignment="Center" FontSize="20" Foreground="Black" FontWeight="Bold"/>
+        <TextBlock x:Name="dwldfile" Margin="5,30,6,65" TextAlignment="Center" FontSize="14" Foreground="Black" FontWeight="Bold"/>
+        <TextBlock x:Name="dwldtext" Margin="5,50,6,35" TextAlignment="Center" FontSize="14" Foreground="Black" FontWeight="Bold"/>
+        <ProgressBar x:Name="dwldprogress" Margin="5,96,5,5"/>
+    </Grid>
+</Window>

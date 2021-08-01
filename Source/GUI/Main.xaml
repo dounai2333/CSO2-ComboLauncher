@@ -1,0 +1,56 @@
+﻿<Window x:Class="CSO2_ComboLauncher.Main"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="CSO2 Combo Launcher" Height="412" Width="496" Loaded="Main_Loaded" ResizeMode="CanMinimize" Closing="Main_Closing" AllowsTransparency="True" WindowStyle="None" Background="{x:Null}" WindowStartupLocation="CenterScreen">
+    <Grid x:Name="mainGrid" Background="#FFEEEEEE" Margin="10">
+        <Grid.Effect>
+            <DropShadowEffect ShadowDepth="2" Opacity="0.4" Direction="270" BlurRadius="10"/>
+        </Grid.Effect>
+        <RichTextBox x:Name="logger" Margin="10,222,10,19" FontFamily="Consolas" IsUndoEnabled="False" IsReadOnly="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible" Background="#7FFFFFFF" BorderBrush="{x:Null}" TextOptions.TextFormattingMode="Ideal"/>
+        <TextBlock Margin="236,202,0,0" TextWrapping="Wrap" Text="_log" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Button x:Name="btngo" Content="_start" Margin="156,48,145,0" FontSize="24" IsEnabled="False" Click="BtnGo_Click" Height="63" VerticalAlignment="Top" BorderBrush="{x:Null}" Background="White">
+            <Button.Effect>
+                <DropShadowEffect Opacity="0.2" Direction="270"/>
+            </Button.Effect>
+        </Button>
+        <Button x:Name="btncfg" Content="_config" Height="34" Margin="156,131,145,0" VerticalAlignment="Top" FontSize="14" Click="Config_Click" Background="White" BorderBrush="{x:Null}">
+            <Button.Effect>
+                <DropShadowEffect Opacity="0.2" Direction="270"/>
+            </Button.Effect>
+        </Button>
+        <Button x:Name="reconnect" Content="_reconnect" Height="30" Margin="10,188,346,0" IsEnabled="False" VerticalAlignment="Top" FontSize="14" Click="Reconnect_Click" Background="White" BorderBrush="{x:Null}">
+            <Button.Effect>
+                <DropShadowEffect Opacity="0.1" Direction="200"/>
+            </Button.Effect>
+        </Button>
+        <Button x:Name="manualfix" Content="_content_repair" Height="30" Margin="346,188,10,0" IsEnabled="False" VerticalAlignment="Top" FontSize="14" Click="Repair_Click" Background="White" BorderBrush="{x:Null}">
+            <Button.Effect>
+                <DropShadowEffect Opacity="0.1" Direction="200"/>
+            </Button.Effect>
+        </Button>
+        <Button x:Name="verify" Content="_verify_file" Height="30" Margin="346,153,10,0" IsEnabled="False" VerticalAlignment="Top" FontSize="14" Click="Verify_Click" Background="White" BorderBrush="{x:Null}">
+            <Button.Effect>
+                <DropShadowEffect Opacity="0.2" Direction="270"/>
+            </Button.Effect>
+        </Button>
+        <Label x:Name="version" Margin="250,368,10,0" Content="Version: 6" FontSize="13" />
+        <Button x:Name="launcherupdatecheck" Content="_update_check" IsEnabled="False" Height="19" Margin="174,373,231,0" VerticalAlignment="Top" FontSize="10" Click="LauncherUpdate_Click" Background="White" BorderBrush="{x:Null}" FontWeight="Bold" FontFamily="SimSun">
+            <Button.Effect>
+                <DropShadowEffect Opacity="0.2" Direction="270"/>
+            </Button.Effect>
+        </Button>
+        <Grid HorizontalAlignment="Left" Height="32" VerticalAlignment="Top" MouseDown="Window_MouseDown" Width="476" Background="#FF00A2FF">
+            <Grid.Effect>
+                <DropShadowEffect Direction="270" Opacity="0.25" ShadowDepth="2"/>
+            </Grid.Effect>
+
+            <TextBlock x:Name="titletext" HorizontalAlignment="Left" Height="19" Margin="10,8,0,0" TextWrapping="Wrap" Text="CSO2 Combo Launcher" VerticalAlignment="Top" Width="215" Foreground="White"/>
+            <ContentControl x:Name="qq" Style="{StaticResource QQ}" Margin="0,0,80,0" MouseLeftButtonDown="QQqun_Click" HorizontalAlignment="Right"/>
+            <ContentControl x:Name="min" Style="{StaticResource Min}" Margin="0,0,32,0" MouseLeftButtonDown="Min_Click" HorizontalAlignment="Right"/>
+            <ContentControl x:Name="close" Style="{StaticResource Close}" MouseLeftButtonDown="Close_Click" HorizontalAlignment="Right"/>
+        </Grid>
+    </Grid>
+</Window>

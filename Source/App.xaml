@@ -1,0 +1,311 @@
+﻿<Application x:Class="CSO2_ComboLauncher.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="GUI/Main.xaml">
+    <Application.Resources>
+        <SolidColorBrush x:Key="ScrollBarDisabledBackground" Color="#00000000"/>
+        <Style x:Key="Close" TargetType="ContentControl">
+            <Setter Property="Width" Value="32"></Setter>
+            <Setter Property="Height" Value="32"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border x:Name="bg" Width="32" Height="32" BorderThickness="0" Background="#00000000">
+                            <Rectangle HorizontalAlignment="Center" VerticalAlignment="Center" Width="13" Height="13">
+                                <Rectangle.Effect>
+                                    <DropShadowEffect x:Name="shadow" ShadowDepth="0" Color="White" BlurRadius="1"/>
+                                </Rectangle.Effect>
+                                <Rectangle.Fill>
+                                    <DrawingBrush>
+                                        <DrawingBrush.Drawing>
+                                            <DrawingGroup ClipGeometry="M0,0 V10 H10 V0 H0 Z">
+                                                <DrawingGroup Transform="1,0,0,1,-82,-15">
+                                                    <GeometryDrawing Brush="#FFFFFFFF" Geometry="F0 M10,10z M0,0z M82.8,25.011L81.989,24.2 91.2,14.989 92.011,15.8z M91.195,25.011L92.009,24.197 82.8,14.989 81.986,15.803z" />
+                                                </DrawingGroup>
+                                            </DrawingGroup>
+                                        </DrawingBrush.Drawing>
+                                    </DrawingBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="shadow" Storyboard.TargetProperty="BlurRadius" Duration="00:00:00.1" To="10">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <QuarticEase EasingMode="EaseOut"/>
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                            <ColorAnimation Storyboard.TargetName="bg" Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" Duration="00:00:00.1" To="#50000000">
+                                                <ColorAnimation.EasingFunction>
+                                                    <QuarticEase EasingMode="EaseOut"/>
+                                                </ColorAnimation.EasingFunction>
+                                            </ColorAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="shadow" Storyboard.TargetProperty="BlurRadius" Duration="00:00:00.1" To="2">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <QuarticEase EasingMode="EaseIn"/>
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                            <ColorAnimation Storyboard.TargetName="bg" Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" Duration="00:00:00.1" To="#00000000">
+                                                <ColorAnimation.EasingFunction>
+                                                    <QuarticEase EasingMode="EaseIn"/>
+                                                </ColorAnimation.EasingFunction>
+                                            </ColorAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="Min" TargetType="ContentControl">
+            <Setter Property="Width" Value="32"></Setter>
+            <Setter Property="Height" Value="32"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border x:Name="bg" Width="32" Height="32" BorderThickness="0" Background="#00000000">
+                            <Rectangle HorizontalAlignment="Center" VerticalAlignment="Center" Width="15" Height="1" Margin="0,9,0,0">
+                                <Rectangle.Effect>
+                                    <DropShadowEffect x:Name="shadow" ShadowDepth="0" Color="White" BlurRadius="2"/>
+                                </Rectangle.Effect>
+                                <Rectangle.Fill>
+                                    <DrawingBrush>
+                                        <DrawingBrush.Drawing>
+                                            <DrawingGroup ClipGeometry="M0,0 V1 H12 V0 H0 Z">
+                                                <DrawingGroup Transform="1,0,0,1,-18,-24">
+                                                    <GeometryDrawing Brush="#FFFFFFFF" Geometry="F0 M12,1z M0,0z M18,25L18,24 30,24 30,25 18,25z" />
+                                                </DrawingGroup>
+                                            </DrawingGroup>
+                                        </DrawingBrush.Drawing>
+                                    </DrawingBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="shadow" Storyboard.TargetProperty="BlurRadius" Duration="00:00:00.1" To="10">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <QuarticEase EasingMode="EaseOut"/>
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                            <ColorAnimation Storyboard.TargetName="bg" Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" Duration="00:00:00.1" To="#50000000">
+                                                <ColorAnimation.EasingFunction>
+                                                    <QuarticEase EasingMode="EaseOut"/>
+                                                </ColorAnimation.EasingFunction>
+                                            </ColorAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="shadow" Storyboard.TargetProperty="BlurRadius" Duration="00:00:00.1" To="2">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <QuarticEase EasingMode="EaseIn"/>
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                            <ColorAnimation Storyboard.TargetName="bg" Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" Duration="00:00:00.1" To="#00000000">
+                                                <ColorAnimation.EasingFunction>
+                                                    <QuarticEase EasingMode="EaseIn"/>
+                                                </ColorAnimation.EasingFunction>
+                                            </ColorAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="VerticalScrollBarPageButton" TargetType="RepeatButton">
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Focusable" Value="false"/>
+            <Setter Property="IsTabStop" Value="false"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RepeatButton">
+                        <Rectangle Fill="{TemplateBinding Background}" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ScrollBarThumb" TargetType="Thumb">
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="IsTabStop" Value="false"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Thumb">
+                        <Rectangle Name="thumbRect" Fill="#A0ffffff" RadiusX="4" RadiusY="4"/>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Fill" Value="#C0ffffff" TargetName="thumbRect" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="HorizontalScrollBarPageButton" TargetType="RepeatButton">
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Focusable" Value="false"/>
+            <Setter Property="IsTabStop" Value="false"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RepeatButton">
+                        <Rectangle Fill="{TemplateBinding Background}" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="ScrollBar">
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="Background" Value="AliceBlue"/>
+            <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
+            <Setter Property="Stylus.IsFlicksEnabled" Value="false"/>
+            <Setter Property="Width" Value="8"/>
+            <Setter Property="MinWidth" Value="8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ScrollBar">
+                        <Grid x:Name="Bg" Background="#7F000000" SnapsToDevicePixels="true" Width="8">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Track x:Name="PART_Track" IsDirectionReversed="true" IsEnabled="{TemplateBinding IsMouseOver}">
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static ScrollBar.PageUpCommand}" Style="{StaticResource VerticalScrollBarPageButton}"/>
+                                </Track.DecreaseRepeatButton>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}" Style="{StaticResource VerticalScrollBarPageButton}"/>
+                                </Track.IncreaseRepeatButton>
+                                <Track.Thumb>
+                                    <Thumb Style="{StaticResource ScrollBarThumb}"/>
+                                </Track.Thumb>
+                            </Track>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="Bg" Value="{StaticResource ScrollBarDisabledBackground}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="Orientation" Value="Horizontal">
+                    <Setter Property="Width" Value="Auto"/>
+                    <Setter Property="MinWidth" Value="0"/>
+                    <Setter Property="Height" Value="6"/>
+                    <Setter Property="MinHeight" Value="6"/>
+                    <Setter Property="Background" Value="AliceBlue"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ScrollBar}">
+                                <Grid x:Name="Bg" Background="Red" SnapsToDevicePixels="true">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Track x:Name="PART_Track"  IsEnabled="{TemplateBinding IsMouseOver}">
+                                        <Track.DecreaseRepeatButton>
+                                            <RepeatButton Command="{x:Static ScrollBar.PageLeftCommand}" Style="{StaticResource HorizontalScrollBarPageButton}"/>
+                                        </Track.DecreaseRepeatButton>
+                                        <Track.IncreaseRepeatButton>
+                                            <RepeatButton Command="{x:Static ScrollBar.PageRightCommand}" Style="{StaticResource HorizontalScrollBarPageButton}"/>
+                                        </Track.IncreaseRepeatButton>
+                                        <Track.Thumb>
+                                            <Thumb Style="{StaticResource ScrollBarThumb}" />
+                                        </Track.Thumb>
+                                    </Track>
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsEnabled" Value="false">
+                                        <Setter Property="Background" TargetName="Bg" Value="{StaticResource ScrollBarDisabledBackground}"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="QQ" TargetType="ContentControl">
+            <Setter Property="Width" Value="32"></Setter>
+            <Setter Property="Height" Value="32"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border x:Name="bg" Width="32" Height="32" BorderThickness="0" Background="#00000000">
+                            <Rectangle HorizontalAlignment="Center" VerticalAlignment="Center" Width="14" Height="15" Margin="0,0,0,0">
+                                <Rectangle.Effect>
+                                    <DropShadowEffect x:Name="shadow" ShadowDepth="0" Color="White" BlurRadius="2"/>
+                                </Rectangle.Effect>
+                                <Rectangle.Fill>
+                                    <DrawingBrush>
+                                        <DrawingBrush.Drawing>
+                                            <DrawingGroup>
+                                                <GeometryDrawing Brush="#FFFFFFFF" Geometry="F0 M12,1z M0,0z M433.754,420.445C422.228,421.838 388.894,367.704 388.894,367.704 388.894,399.049 372.758,439.951 337.843,469.49 354.685,474.682 392.686,488.657 383.646,503.911 376.33,516.254 258.136,511.792 224.014,507.948 189.892,511.792 71.698,516.254 64.382,503.911 55.337,488.661 93.3,474.697 110.165,469.496 75.245,439.957 59.106,399.051 59.106,367.704 59.106,367.704 25.772,421.838 14.247,420.445 8.87700000000001,419.795 1.82300000000001,390.801 23.594,320.741 33.855,287.717 45.589,260.263 63.738,214.962 60.683,98.063 108.982,0.006 224,0 337.737,0.006 387.156,96.133 384.264,214.963 402.382,260.186 414.176,287.813 424.408,320.741 446.176,390.801 439.124,419.794 433.754,420.445z" />
+                                            </DrawingGroup>
+                                        </DrawingBrush.Drawing>
+                                    </DrawingBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="shadow" Storyboard.TargetProperty="BlurRadius" Duration="00:00:00.1" To="10">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <QuarticEase EasingMode="EaseOut"/>
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                            <ColorAnimation Storyboard.TargetName="bg" Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" Duration="00:00:00.1" To="#50000000">
+                                                <ColorAnimation.EasingFunction>
+                                                    <QuarticEase EasingMode="EaseOut"/>
+                                                </ColorAnimation.EasingFunction>
+                                            </ColorAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="shadow" Storyboard.TargetProperty="BlurRadius" Duration="00:00:00.1" To="2">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <QuarticEase EasingMode="EaseIn"/>
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                            <ColorAnimation Storyboard.TargetName="bg" Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" Duration="00:00:00.1" To="#00000000">
+                                                <ColorAnimation.EasingFunction>
+                                                    <QuarticEase EasingMode="EaseIn"/>
+                                                </ColorAnimation.EasingFunction>
+                                            </ColorAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Application.Resources>
+</Application>

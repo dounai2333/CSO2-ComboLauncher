@@ -1,0 +1,23 @@
+﻿<Window x:Class="CSO2_ComboLauncher.QQGroup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="QQ Group" Height="250" Width="300" Closing="QQGroup_Closing" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid x:Name="mainGrid" Margin="5">
+        <TextBlock Text="_join_qqqun" Margin="10,10,10,165" FontSize="28"></TextBlock>
+        <TextBlock Text="_group_1" Margin="10,56,10,129" FontSize="20"></TextBlock>
+        <TextBox x:Name="text1" Text="793597644" IsReadOnly="True" Margin="10,82,183,109" FontSize="14" FontWeight="Bold"/>
+        <Button x:Name="copy1" Content="_copy" Margin="116,82,102,109" Click="Copy1_Click" FontWeight="Bold"></Button>
+        <Button x:Name="join1" Content="_oneclick" Margin="197,82,21,109" Click="Join1_Click" FontWeight="Bold"></Button>
+        <TextBlock Text="_group_2" Margin="10,107,10,78" FontSize="20"></TextBlock>
+        <TextBox x:Name="text2" Text="810465575" IsReadOnly="True" Margin="10,133,183,58" FontSize="14" FontWeight="Bold"/>
+        <Button x:Name="copy2" Content="_copy" Margin="116,133,102,58" Click="Copy2_Click" FontWeight="Bold"></Button>
+        <Button x:Name="join2" Content="_oneclick" Margin="197,133,21,58" Click="Join2_Click" FontWeight="Bold"></Button>
+        <TextBlock Text="_group_3" Margin="10,157,10,28" FontSize="20"></TextBlock>
+        <TextBox x:Name="text3" Text="1014256762" IsReadOnly="True" Margin="10,183,183,8" FontSize="14" FontWeight="Bold"/>
+        <Button x:Name="copy3" Content="_copy" Margin="116,183,102,8" Click="Copy3_Click" FontWeight="Bold"></Button>
+        <Button x:Name="join3" Content="_oneclick" Margin="197,183,21,8" Click="Join3_Click" FontWeight="Bold"></Button>
+    </Grid>
+</Window>
