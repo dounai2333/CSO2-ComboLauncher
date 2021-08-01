@@ -116,9 +116,9 @@ namespace CSO2_ComboLauncher
                 AddKeyWords("schinese", "_lang_file_not_exist", "无法找到当前选择的语言的文件, 请修改语言, 否则启动游戏将会导致报错!\n\n如果你希望使用这个语言,请自行寻找相关的语言包!");
                 AddKeyWords("tchinese", "_lang_file_not_exist", "無法找到當前選擇的語言的文件, 請修改語言, 強行開始遊戲將會導致出現錯誤!\n\n如果你希望使用這個語言,請自己尋找相關的語言文件!");
 
-                AddKeyWords("english", "_enable_console_hint", "If you don't know what is this, you better stay this option in 'Disable'!\nUse the console will cause some problem in the game!\nHere is some problem when you used console:\n- If you are hosting a game, others player can not join your game anymore.\n- You can not close the game result window after game ended. (not 100%)\n- You can not join the game when you used it at a room.\n\nYOU ARE BEEN WARNED! ANY PROBLEM AFTER YOU USE THE CONSOLE IS 'NORMAL'!\n(If you modified the 'CounterStrikeOnine2.exe' file then this option will not working)\n\nContinue with 'Yes'?");
-                AddKeyWords("schinese", "_enable_console_hint", "如果你不知道控制台到底有什么用处, 那你最好不要勾选这个选项!\n使用控制台后, 游戏将会出现问题!\n这是几个当你已经使用了控制台之后会发生的问题:\n- 如果你是房主, 其他人无法再加入你的游戏直到一整局结束.\n- 你无法在游戏结束后关闭结算窗口. (并不是100%发生)\n- 如果你在房间中, 那你将会无法加入游戏.\n\n你已经被警告过了! 任何使用控制台后发生的问题都是'极为正常的'!\n(如果你修改过'CounterStrikeOnine2.exe'那么此选项将不起作用)\n\n是否确定勾选?");
-                AddKeyWords("tchinese", "_enable_console_hint", "如果你不知道控制台是幹嘛用的, 那你最好不要開啟它!\n當你使用了控制台之後, 遊戲將會發生問題!\n給你舉一些問題的例子:\n- 如果你是房主, 其他人無法再加入你主持的房間, 直到遊戲結束為止.\n- 你不能關閉結算窗口. (不是100%發生的)\n- 如果你在房間里, 那麼你無法加入遊戲.\n\n你已經被警告過了! 任何使用了控制台之後發生的問題都是'正常的'!\n(如果你修改過'CounterStrikeOnine2.exe'那麼這個選項將失去作用)\n\n是否確定勾選?");
+                AddKeyWords("english", "_enable_console_hint", "Console is only for debugging!\nYou should not enable it if you don't know what it is.\n\nDon't report any bug after you used console, it's 'normal'.\nIf you cannot close console window:\n- Click 'X' of the console window\n- execute 'toggleconsole' command\n\nConfirm to enable?");
+                AddKeyWords("schinese", "_enable_console_hint", "控制台仅供调试使用!\n如果你不知道它是什么, 那就别勾选.\n\n使用控制台后, 不要汇报任何BUG, 都是'正常现象'.\n如果你无法关闭控制台窗口:\n- 点击控制台窗口的'X'\n- 执行'toggleconsole'命令\n\n是否确定勾选?");
+                AddKeyWords("tchinese", "_enable_console_hint", "控制台僅為調試時使用!\n如果你不知道它是什麼, 那就不要勾選.\n\n使用控制台後, 不要匯報任何BUG, 這都是'正常現象'.\n-如果你無法關閉控制台窗口:\n- 點擊控制台窗口的'X'\n- 執行'toggleconsole'命令\n\n是否確定勾選?");
             }
 
             // QQGroup strings
