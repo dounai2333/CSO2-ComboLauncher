@@ -52,18 +52,6 @@ namespace CSO2_ComboLauncher
             return await Downloader.StringFromHttp(address);
         }
 
-        public static async Task<string> DownloadString(string[] code, string sha1, string[] k)
-        {
-            for (int i=0;i<k.Count();i++)
-            {
-                string result = await DownloadString(code[i], sha1, k[i]);
-                if (!string.IsNullOrEmpty(result))
-                    return result;
-            }
-
-            return null;
-        }
-
         /// <param name="path">if a folder is given, file name will be from QQ mail server.</param>
         public static async Task<bool> DownloadFile(string path, int threads, string code, string sha1, string k)
         {
@@ -76,6 +64,18 @@ namespace CSO2_ComboLauncher
                     return false;
             }
             return await Downloader.FileFromHttp(address, (Path.GetFileName(path) == string.Empty) ? path + Filename : path, threads, "sha1", sha1);
+        }
+
+        public static async Task<string> DownloadString(string[] code, string sha1, string[] k)
+        {
+            for (int i = 0; i < k.Count(); i++)
+            {
+                string result = await DownloadString(code[i], sha1, k[i]);
+                if (!string.IsNullOrEmpty(result))
+                    return result;
+            }
+
+            return null;
         }
 
         /// <param name="path">if a folder is given, file name will be from QQ mail server.</param>
