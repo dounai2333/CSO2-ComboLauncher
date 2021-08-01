@@ -1,0 +1,25 @@
+## CSO2 Combo Launcher
+
+A custom launcher made for cso2.
+
+Special thanks to @GEEKiDoS and @leang97 for their great work!
+
+This launcher is current working with CSO2 China server (server owner "Qingxue").
+
+### Requirement
+.NET Framework 4.7.2 or newer version.
+
+### Todo
+1. When there is no TAP-Windows adapter available, create a new adapter and try again.
+
+2. Move main ui to the V7 style (which is dead project now)
+
+
+
+
+
+### Third party library
+
+- **[Downloader](https://github.com/Toqe/Downloader) made by @Toqe.**
+
+- **[jdynamic](https://github.com/chsword/jdynamic) made by @chsword.**
