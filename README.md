@@ -4,7 +4,7 @@ A custom launcher made for cso2.
 
 Special thanks to [GEEKiDoS](https://github.com/GEEKiDoS) and [leang97](https://github.com/leang97) for their great work!
 
-This launcher is current working with CSO2 China server (server owner "Qingxue").
+This launcher is current working with CSO2 China server (server owner "晴雪 (Qingxue)").
 
 ### Requirement
 .NET Framework 4.7.2 or newer version.
