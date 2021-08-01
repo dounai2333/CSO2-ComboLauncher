@@ -270,6 +270,10 @@ namespace CSO2_ComboLauncher
                 AddKeyWords("schinese", "_openvpn_message", "声明: OpenVPN仅用于创建虚拟局域网.");
                 AddKeyWords("tchinese", "_openvpn_message", "聲明: OpenVPN僅用於創建虛擬局域網.");
 
+                AddKeyWords("english", "_open_source_link", "CSO2 Combo Launcher is now open-source and free to view.\ngithub.com/dounai2333/CSO2-ComboLauncher");
+                AddKeyWords("schinese", "_open_source_link", "CSO2 Combo Launcher现已开源并可免费阅览.\ngithub.com/dounai2333/CSO2-ComboLauncher");
+                AddKeyWords("tchinese", "_open_source_link", "CSO2 Combo Launcher現在已開源並可以免費查看.\ngithub.com/dounai2333/CSO2-ComboLauncher");
+
                 AddKeyWords("english", "_server_main", "main");
                 AddKeyWords("schinese", "_server_main", "主");
                 AddKeyWords("tchinese", "_server_main", "主要");

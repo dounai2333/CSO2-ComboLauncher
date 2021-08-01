@@ -211,8 +211,8 @@ namespace CSO2_ComboLauncher
                         File.Delete(files[i]);
             }
 
-            // setup window, main been called in App.xaml
-            // new Config(); // bugged when cso2_launcher.ini is not exist
+            // setup window, Main will be called after this function ends
+            //new Config(); // bugged when cso2_launcher.ini is not exist
             new QQGroup();
             new Download();
             new ZipWorker();

@@ -60,7 +60,7 @@ namespace CSO2_ComboLauncher
                 GameLanguage = string.IsNullOrEmpty(_language) ? GameLanguage : _language;
                 CustomArgs = string.IsNullOrEmpty(_customargs) ? CustomArgs : _customargs;
                 EnableConsole = (_enableconsole != "True" && _enableconsole != "False") ? EnableConsole : (_enableconsole.ToString() != EnableConsole.ToString());
-                Location = _server == "Shanghai" /* || _server == "Server" */ ? _server : Location;
+                Location = _server == "Shanghai" ? _server : Location;
                 DisableSomeCheck = (_disablesomecheck != "True" && _disablesomecheck != "False") ? DisableSomeCheck : _disablesomecheck.ToString() != DisableSomeCheck.ToString();
                 Secret = string.IsNullOrEmpty(_secret) ? Secret : _secret;
 
