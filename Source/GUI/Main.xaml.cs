@@ -566,7 +566,7 @@ namespace CSO2_ComboLauncher
             if (!Config.NoAutoLogin && !connecterror)
                 args += $"-username \"{Misc.ChangeTextEncoding(Config.Username, "UTF-8", "GBK")}\" -password \"{Config.Password}\" ";
             if (Config.EnableConsole)
-                args += "-console ";
+                args += "-enableconsole ";
             args += Config.CustomArgs;
 
             Process process = new Process

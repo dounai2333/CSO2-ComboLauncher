@@ -112,7 +112,7 @@ namespace CSO2_ComboLauncher
                 if (await Misc.GetHash("Bin\\CounterStrikeOnine2.exe", "sha1") == sha1)
                     return true;
 
-            return await QQMail.DownloadFile("Bin\\CounterStrikeOnine2.exe", 4, code, sha1, k);
+            return await QQMail.DownloadFile("Bin\\CounterStrikeOnine2.exe", 2, code, sha1, k);
         }
 
         public static async Task<bool> GameUpdate()
