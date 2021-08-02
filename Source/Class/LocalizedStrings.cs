@@ -198,10 +198,6 @@ namespace CSO2_ComboLauncher
                 AddKeyWords("schinese", "_third_party_library", "第三方库:\n- Toqe.Downloader(多线程下载器)\n- Chsword.JDynamic(JSON解析器)");
                 AddKeyWords("tchinese", "_third_party_library", "第三方庫:\n- Toqe.Downloader(多線程下載器)\n- Chsword.JDynamic(JSON解析器)");
 
-                AddKeyWords("english", "_self_checking", "Running Self-check, please wait. Process: {0} / {1}");
-                AddKeyWords("schinese", "_self_checking", "正在进行自检, 请稍等. 进度: {0} / {1}");
-                AddKeyWords("tchinese", "_self_checking", "正在自我檢查, 請等下. 進度: {0} / {1}");
-
                 AddKeyWords("english", "_self_checking_gamefiledll", "Checking if game dll files is missing...");
                 AddKeyWords("schinese", "_self_checking_gamefiledll", "正在检查游戏dll文件是否缺失...");
                 AddKeyWords("tchinese", "_self_checking_gamefiledll", "正在校驗遊戲dll文件是否少了...");

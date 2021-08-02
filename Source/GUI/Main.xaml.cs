@@ -57,13 +57,9 @@ namespace CSO2_ComboLauncher
         {
             Log = new Logger { LogDisplay = logger };
 
-            int currentcheck = 1;
-            int totalchecks = 10;
-
             if (true)
             {
                 Log.Clear();
-                Log.Write(LStr.Get("_self_checking", currentcheck, totalchecks));
                 Log.Write(LStr.Get("_self_checking_gamefiledll") + Static.StartOutput());
 
                 string[] dllfiles = { "BugTrapU.dll", "client.dll", "d3dx9_33.dll", "datacache.dll", "engine.dll", "FileSystem_Stdio.dll", "inputsystem.dll", "MaterialSystem.dll", "Mss32.dll",
@@ -84,14 +80,12 @@ namespace CSO2_ComboLauncher
                     }
                 }
 
-                currentcheck++;
                 await Misc.Sleep(500);
             }
 
             if (true)
             {
                 Log.Clear();
-                Log.Write(LStr.Get("_self_checking", currentcheck, totalchecks));
                 Log.Write(LStr.Get("_self_checking_gamefilepkg") + Static.StartOutput());
 
                 int rightpkgcount = 2058;
@@ -111,14 +105,12 @@ namespace CSO2_ComboLauncher
                     }
                 }
 
-                currentcheck++;
                 await Misc.Sleep(500);
             }
 
             if (true)
             {
                 Log.Clear();
-                Log.Write(LStr.Get("_self_checking", currentcheck, totalchecks));
                 Log.Write(LStr.Get("_self_checking_openvpnfile") + Static.StartOutput());
 
                 if (!Directory.Exists("Bin\\OpenVPN") || Directory.GetFiles("Bin\\OpenVPN").Count() != 5)
@@ -131,14 +123,12 @@ namespace CSO2_ComboLauncher
                     }
                 }
 
-                currentcheck++;
                 await Misc.Sleep(500);
             }
 
             if (true)
             {
                 Log.Clear();
-                Log.Write(LStr.Get("_self_checking", currentcheck, totalchecks));
                 Log.Write(LStr.Get("_self_checking_tapwindows") + Static.StartOutput());
 
                 if (!await Misc.ResetNetAdapter(Static.netadapter))
@@ -151,14 +141,12 @@ namespace CSO2_ComboLauncher
                     }
                 }
 
-                currentcheck++;
                 await Misc.Sleep(500);
             }
 
             if (true)
             {
                 Log.Clear();
-                Log.Write(LStr.Get("_self_checking", currentcheck, totalchecks));
                 Log.Write(LStr.Get("_self_checking_dhcpclient") + Static.StartOutput());
 
                 await Task.Run(() =>
@@ -187,14 +175,12 @@ namespace CSO2_ComboLauncher
                     }
                 });
 
-                currentcheck++;
                 await Misc.Sleep(500);
             }
 
             if (true)
             {
                 Log.Clear();
-                Log.Write(LStr.Get("_self_checking", currentcheck, totalchecks));
                 Log.Write(LStr.Get("_self_checking_firewall_addexception") + Static.StartOutput());
 
                 using (Firewall Firewall = new Firewall())
@@ -203,20 +189,18 @@ namespace CSO2_ComboLauncher
                     {
                         if (!Firewall.ICMPRequestAllowed)
                             Firewall.ICMPRequestAllowed = true;
-                        if (File.Exists("Bin\\CounterStrikeOnine2.exe"))
+                        if (File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "Bin\\CounterStrikeOnine2.exe")))
                             Firewall.AddProgramException("CSO2", Path.Combine(Directory.GetCurrentDirectory(), "Bin\\CounterStrikeOnine2.exe"));
                         Firewall.AddProgramException(Static.CWindow, Process.GetCurrentProcess().MainModule.FileName);
                     }
                 }
 
-                currentcheck++;
                 await Misc.Sleep(500);
             }
 
             if (true)
             {
                 Log.Clear();
-                Log.Write(LStr.Get("_self_checking", currentcheck, totalchecks));
                 Log.Write(LStr.Get("_self_checking_httplistener") + Static.StartOutput());
 
                 Http = new HttpListenerHelper(27482);
@@ -233,14 +217,12 @@ namespace CSO2_ComboLauncher
                     }
                 });
 
-                currentcheck++;
                 await Misc.Sleep(500);
             }
 
             if (true)
             {
                 Log.Clear();
-                Log.Write(LStr.Get("_self_checking", currentcheck, totalchecks));
                 Log.Write(LStr.Get("_self_checking_mainserverconnection") + Static.StartOutput());
 
                 try
@@ -252,26 +234,22 @@ namespace CSO2_ComboLauncher
                     updateservererror = true;
                 }
 
-                currentcheck++;
                 await Misc.Sleep(500);
             }
 
             if (!Config.DisableSomeCheck && !updateservererror)
             {
                 Log.Clear();
-                Log.Write(LStr.Get("_self_checking", currentcheck, totalchecks));
                 Log.Write(LStr.Get("_self_checking_launcherupdate") + Static.StartOutput());
 
                 await Downloader.LauncherUpdate();
 
-                currentcheck++;
                 await Misc.Sleep(500);
             }
 
             if (true)
             {
                 Log.Clear();
-                Log.Write(LStr.Get("_self_checking", currentcheck, totalchecks));
                 Log.Write(LStr.Get("_self_checking_download_resource", LStr.Get(updateservererror ? "_server_backup" : "_server_main")) + Static.StartOutput());
 
                 if (!updateservererror)
@@ -283,7 +261,6 @@ namespace CSO2_ComboLauncher
                 }
                 Static.blacklist = await Downloader.BlackList(updateservererror);
 
-                currentcheck++;
                 await Misc.Sleep(500);
             }
 
