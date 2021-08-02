@@ -8,7 +8,7 @@ namespace CSO2_ComboLauncher
     {
         public static System.Windows.Forms.NotifyIcon icon = new System.Windows.Forms.NotifyIcon();
 
-        public static string CVersion = "6.5.1.10"; // 启动器版本 (记得也换程序集信息)
+        public static string CVersion = "6.5.1.11"; // 启动器版本 (记得也换程序集信息)
         public static string CWindow = "CSO2 Combo Launcher V" + CVersion;
 
         public static string service = "43.249.192.204:49971"; // hosted on Sakura Frp (natfrp.com)
