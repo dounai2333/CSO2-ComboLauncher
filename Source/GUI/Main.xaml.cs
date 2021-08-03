@@ -314,19 +314,22 @@ namespace CSO2_ComboLauncher
 
             if (OpenVpn.Process.HasExited)
             {
-                connecterror = true;
-                MainButtonStatus(true);
-
                 if (OpenVpn.ExitedWithFatalError)
                 {
-                    if (OpenVpn.NoAnyTapWindows)
+                    if (OpenVpn.NoTapWindowsExist)
                     {
                         App.HideAllWindow();
                         MessageBox.Show(LStr.Get("_connect_to_server_failed_openvpnexited_fatalerror_notapwindows"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
                         Environment.Exit(1);
                     }
-                    else if (OpenVpn.NoFreeTapWindows)
+                    else if (OpenVpn.NoTapWindowsAvailable)
                     {
+                        if (await Downloader.TapWindows())
+                        {
+                            Reconnect_Click(null, null);
+                            return;
+                        }
+
                         Log.Write(LStr.Get("_connect_to_server_failed_openvpnexited_fatalerror_alltapwindowsinuse"), "red");
                     }
                     else
@@ -339,6 +342,8 @@ namespace CSO2_ComboLauncher
                     Log.Write(LStr.Get("_connect_to_server_failed_openvpnexited"), "red");
                 }
 
+                connecterror = true;
+                MainButtonStatus(true);
                 return;
             }
 

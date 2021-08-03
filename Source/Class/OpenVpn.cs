@@ -42,21 +42,21 @@ namespace CSO2_ComboLauncher
             get { return Process.HasExited && exitedWithFatalError; }
         }
 
-        public static bool NoFreeTapWindows
+        public static bool NoTapWindowsAvailable
         {
-            get { return ExitedWithFatalError && noFreeTapWindows; }
+            get { return ExitedWithFatalError && noTapWindowsAvailable; }
         }
 
-        public static bool NoAnyTapWindows
+        public static bool NoTapWindowsExist
         {
-            get { return ExitedWithFatalError && noAnyTapWindows; }
+            get { return ExitedWithFatalError && noTapWindowsExist; }
         }
 
         private static bool exitedWithFatalError = false;
 
-        private static bool noFreeTapWindows = false;
+        private static bool noTapWindowsAvailable = false;
 
-        private static bool noAnyTapWindows = false;
+        private static bool noTapWindowsExist = false;
 
         private static string interfaceGuid = "";
 
@@ -80,8 +80,8 @@ namespace CSO2_ComboLauncher
 
         private static void ResetValue()
         {
-            noFreeTapWindows = false;
-            noAnyTapWindows = false;
+            noTapWindowsAvailable = false;
+            noTapWindowsExist = false;
             exitedWithFatalError = false;
             interfaceGuid = "";
             currentIp = "";
@@ -266,13 +266,13 @@ namespace CSO2_ComboLauncher
                 {
                     "All TAP-Windows adapters on this system are currently in use", msg =>
                     {
-                        noFreeTapWindows = true;
+                        noTapWindowsAvailable = true;
                     }
                 },
                 {
                     "There are no TAP-Windows adapters on this system", msg =>
                     {
-                        noAnyTapWindows = true;
+                        noTapWindowsExist = true;
                     }
                 },
                 {
