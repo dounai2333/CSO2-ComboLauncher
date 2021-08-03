@@ -10,9 +10,7 @@ This launcher is current working with CSO2 China server (server owner "晴雪 (Q
 .NET Framework 4.7.2 or newer version.
 
 ### Todo
-1. When there is no TAP-Windows adapter available, create a new adapter and try again.
-
-2. Move main ui to the V7 style (which is dead project now)
+1. Move main ui to the V7 style (which is dead project now)
 
 ⁧
 
