@@ -30,7 +30,7 @@ namespace CSO2_ComboLauncher
         private Config Config { get; set; }
 
         public static bool connecterror = false;
-        public static bool updateservererror = false;
+        public static bool mainservererror = false;
 
         public Main()
         {
@@ -231,13 +231,13 @@ namespace CSO2_ComboLauncher
                 }
                 catch
                 {
-                    updateservererror = true;
+                    mainservererror = true;
                 }
 
                 await Misc.Sleep(500);
             }
 
-            if (!Config.DisableSomeCheck && !updateservererror)
+            if (!Config.DisableSomeCheck && !mainservererror)
             {
                 Log.Clear();
                 Log.Write(LStr.Get("_self_checking_launcherupdate") + Static.StartOutput());
@@ -250,16 +250,16 @@ namespace CSO2_ComboLauncher
             if (true)
             {
                 Log.Clear();
-                Log.Write(LStr.Get("_self_checking_download_resource", LStr.Get(updateservererror ? "_server_backup" : "_server_main")) + Static.StartOutput());
+                Log.Write(LStr.Get("_self_checking_download_resource", LStr.Get(mainservererror ? "_server_backup" : "_server_main")) + Static.StartOutput());
 
-                if (!updateservererror)
+                if (!mainservererror)
                 {
                     List<string> files = await Downloader.PromoImage();
                     if (files != null && files.Count() >= 1)
                         for (int i = 0; i < files.Count(); i++)
                             Http.AddResponse(files[i], Path.GetTempPath() + "_" + files[i], true);
                 }
-                Static.blacklist = await Downloader.BlackList(updateservererror);
+                Static.blacklist = await Downloader.BlackList(mainservererror);
 
                 await Misc.Sleep(500);
             }
@@ -280,9 +280,9 @@ namespace CSO2_ComboLauncher
             await OpenVpn.Kill(true);
             await Misc.ResetNetAdapter(Static.netadapter);
 
-            Log.Write(LStr.Get("_download_server_info", LStr.Get(updateservererror ? "_server_backup" : "_server_main")));
+            Log.Write(LStr.Get("_download_server_info", LStr.Get(mainservererror ? "_server_backup" : "_server_main")));
             
-            string path = await Downloader.OpenVpnServer(updateservererror);
+            string path = await Downloader.OpenVpnServer(mainservererror);
             if (string.IsNullOrEmpty(path))
             {
                 Log.Write(LStr.Get("_download_server_info_failed"), "red");
@@ -552,7 +552,7 @@ namespace CSO2_ComboLauncher
 
             MainButtonStatus(false, false);
 
-            if (!Config.DisableSomeCheck && !updateservererror)
+            if (!Config.DisableSomeCheck && !mainservererror)
             {
                 try
                 {
@@ -804,15 +804,25 @@ namespace CSO2_ComboLauncher
 
         private async void LauncherUpdate_Click(object sender, RoutedEventArgs e)
         {
-            if (updateservererror)
+            MainButtonStatus(false, false);
+            try
+            {
+                await Downloader.StringFromMainServer("test");
+                mainservererror = false;
+            }
+            catch
+            {
+                mainservererror = true;
+            }
+
+            if (mainservererror)
             {
                 MessageBox.Show(LStr.Get("_update_check_main_server_offline"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
+                MainButtonStatus(true);
                 return;
             }
             else
             {
-                MainButtonStatus(false, false);
-
                 int totalchecks = 3;
                 int passedcheck = 0;
 
