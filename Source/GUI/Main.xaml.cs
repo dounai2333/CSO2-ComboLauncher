@@ -300,7 +300,7 @@ namespace CSO2_ComboLauncher
             {
                 await Misc.Sleep(100);
                 wait++;
-                if (wait >= 1500)
+                if (wait >= 150)
                 {
                     Log.Write(LStr.Get("_connect_to_server_failed"), "red");
                     await OpenVpn.Kill(true);
@@ -352,7 +352,7 @@ namespace CSO2_ComboLauncher
             {
                 await Misc.Sleep(100);
                 wait++;
-                if (wait >= 1500)
+                if (wait >= 150)
                 {
                     Log.Write(LStr.Get("_connect_to_server_failed"), "red");
                     await OpenVpn.Kill(true);
