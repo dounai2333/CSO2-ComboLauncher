@@ -1,12 +1,13 @@
 ﻿using System;
 using System.IO;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace CSO2_ComboLauncher
 {
     static class Static
     {
-        public static System.Windows.Forms.NotifyIcon icon = new System.Windows.Forms.NotifyIcon();
+        public static NotifyIcon icon = new NotifyIcon();
 
         public static string CVersion = "6.5.1.13"; // 启动器版本 (记得也换程序集信息)
         public static string CWindow = "CSO2 Combo Launcher V" + CVersion;
