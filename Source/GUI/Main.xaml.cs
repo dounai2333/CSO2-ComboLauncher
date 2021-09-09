@@ -791,11 +791,10 @@ namespace CSO2_ComboLauncher
 
                 App.HideAllWindow();
 
+                Config.UserAgreement = false;
                 Config.DisableSomeCheck = false;
-                Config.disableSomeCheck.IsChecked = false;
                 Config.EnableConsole = false;
-                Config.enableConsole.IsChecked = false;
-                Config.Close();
+                Config.SaveConfig();
 
                 ProgramHelper.CmdCommand($"timeout /nobreak /t 2 && start \"\" \"{Process.GetCurrentProcess().ProcessName}.exe\"", false, true);
                 Environment.Exit(0);

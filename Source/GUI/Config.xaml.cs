@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,6 +20,7 @@ namespace CSO2_ComboLauncher
         public bool EnableConsole = false;
         public Server CurrentServer;
         public string Location = "Shanghai";
+        public bool UserAgreement = false;
         public bool DisableSomeCheck = false;
         public string Secret = "";
 
@@ -40,16 +42,17 @@ namespace CSO2_ComboLauncher
             {
                 Misc.DecryptFile(ConfigName, ConfigName);
 
-                var ini = new IniParser(ConfigName);
-                var _name = ini.GetSetting("Game", "Name");
-                var _password = ini.GetSetting("Game", "Password");
-                var _noautologin = ini.GetSetting("Game", "DisableAutoLogin");
-                var _language = ini.GetSetting("Game", "Language");
-                var _customargs = ini.GetSetting("Game", "CustomArgs");
-                var _enableconsole = ini.GetSetting("Game", "EnableConsole");
-                var _server = ini.GetSetting("Launcher", "Server");
-                var _disablesomecheck = ini.GetSetting("Launcher", "DisableSomeCheck");
-                var _secret = ini.GetSetting("Launcher", "Secret");
+                IniParser ini = new IniParser(ConfigName);
+                string _name = ini.GetSetting("Game", "Name");
+                string _password = ini.GetSetting("Game", "Password");
+                string _noautologin = ini.GetSetting("Game", "DisableAutoLogin");
+                string _language = ini.GetSetting("Game", "Language");
+                string _customargs = ini.GetSetting("Game", "CustomArgs");
+                string _enableconsole = ini.GetSetting("Game", "EnableConsole");
+                string _server = ini.GetSetting("Launcher", "Server");
+                string _useragreement = ini.GetSetting("Launcher", "UserAgreement");
+                string _disablesomecheck = ini.GetSetting("Launcher", "DisableSomeCheck");
+                string _secret = ini.GetSetting("Launcher", "Secret");
 
                 Username = string.IsNullOrEmpty(_name) ? Username : ((_name.Length > userName.MaxLength) ? _name.Substring(0, userName.MaxLength) : _name);
                 Password = string.IsNullOrEmpty(_password) ? Password : ((_password.Length > passWord.MaxLength) ? _password.Substring(0, passWord.MaxLength) : _password);
@@ -58,6 +61,7 @@ namespace CSO2_ComboLauncher
                 CustomArgs = string.IsNullOrEmpty(_customargs) ? CustomArgs : _customargs;
                 EnableConsole = (_enableconsole != "True" && _enableconsole != "False") ? EnableConsole : (_enableconsole.ToString() != EnableConsole.ToString());
                 Location = _server == "Shanghai" ? _server : Location;
+                UserAgreement = (_useragreement != "True" && _useragreement != "False") ? UserAgreement : _useragreement.ToString() != UserAgreement.ToString();
                 DisableSomeCheck = (_disablesomecheck != "True" && _disablesomecheck != "False") ? DisableSomeCheck : _disablesomecheck.ToString() != DisableSomeCheck.ToString();
                 Secret = string.IsNullOrEmpty(_secret) ? Secret : _secret;
 
@@ -65,7 +69,19 @@ namespace CSO2_ComboLauncher
             }
             else
             {
-                MessageBox.Show(LStr.Get("_no_ini_found"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBoxResult box = MessageBox.Show(LStr.Get("_user_agreement"), Static.CWindow, MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (box == MessageBoxResult.No)
+                    Environment.Exit(0);
+                UserAgreement = true;
+            }
+
+            if (!UserAgreement)
+            {
+                MessageBoxResult box = MessageBox.Show(LStr.Get("_user_agreement"), Static.CWindow, MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (box == MessageBoxResult.No)
+                    Environment.Exit(0);
+                UserAgreement = true;
+                SaveConfig();
             }
 
             userName.Text = Username;
@@ -123,8 +139,6 @@ namespace CSO2_ComboLauncher
 
         public void SaveConfig()
         {
-            Misc.DecryptFile(ConfigName, ConfigName);
-
             File.WriteAllText(ConfigName, string.Empty);
 
             IniParser ini = new IniParser(ConfigName);
@@ -135,6 +149,7 @@ namespace CSO2_ComboLauncher
             ini.AddSetting("Game", "CustomArgs", CustomArgs);
             ini.AddSetting("Game", "EnableConsole", EnableConsole.ToString());
             ini.AddSetting("Launcher", "Server", Location);
+            ini.AddSetting("Launcher", "UserAgreement", UserAgreement.ToString());
             ini.AddSetting("Launcher", "DisableSomeCheck", DisableSomeCheck.ToString());
             ini.AddSetting("Launcher", "Secret", Secret);
             ini.SaveSettings();

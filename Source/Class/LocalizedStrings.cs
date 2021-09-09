@@ -108,9 +108,9 @@ namespace CSO2_ComboLauncher
                 AddKeyWords("tchinese", "_enable_console", "開啟遊戲控制台");
                 // GUI end
 
-                AddKeyWords("english", "_no_ini_found", "Welcome to play cso2, GL&HF!");
-                AddKeyWords("schinese", "_no_ini_found", "欢迎来到cso2, 祝你游戏开心!");
-                AddKeyWords("tchinese", "_no_ini_found", "歡迎你來到cso2, 祝你遊戲開心!");
+                AddKeyWords("english", "_user_agreement", "Before you use this program, you must allow this program to do couple things in your PC:\n- Install OpenVPN (for virtual LAN)\n- Install TAP-Windows (network adapter that OpenVPN needed)\n- Scan Dhcp service status (enable it if necessary)\n- Modify firewall exception list (add game client and program itself)\n\nOpenVPN may read your system information to generate a unique key to connect to the server.\nWhen you have connected to the server you will be exposed to a virtual LAN network which everybody in the same network can access your PC.\nWe highly recommended enabling your firewall or keep anti-virus open to avoid being affected by malicious activities in the network!\n\nIf you do not agree with any of them, you can click 'No' to exit program, your PC will keep untouched.\nClicking 'Yes' means that you agree to all the above content and assume possible potential risks.\nyou should be responsible for the security of your own PC!");
+                AddKeyWords("schinese", "_user_agreement", "在你使用此程序之前, 你必须允许程序在你的电脑上做一些事情:\n- 安装OpenVPN (建立虚拟局域网)\n- 安装TAP-Windows (OpenVPN所需要的网络适配器)\n- 扫描Dhcp服务状态 (如有需要则启用)\n- 修改防火墙例外列表 (添加游戏客户端和程序自身)\n\nOpenVPN可能会收集你电脑的信息并生成唯一标识密钥用于连接服务器.\n当你连接服务器后, 你将暴露在一个虚拟局域网中, 任何人都可以通过此网络访问你的电脑.\n我们强烈推荐你启用防火墙或保持杀软开启以避免受到网络中恶意活动的影响!\n\n如果你不同意其中任何一条, 你可以点击'否'退出程序, 你的电脑将保持原状.\n点击'是'即代表你同意以上所有内容并愿意承担可能存在的风险.\n你应对自己的电脑安全负责!");
+                AddKeyWords("tchinese", "_user_agreement", "在你使用此程式之前, 你必須允許程式在你的電腦上做一些事情:\n- 安裝OpenVPN (建立虛擬局域網)\n- 安裝TAP-Windows (OpenVPN所需要的網路適配器)\n- 掃描Dhcp服務狀態 (如有需要則啟用)\n- 修改防火墻例外列表 (添加遊戲客戶端和程式自身)\n\nOpenVPN可能會收集你電腦的信息並生成唯一標識密鑰用來連接伺服器.\n當你連接伺服器後, 你將暴露在一個虛擬局域網中, 任何人都可以通過該網路訪問你的電腦.\n我們強烈推薦你啟用防火墻或讓殺毒軟體一直開著以避免受到網路中惡意活動的影響!\n\n如果你不同意其中任何一條, 你可以點擊'否'退出程式, 你的電腦將保持原狀.\n點擊'是'就代表你同意以上所有內容並願意承擔可能存在的風險.\n你應該對自己的電腦安全負責!");
 
                 AddKeyWords("english", "_lang_file_not_exist", "The file for the currently selected language could not be found, please change to other language, otherwise you will hit errors when launching the game!\n\nIf you want to use the language of your choice, please download the files by yourself.");
                 AddKeyWords("schinese", "_lang_file_not_exist", "无法找到当前选择的语言的文件, 请修改语言, 否则启动游戏将会导致报错!\n\n如果你希望使用这个语言,请自行寻找相关的语言包!");
@@ -189,6 +189,10 @@ namespace CSO2_ComboLauncher
                 AddKeyWords("schinese", "_version_info", "启动器版本: V{0} | 游戏: V{1}");
                 AddKeyWords("tchinese", "_version_info", "啟動器版本: V{0} | 遊戲: V{1}");
                 // GUI end
+
+                AddKeyWords("english", "_copyright", "Counter-Strike Online 2 is made by Nexon Korea,\nValve, Counter-Strike and Counter-Strike Online is trademark, registered trademark or application trademark of Valve Corporation.\nCopyright © NEXON Korea Corporation & Valve Corporation");
+                AddKeyWords("schinese", "_copyright", "Counter-Strike Online 2由Nexon制作,\nValve, Counter-Strike和Counter-Strike Online是Valve Corporation的商标, 注册商标或应用商标.\nCopyright © NEXON Korea Corporation & Valve Corporation");
+                AddKeyWords("tchinese", "_copyright", "Counter-Strike Online 2由Nexon製作,\nValve, Counter-Strike和Counter-Strike Online是Valve Corporation的商標, 註冊商標或應用商標.\nCopyright © NEXON Korea Corporation & Valve Corporation");
 
                 AddKeyWords("english", "_author_and_helper", "CSO2 Combo Launcher:\n- Made by GEEKiDoS\n- Secondary development by leang97 and dounai2333");
                 AddKeyWords("schinese", "_author_and_helper", "CSO2 Combo Launcher:\n- GEEKiDoS编写\n- leang97及dounai2333二次开发");
