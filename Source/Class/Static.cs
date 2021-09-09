@@ -9,7 +9,7 @@ namespace CSO2_ComboLauncher
     {
         public static NotifyIcon icon = new NotifyIcon();
 
-        public static string CVersion = "6.5.1.13"; // 启动器版本 (记得也换程序集信息)
+        public static string CVersion = "6.5.1.14"; // 启动器版本 (记得也换程序集信息)
         public static string CWindow = "CSO2 Combo Launcher V" + CVersion;
 
         public static string service = "43.249.192.204:49971"; // hosted on Sakura Frp (www.natfrp.com)
