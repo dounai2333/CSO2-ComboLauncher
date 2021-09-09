@@ -407,15 +407,19 @@ namespace CSO2_ComboLauncher
                 {
                     using (Web Web = new Web())
                     {
-                        // stop being curious, it got reason and necessary to hide some basic info (keep it as a secret even it's easy to decrypt)
-                        string temp1 = Web.Client.DownloadString(Misc.Decrypt(Misc.UnicodeToString("\\u0059\\u0055\\u0068\\u0053\\u004d\\u0047\\u004e\\u0045\\u0062\\u0033\\u005a\\u004d\\u0065\\u006b\\u0056\\u0033\\u0054\\u0047\\u0070\\u006e\\u0064\\u0055\\u0031\\u0044\\u004e\\u0048\\u0068\\u004d\\u004d\\u0044\\u006c\\u0033\\u0057\\u006c\\u0063\\u0031\\u0056\\u0031\\u0056\\u0046\\u004e\\u0055\\u004a\\u0056\\u0052\\u0057\\u0074\\u0031\\u0059\\u0030\\u0064\\u006f\\u0064\\u0031\\u0041\\u007a\\u0054\\u006d\\u0078\\u005a\\u004d\\u0030\\u0070\\u0073\\u005a\\u0045\\u0051\\u0078\\u0061\\u0046\\u006c\\u0074\\u0054\\u006d\\u0074\\u004e\\u0056\\u0045\\u006c\\u0036\\u0054\\u006b\\u0052\\u0056\\u0065\\u0045\\u0031\\u006e\\u0050\\u0054\\u0030\\u003d")));
-                        dynamic json = Json.Parse(temp1)[0];
-                        List<string> array = Json.ReadArray(json["list"]);
-                        online = array.Count();
+                        try
+                        {
+                            // stop being curious, it got reason and necessary to hide some basic info (keep it as a secret even it's easy to decrypt)
+                            string temp1 = Web.Client.DownloadString(Misc.Decrypt(Misc.UnicodeToString("\\u0059\\u0055\\u0068\\u0053\\u004d\\u0047\\u004e\\u0045\\u0062\\u0033\\u005a\\u004d\\u0065\\u006b\\u0056\\u0033\\u0054\\u0047\\u0070\\u006e\\u0064\\u0055\\u0031\\u0044\\u004e\\u0048\\u0068\\u004d\\u004d\\u0044\\u006c\\u0033\\u0057\\u006c\\u0063\\u0031\\u0056\\u0031\\u0056\\u0046\\u004e\\u0055\\u004a\\u0056\\u0052\\u0057\\u0074\\u0031\\u0059\\u0030\\u0064\\u006f\\u0064\\u0031\\u0041\\u007a\\u0054\\u006d\\u0078\\u005a\\u004d\\u0030\\u0070\\u0073\\u005a\\u0045\\u0051\\u0078\\u0061\\u0046\\u006c\\u0074\\u0054\\u006d\\u0074\\u004e\\u0056\\u0045\\u006c\\u0036\\u0054\\u006b\\u0052\\u0056\\u0065\\u0045\\u0031\\u006e\\u0050\\u0054\\u0030\\u003d")));
+                            dynamic json = Json.Parse(temp1)[0];
+                            List<string> array = Json.ReadArray(json["list"]);
+                            online = array.Count();
+                        }
+                        catch { }
                     }
                 });
 
-                Log.Write(LStr.Get("_connect_to_server_success", ping.RoundtripTime, online));
+                Log.Write(LStr.Get("_connect_to_server_success", ping.RoundtripTime, (online == -1) ? "Unknown" : online.ToString()));
             }
         }
 
