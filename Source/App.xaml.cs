@@ -139,49 +139,42 @@ namespace CSO2_ComboLauncher
                 Environment.Exit(1);
             }
 
-            if (true)
+            using (RegistryKey ndpKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey("SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v4\\Full\\"))
             {
-                using (RegistryKey ndpKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey("SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v4\\Full\\"))
+                int releaseKey = Convert.ToInt32(ndpKey.GetValue("Release"));
+                if (releaseKey < 461808)
                 {
-                    int releaseKey = Convert.ToInt32(ndpKey.GetValue("Release"));
-                    if (releaseKey < 461808)
+                    Task.Run(() =>
                     {
-                        Task.Run(() =>
+                        MessageBoxResult box = MessageBox.Show(LStr.Get("_net_framework_lower_version"), Static.CWindow, MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                        if (box == MessageBoxResult.Yes)
                         {
-                            MessageBoxResult box = MessageBox.Show(LStr.Get("_net_framework_lower_version"), Static.CWindow, MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                            if (box == MessageBoxResult.Yes)
-                            {
-                                Process.Start("https://dotnet.microsoft.com/download/dotnet-framework/thank-you/net472-offline-installer");
-                                Environment.Exit(1);
-                            }
-                        }).Wait();
-                    }
+                            Process.Start("https://dotnet.microsoft.com/download/dotnet-framework/thank-you/net472-offline-installer");
+                            Environment.Exit(1);
+                        }
+                    }).Wait();
                 }
             }
 
-            if (true)
+            bool network = false;
+            foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
             {
-                bool network = false;
-                foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
-                {
-                    if ((ni.OperationalStatus != OperationalStatus.Up) || (ni.NetworkInterfaceType == NetworkInterfaceType.Loopback) || (ni.NetworkInterfaceType == NetworkInterfaceType.Tunnel))
-                        continue;
-                    if (ni.Speed < 100000000) // 100M
-                        continue;
-                    if (ni.Name.ToLower().Contains("virtual") || ni.Description.ToLower().Contains("virtual"))
-                        continue;
-                    if (ni.Description.Equals("Microsoft Loopback Adapter", StringComparison.OrdinalIgnoreCase))
-                        continue;
+                if ((ni.OperationalStatus != OperationalStatus.Up) || (ni.NetworkInterfaceType == NetworkInterfaceType.Loopback) || (ni.NetworkInterfaceType == NetworkInterfaceType.Tunnel))
+                    continue;
+                if (ni.Speed < 100000000) // 100M
+                    continue;
+                if (ni.Name.ToLower().Contains("virtual") || ni.Description.ToLower().Contains("virtual"))
+                    continue;
+                if (ni.Description.Equals("Microsoft Loopback Adapter", StringComparison.OrdinalIgnoreCase))
+                    continue;
 
-                    network = true;
-                    break;
-                }
-
-                if (!network && !NetworkInterface.GetIsNetworkAvailable())
-                {
-                    MessageBox.Show(LStr.Get("_no_network_connection"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
-                    Environment.Exit(1);
-                }
+                network = true;
+                break;
+            }
+            if (!network && !NetworkInterface.GetIsNetworkAvailable())
+            {
+                MessageBox.Show(LStr.Get("_no_network_connection"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
+                Environment.Exit(1);
             }
 
             if (!Misc.IsFileAvailable(Path.GetTempPath() + "combolauncher.log"))
@@ -215,8 +208,8 @@ namespace CSO2_ComboLauncher
             //new Config(); // bugged when cso2_launcher.ini is not exist
             new QQGroup();
             new Download();
-            new ZipWorker();
             Download.StartLoop();
+            new ZipWorker();
             ZipWorker.StartLoop();
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
         }

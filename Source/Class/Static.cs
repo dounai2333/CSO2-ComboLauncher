@@ -31,7 +31,7 @@ namespace CSO2_ComboLauncher
             icon.Icon = new Icon(App.GetResourceStream(new Uri("pack://application:,,,/icon.ico")).Stream);
         }
 
-        public static string StartOutput()
+        public static string AuthorAndLibraryOutput()
         {
             return $"\n\n{LStr.Get(AuthorAndHelper)}\n{LStr.Get(ThirdPartyLibrary)}";
         }

@@ -25,10 +25,9 @@ namespace CSO2_ComboLauncher
 
         private static HttpListenerHelper Http { get; set; }
 
-        public bool started = false;
-
         private Config Config { get; set; }
 
+        public bool started = false;
         public static bool connecterror = false;
         public static bool mainservererror = false;
 
@@ -57,212 +56,185 @@ namespace CSO2_ComboLauncher
         {
             Log = new Logger { LogDisplay = logger };
 
-            if (true)
-            {
-                Log.Clear();
-                Log.Write(LStr.Get("_self_checking_gamefiledll") + Static.StartOutput());
-
-                string[] dllfiles = { "BugTrapU.dll", "client.dll", "d3dx9_33.dll", "datacache.dll", "engine.dll", "FileSystem_Stdio.dll", "inputsystem.dll", "MaterialSystem.dll", "Mss32.dll",
+            // check if any necessary game dll files is missing
+            Log.Clear();
+            Log.Write(LStr.Get("_self_checking_gamefiledll") + Static.AuthorAndLibraryOutput());
+            string[] dllfiles = { "BugTrapU.dll", "client.dll", "d3dx9_33.dll", "datacache.dll", "engine.dll", "FileSystem_Stdio.dll", "inputsystem.dll", "MaterialSystem.dll", "Mss32.dll",
                                   "mssmp3.asi", "mssvoice.asi", "nmcogame.dll", "NPS.dll", "scenefilecache.dll", "server.dll", "shaderapidx9.dll", "SoundEmitterSystem.dll", "stdshader_dx9.dll",
                                   "StudioRender.dll", "tier0.dll", "unicode.dll", "vaudio_miles.dll", "vaudio_speex.dll", "vgui2.dll", "vguimatsurface.dll", "video_services.dll", "vphysics.dll", "vstdlib.dll", "xinput1_3.dll" };
-                string missedfiles = "";
-                for (int i = 0; i < dllfiles.Count(); i++)
-                    if (!File.Exists("Bin\\" + dllfiles[i]))
-                        missedfiles = (missedfiles == "") ? dllfiles[i] : missedfiles + " - " + dllfiles[i];
+            string missedfiles = "";
+            for (int i = 0; i < dllfiles.Count(); i++)
+                if (!File.Exists("Bin\\" + dllfiles[i]))
+                    missedfiles = (missedfiles == "") ? dllfiles[i] : missedfiles + " - " + dllfiles[i];
 
-                if (!string.IsNullOrEmpty(missedfiles))
+            if (!string.IsNullOrEmpty(missedfiles))
+            {
+                MessageBoxResult box = MessageBox.Show(LStr.Get("_self_checking_gamefiledll_failed", missedfiles), Static.CWindow, MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (box == MessageBoxResult.No)
                 {
-                    MessageBoxResult box = MessageBox.Show(LStr.Get("_self_checking_gamefiledll_failed", missedfiles), Static.CWindow, MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                    if (box == MessageBoxResult.No)
+                    App.HideAllWindow();
+                    Environment.Exit(1);
+                }
+            }
+
+            await Misc.Sleep(250);
+
+            // check if game pkg files count is match the expected number
+            Log.Clear();
+            Log.Write(LStr.Get("_self_checking_gamefilepkg") + Static.AuthorAndLibraryOutput());
+            int rightpkgcount = 2058;
+            List<string> pkgfiles = new List<string>();
+            string[] pkgfiles1 = Directory.GetFiles("Data");
+            for (int i = 0; i < pkgfiles1.Count(); i++)
+                if (Path.GetExtension(pkgfiles1[i]) == ".pkg")
+                    pkgfiles.Add(pkgfiles1[i]);
+
+            if (pkgfiles.Count() < rightpkgcount)
+            {
+                MessageBoxResult box = MessageBox.Show(LStr.Get("_self_checking_gamefilepkg_failed", pkgfiles.Count(), rightpkgcount), Static.CWindow, MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (box == MessageBoxResult.No)
+                {
+                    App.HideAllWindow();
+                    Environment.Exit(1);
+                }
+            }
+
+            await Misc.Sleep(250);
+
+            // check and download OpenVPN if necessary
+            Log.Clear();
+            Log.Write(LStr.Get("_self_checking_openvpnfile") + Static.AuthorAndLibraryOutput());
+            if (!Directory.Exists("Bin\\OpenVPN") || Directory.GetFiles("Bin\\OpenVPN").Count() != 5)
+            {
+                if (!await Downloader.OpenVpn())
+                {
+                    App.HideAllWindow();
+                    MessageBox.Show(LStr.Get("_self_checking_openvpnfile_failed"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
+                    Environment.Exit(1);
+                }
+            }
+
+            await Misc.Sleep(250);
+
+            // check and download TAP-Windows and install if necessary
+            Log.Clear();
+            Log.Write(LStr.Get("_self_checking_tapwindows") + Static.AuthorAndLibraryOutput());
+            if (!await Misc.ResetNetAdapter(Static.netadapter))
+            {
+                if (!await Downloader.TapWindows())
+                {
+                    App.HideAllWindow();
+                    MessageBox.Show(LStr.Get("_self_checking_tapwindows_failed"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
+                    Environment.Exit(1);
+                }
+            }
+
+            await Misc.Sleep(250);
+
+            // check Dhcp service status and enable it if necessary
+            Log.Clear();
+            Log.Write(LStr.Get("_self_checking_dhcpclient") + Static.AuthorAndLibraryOutput());
+            await Task.Run(() =>
+            {
+                using (ServiceController service = new ServiceController("Dhcp"))
+                {
+                    try
+                    {
+                        if (service.StartType != ServiceStartMode.Automatic)
+                            using (ManagementObject servicemo = new ManagementObject("Win32_Service.Name=\"Dhcp\""))
+                                servicemo.InvokeMethod("ChangeStartMode", new object[] { "Automatic" });
+
+                        if (service.Status == ServiceControllerStatus.Stopped)
+                            service.Start();
+                        else if (service.Status == ServiceControllerStatus.Paused)
+                            service.Continue();
+
+                        service.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromSeconds(7.5));
+                    }
+                    catch
                     {
                         App.HideAllWindow();
+                        MessageBox.Show(LStr.Get("_self_checking_dhcpclient_failed"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
                         Environment.Exit(1);
                     }
                 }
+            });
 
-                await Misc.Sleep(500);
-            }
+            await Misc.Sleep(250);
 
-            if (true)
+            // add game client and program itself to the filewall exception list (trusted)
+            Log.Clear();
+            Log.Write(LStr.Get("_self_checking_firewall_addexception") + Static.AuthorAndLibraryOutput());
+            using (Firewall Firewall = new Firewall())
             {
-                Log.Clear();
-                Log.Write(LStr.Get("_self_checking_gamefilepkg") + Static.StartOutput());
-
-                int rightpkgcount = 2058;
-                List<string> pkgfiles = new List<string>();
-                string[] pkgfiles1 = Directory.GetFiles("Data");
-                for (int i = 0; i < pkgfiles1.Count(); i++)
-                    if (Path.GetExtension(pkgfiles1[i]) == ".pkg")
-                        pkgfiles.Add(pkgfiles1[i]);
-
-                if (pkgfiles.Count() < rightpkgcount)
+                if (Firewall.Mgr != null && Firewall.Running)
                 {
-                    MessageBoxResult box = MessageBox.Show(LStr.Get("_self_checking_gamefilepkg_failed", pkgfiles.Count(), rightpkgcount), Static.CWindow, MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                    if (box == MessageBoxResult.No)
-                    {
-                        App.HideAllWindow();
-                        Environment.Exit(1);
-                    }
+                    if (!Firewall.ICMPRequestAllowed)
+                        Firewall.ICMPRequestAllowed = true;
+                    if (File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "Bin\\CounterStrikeOnine2.exe")))
+                        Firewall.AddProgramException("CSO2", Path.Combine(Directory.GetCurrentDirectory(), "Bin\\CounterStrikeOnine2.exe"));
+                    Firewall.AddProgramException(Static.CWindow, Process.GetCurrentProcess().MainModule.FileName);
                 }
-
-                await Misc.Sleep(500);
             }
 
-            if (true)
-            {
-                Log.Clear();
-                Log.Write(LStr.Get("_self_checking_openvpnfile") + Static.StartOutput());
+            await Misc.Sleep(250);
 
-                if (!Directory.Exists("Bin\\OpenVPN") || Directory.GetFiles("Bin\\OpenVPN").Count() != 5)
+            // enable HttpListener for image showing and future API
+            Log.Clear();
+            Log.Write(LStr.Get("_self_checking_httplistener") + Static.AuthorAndLibraryOutput());
+            Http = new HttpListenerHelper(27482);
+            Http.Start();
+            Http.AddResponse("test", "ok", false);
+
+            Http.AddResponse("username", Config.Username, false);
+            _ = Task.Run(() =>
+            {
+                while (true)
                 {
-                    if (!await Downloader.OpenVpn())
-                    {
-                        App.HideAllWindow();
-                        MessageBox.Show(LStr.Get("_self_checking_openvpnfile_failed"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
-                        Environment.Exit(1);
-                    }
+                    Misc.Sleep(1000, false);
+                    Http.RefreshResponse("username", Config.NoAutoLogin ? "" : Config.Username, false);
                 }
+            });
 
-                await Misc.Sleep(500);
-            }
+            await Misc.Sleep(250);
 
-            if (true)
+            // check if main server is online and ok for transfer data
+            Log.Clear();
+            Log.Write(LStr.Get("_self_checking_mainserverconnection") + Static.AuthorAndLibraryOutput());
+            try
             {
-                Log.Clear();
-                Log.Write(LStr.Get("_self_checking_tapwindows") + Static.StartOutput());
-
-                if (!await Misc.ResetNetAdapter(Static.netadapter))
-                {
-                    if (!await Downloader.TapWindows())
-                    {
-                        App.HideAllWindow();
-                        MessageBox.Show(LStr.Get("_self_checking_tapwindows_failed"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
-                        Environment.Exit(1);
-                    }
-                }
-
-                await Misc.Sleep(500);
+                await Downloader.StringFromMainServer("test");
             }
-
-            if (true)
+            catch
             {
-                Log.Clear();
-                Log.Write(LStr.Get("_self_checking_dhcpclient") + Static.StartOutput());
-
-                await Task.Run(() =>
-                {
-                    using (ServiceController service = new ServiceController("Dhcp"))
-                    {
-                        try
-                        {
-                            if (service.StartType != ServiceStartMode.Automatic)
-                                using (ManagementObject servicemo = new ManagementObject("Win32_Service.Name=\"Dhcp\""))
-                                    servicemo.InvokeMethod("ChangeStartMode", new object[] { "Automatic" });
-
-                            if (service.Status == ServiceControllerStatus.Stopped)
-                                service.Start();
-                            else if (service.Status == ServiceControllerStatus.Paused)
-                                service.Continue();
-
-                            service.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromSeconds(7.5));
-                        }
-                        catch
-                        {
-                            App.HideAllWindow();
-                            MessageBox.Show(LStr.Get("_self_checking_dhcpclient_failed"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
-                            Environment.Exit(1);
-                        }
-                    }
-                });
-
-                await Misc.Sleep(500);
+                mainservererror = true;
             }
 
-            if (true)
-            {
-                Log.Clear();
-                Log.Write(LStr.Get("_self_checking_firewall_addexception") + Static.StartOutput());
+            await Misc.Sleep(250);
 
-                using (Firewall Firewall = new Firewall())
-                {
-                    if (Firewall.Mgr != null && Firewall.Running)
-                    {
-                        if (!Firewall.ICMPRequestAllowed)
-                            Firewall.ICMPRequestAllowed = true;
-                        if (File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "Bin\\CounterStrikeOnine2.exe")))
-                            Firewall.AddProgramException("CSO2", Path.Combine(Directory.GetCurrentDirectory(), "Bin\\CounterStrikeOnine2.exe"));
-                        Firewall.AddProgramException(Static.CWindow, Process.GetCurrentProcess().MainModule.FileName);
-                    }
-                }
-
-                await Misc.Sleep(500);
-            }
-
-            if (true)
-            {
-                Log.Clear();
-                Log.Write(LStr.Get("_self_checking_httplistener") + Static.StartOutput());
-
-                Http = new HttpListenerHelper(27482);
-                Http.Start();
-                Http.AddResponse("test", "ok", false);
-
-                Http.AddResponse("username", Config.Username, false);
-                _ = Task.Run(() =>
-                {
-                    while (true)
-                    {
-                        Misc.Sleep(1000, false);
-                        Http.RefreshResponse("username", Config.NoAutoLogin ? "" : Config.Username, false);
-                    }
-                });
-
-                await Misc.Sleep(500);
-            }
-
-            if (true)
-            {
-                Log.Clear();
-                Log.Write(LStr.Get("_self_checking_mainserverconnection") + Static.StartOutput());
-
-                try
-                {
-                    await Downloader.StringFromMainServer("test");
-                }
-                catch
-                {
-                    mainservererror = true;
-                }
-
-                await Misc.Sleep(500);
-            }
-
+            // check program itself for updates (ignored if 'No Unnecessary Checks' is checked or main server is offline)
             if (!Config.DisableSomeCheck && !mainservererror)
             {
                 Log.Clear();
-                Log.Write(LStr.Get("_self_checking_launcherupdate") + Static.StartOutput());
-
+                Log.Write(LStr.Get("_self_checking_launcherupdate") + Static.AuthorAndLibraryOutput());
                 await Downloader.LauncherUpdate();
 
-                await Misc.Sleep(500);
+                await Misc.Sleep(250);
             }
 
-            if (true)
+            // download text blacklist for banning insulting or inappropriate username
+            Log.Clear();
+            Log.Write(LStr.Get("_self_checking_download_resource", LStr.Get(mainservererror ? "_server_backup" : "_server_main")) + Static.AuthorAndLibraryOutput());
+            if (!mainservererror)
             {
-                Log.Clear();
-                Log.Write(LStr.Get("_self_checking_download_resource", LStr.Get(mainservererror ? "_server_backup" : "_server_main")) + Static.StartOutput());
-
-                if (!mainservererror)
-                {
-                    List<string> files = await Downloader.PromoImage();
-                    if (files != null && files.Count() >= 1)
-                        for (int i = 0; i < files.Count(); i++)
-                            Http.AddResponse(files[i], Path.GetTempPath() + "_" + files[i], true);
-                }
-                Static.blacklist = await Downloader.BlackList(mainservererror);
-
-                await Misc.Sleep(500);
+                List<string> files = await Downloader.PromoImage();
+                if (files != null && files.Count() >= 1)
+                    for (int i = 0; i < files.Count(); i++)
+                        Http.AddResponse(files[i], Path.GetTempPath() + "_" + files[i], true);
             }
+            Static.blacklist = await Downloader.BlackList(mainservererror);
+
+            await Misc.Sleep(250);
 
             await StartOpenVpn();
             started = true;
