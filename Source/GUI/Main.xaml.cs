@@ -222,7 +222,7 @@ namespace CSO2_ComboLauncher
                 await Misc.Sleep(250);
             }
 
-            // download text blacklist for banning insulting or inappropriate username
+            // download promotional images for let game showing it (ignored if main server is offline) and text blacklist for banning insulting or inappropriate username
             Log.Clear();
             Log.Write(LStr.Get("_self_checking_download_resource", LStr.Get(mainservererror ? "_server_backup" : "_server_main")) + Static.AuthorAndLibraryOutput());
             if (!mainservererror)
