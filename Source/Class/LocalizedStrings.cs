@@ -194,9 +194,9 @@ namespace CSO2_ComboLauncher
                 AddKeyWords("schinese", "_copyright", "cso2(反恐精英Online2)的版权:\n版权所有© 2008(2013) NEXON Korea Corporation & Valve Corporation. 保留所有权利.\nValve, Counter-Strike和Counter-Strike Online是Valve Corporation的商标, 注册商标或申请商标.\n\n此程序仅用于创建虚拟局域网(LAN)以辅助游戏, 不会也永远不会修改cso2的任何内容.");
                 AddKeyWords("tchinese", "_copyright", "cso2(絕對武力Online2)的版權:\n版權所有© 2008(2013) NEXON Korea Corporation & Valve Corporation. 保留所有權利.\nValve, Counter-Strike和Counter-Strike Online是Valve Corporation的商標, 註冊商標或申請商標.\n\n本程式僅負責創建虛擬局域網(LAN)以輔助遊戲遊玩, 不會也永遠不會修改cso2的任何內容.");
 
-                AddKeyWords("english", "_author_and_helper", "CSO2 Combo Launcher:\n- Made by GEEKiDoS\n- Secondary development by leang97 and dounai2333");
-                AddKeyWords("schinese", "_author_and_helper", "CSO2 Combo Launcher:\n- GEEKiDoS编写\n- leang97及dounai2333二次开发");
-                AddKeyWords("tchinese", "_author_and_helper", "CSO2 Combo Launcher:\n- GEEKiDoS製作\n- leang97和dounai2333二次開發");
+                AddKeyWords("english", "_author_and_helper", "CSO2 Combo Launcher:\n- Made by GEEKiDoS\n- Secondary development by leang97 and dounai2333\n- Sakura Frp for main server hosting");
+                AddKeyWords("schinese", "_author_and_helper", "CSO2 Combo Launcher:\n- GEEKiDoS编写\n- leang97及dounai2333二次开发\n- 由Sakura Frp提供主服务器");
+                AddKeyWords("tchinese", "_author_and_helper", "CSO2 Combo Launcher:\n- GEEKiDoS製作\n- leang97和dounai2333二次開發\n- 由Sakura Frp提供主服务器");
 
                 AddKeyWords("english", "_third_party_library", "Third-Party Library(s):\n- Toqe.Downloader as Multi-Threaded Downloader\n- Chsword.JDynamic as JSON Parser");
                 AddKeyWords("schinese", "_third_party_library", "第三方库:\n- Toqe.Downloader(多线程下载器)\n- Chsword.JDynamic(JSON解析器)");
@@ -294,9 +294,9 @@ namespace CSO2_ComboLauncher
                 AddKeyWords("schinese", "_download_server_info_failed", "信息下载失败! 也许你的网络出现了问题?");
                 AddKeyWords("tchinese", "_download_server_info_failed", "訊息下載失敗! 也許你的網路出現了問題?");
 
-                AddKeyWords("english", "_start_openvpn_and_connect", "OpenVPN started, trying to connect to the server...");
-                AddKeyWords("schinese", "_start_openvpn_and_connect", "OpenVPN已启动, 正在尝试连接到服务器...");
-                AddKeyWords("tchinese", "_start_openvpn_and_connect", "OpenVPN已啟動, 正在嘗試連接到伺服器...");
+                AddKeyWords("english", "_start_openvpn_and_connect", "OpenVPN started, trying to connect to the game server...");
+                AddKeyWords("schinese", "_start_openvpn_and_connect", "OpenVPN已启动, 正在尝试连接到游戏服务器...");
+                AddKeyWords("tchinese", "_start_openvpn_and_connect", "OpenVPN已啟動, 正在嘗試連接到遊戲伺服器...");
 
                 AddKeyWords("english", "_connect_to_server_failed", "Tried connect to the server but failed!\nMaybe server is current offline, you can try again later.");
                 AddKeyWords("schinese", "_connect_to_server_failed", "尝试连接服务器失败!\n服务器当前可能离线, 你可以稍后再试.");
@@ -330,9 +330,9 @@ namespace CSO2_ComboLauncher
                 AddKeyWords("schinese", "_connect_to_server_failed_sus_ipconflict_hint", "有许多原因可以导致\"IP冲突\"\n局域网IP延迟: {0}ms, 公网IP延迟: {1}ms\n如果相比公网延迟, 局域网显得非常低, 那么你遇见了\"IP冲突\".");
                 AddKeyWords("tchinese", "_connect_to_server_failed_sus_ipconflict_hint", "有很多原因可以導致\"IP衝突\"\n局域網IP延遲: {0}ms, 公網IP延遲: {1}ms\n如果相比公網延遲, 局域網非常低, 那麼你有\"IP衝突\".");
 
-                AddKeyWords("english", "_connect_to_server_success", "Server connected, {0}{1}you can start the game now!");
-                AddKeyWords("schinese", "_connect_to_server_success", "服务器已连接, {0}{1}你现在可以启动游戏了!");
-                AddKeyWords("tchinese", "_connect_to_server_success", "伺服器已連接, {0}{1}你現在可以開始遊戲了!");
+                AddKeyWords("english", "_connect_to_server_success", "Game server connected, {0}{1}you can start the game now!");
+                AddKeyWords("schinese", "_connect_to_server_success", "游戏服务器已连接, {0}{1}你现在可以启动游戏了!");
+                AddKeyWords("tchinese", "_connect_to_server_success", "遊戲伺服器已連接, {0}{1}你現在可以開始遊戲了!");
 
                 AddKeyWords("english", "_server_delay", "delay: {0}ms, ");
                 AddKeyWords("schinese", "_server_delay", "延迟: {0}ms, ");
@@ -381,10 +381,6 @@ namespace CSO2_ComboLauncher
                 AddKeyWords("english", "_start_name_convertfailed", "Your nickname has broken: {0}\nYou can't start game with a broken name!\nBut please don't panic, this error does not mean that it cannot be resolve, please follow the steps below:\n\nYou can not use the singular texts (example: 我爱所有人)\nYou can add \"丶\" or \"｜\"to solve this problem (example: 我爱所有人丶)\nDuel texts has been cut to singular texts (example: 我K爱大家、我 爱大家(space character))\nYou can delete them, or try to add more non-ASCII texts!\n\nWhen you solved problems, you can start the game normally!\nThe following sample text has no problem:\n世界上最帅气的人、脸皮挡子弹丶、xX灭神Xx、夜影o夜空、豆奶233");
                 AddKeyWords("schinese", "_start_name_convertfailed", "你的游戏名称出现了损坏: {0}\n使用损坏的名称无法进入游戏!\n但请不要慌张, 出现此错误, 并不代表无法解决, 请跟着以下步骤排错:\n\n奇数的中文名是无法使用的(例如: 我爱所有人)\n你可以考虑添加一个\"丶\"或\"｜\"来解决此问题(例如: 我爱所有人丶)\n偶数的中文名被隔开变成了奇数(例如:我K爱大家、我 爱大家(有空格))\n你可以考虑删除导致中文被隔开的罪魁祸首, 或者想办法让奇数的字有个伴!\n\n解决以上问题后, 将可以正常进入游戏!\n以下示例文字是没有问题的, 可以进行参考:\n世界上最帅气的人、脸皮挡子弹丶、xX灭神Xx、夜影o夜空、豆奶233");
                 AddKeyWords("tchinese", "_start_name_convertfailed", "你的遊戲名稱損壞了: {0}\n你不能用壞掉了的名稱開始遊戲!\n但是不要擔心, 出現這個問題, 並不代表不能解決, 請跟著以下步驟嘗試排除錯誤:\n\n你無法使用基數的名稱(如: 我愛所有人)\n你可以添加\"丶\"或\"｜\"解決這個問題(如: 我愛所有人丶)\n偶數的名稱被割開變成了基數(如:我K愛大家、我 愛大家(空格符號))\n你可以把那些字符刪除掉, 或者把中文字符改成偶數!\n\n解決這些問題之後, 你就可以正常開始遊戲了!\n下面的示例名稱是沒有問題的, 可以參考一下:\n世界上最帅气的人、脸皮挡子弹丶、xX灭神Xx、夜影o夜空、豆奶233");
-
-                AddKeyWords("english", "_start_game_minimized", "Game is started, wait a while and then enjoy!");
-                AddKeyWords("schinese", "_start_game_minimized", "游戏已启动, 稍等一会加载然后享受吧!");
-                AddKeyWords("tchinese", "_start_game_minimized", "遊戲已開始, 稍等一會加載, 然後享受吧!");
 
                 AddKeyWords("english", "_update_check_main_server_offline", "Main server is currently offline, cannot run the update check.");
                 AddKeyWords("schinese", "_update_check_main_server_offline", "主服务器当前离线, 无法运行更新检查.");
@@ -443,8 +439,8 @@ namespace CSO2_ComboLauncher
                 AddKeyWords("tchinese", "_file_check_file_all_good", "文件檢查已完成, 所有文件都沒有錯誤!\n盡你所能保持它們的良好狀態!");
 
                 AddKeyWords("english", "_auto_repair_warn", "\"Auto Repair\" is not recommand to use if you didn't have any problem!\nThis function will reset most contents that needed to be use.\n\nAre you sure to continue?");
-                AddKeyWords("schinese", "_auto_repair_warn", "如果你没有出现任何问题, 那么不建议使用\"解决疑难杂症\"!\n此功能将重置启动器和游戏需要的内容.\n\n是否确定继续?");
-                AddKeyWords("tchinese", "_auto_repair_warn", "如果你沒有出現任何問題, 是不建議使用\"自動修復\"的!\n此功能將重置啟動器和遊戲需要的內容.\n\n是否確定繼續?");
+                AddKeyWords("schinese", "_auto_repair_warn", "如果你没有出现任何问题, 那么不建议使用\"解决疑难杂症\"!\n此功能将重置启动器和需要的内容.\n\n是否确定继续?");
+                AddKeyWords("tchinese", "_auto_repair_warn", "如果你沒有出現任何問題, 是不建議使用\"自動修復\"的!\n此功能將重置啟動器和需要的內容.\n\n是否確定繼續?");
 
                 AddKeyWords("english", "_auto_repair_running", "Resetting..");
                 AddKeyWords("schinese", "_auto_repair_running", "重置中..");
