@@ -338,6 +338,10 @@ namespace CSO2_ComboLauncher
                 AddKeyWords("schinese", "_connect_to_server_success_no_unnecessary_check", "服务器已连接, 你现在可以启动游戏了!");
                 AddKeyWords("tchinese", "_connect_to_server_success_no_unnecessary_check", "伺服器已連接, 你現在可以開始遊戲了!");
 
+                AddKeyWords("english", "_connect_to_server_success_playerapifailed", "Server connected, delay: {0}ms, you can start the game now!");
+                AddKeyWords("schinese", "_connect_to_server_success_playerapifailed", "服务器已连接, 延迟: {0}ms, 你现在可以启动游戏了!");
+                AddKeyWords("tchinese", "_connect_to_server_success_playerapifailed", "伺服器已連接, 延遲: {0}ms, 你現在可以開始遊戲了!");
+
                 AddKeyWords("english", "_start_connect_failed_hint", "You have failed to connect to the server, you can still start the game, but most likely you will not be available to login!\n\nContinue?");
                 AddKeyWords("schinese", "_start_connect_failed_hint", "你连接服务器失败了, 你仍然可以启动游戏, 但极大可能你无法进行登录!\n\n确认并继续?");
                 AddKeyWords("tchinese", "_start_connect_failed_hint", "你連接伺服器失敗了, 你仍然可以開始遊戲, 但很有可能你無法進行登錄!\n\n確認並繼續?");

@@ -247,13 +247,13 @@ namespace CSO2_ComboLauncher
             Log.Write(LStr.Get("_openvpn_message"), "red");
             Log.Write(LStr.Get("_open_source_link"));
 
+            // reset status
             connecterror = false;
             MainButtonStatus(false);
             await OpenVpn.Kill(true);
             await Misc.ResetNetAdapter(Static.netadapter);
 
             Log.Write(LStr.Get("_download_server_info", LStr.Get(mainservererror ? "_server_backup" : "_server_main")));
-            
             string path = await Downloader.OpenVpnServer(mainservererror);
             if (string.IsNullOrEmpty(path))
             {
@@ -264,7 +264,6 @@ namespace CSO2_ComboLauncher
             }
 
             OpenVpn.Start("Bin\\OpenVPN\\openvpn.exe", path);
-
             Log.Write(LStr.Get("_start_openvpn_and_connect"));
 
             int wait = 0;
@@ -391,7 +390,10 @@ namespace CSO2_ComboLauncher
                     }
                 });
 
-                Log.Write(LStr.Get("_connect_to_server_success", ping.RoundtripTime, (online == -1) ? "Unknown" : online.ToString()));
+                if (online == -1)
+                    Log.Write(LStr.Get("_connect_to_server_success_playerapifailed", ping.RoundtripTime));
+                else
+                    Log.Write(LStr.Get("_connect_to_server_success", ping.RoundtripTime, online));
             }
         }
 
