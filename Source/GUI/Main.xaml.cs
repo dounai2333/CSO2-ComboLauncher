@@ -106,6 +106,9 @@ namespace CSO2_ComboLauncher
             Log.Write(LStr.Get("_self_checking_openvpnfile") + Static.AuthorAndLibraryOutput());
             if (!Directory.Exists("Bin\\OpenVPN") || Directory.GetFiles("Bin\\OpenVPN").Count() != 5)
             {
+                if (Directory.Exists("Bin\\OpenVPN"))
+                    Directory.Delete("Bin\\OpenVPN");
+
                 if (!await Downloader.OpenVpn())
                 {
                     App.HideAllWindow();
@@ -348,7 +351,7 @@ namespace CSO2_ComboLauncher
 
             if (Config.DisableSomeCheck)
             {
-                Log.Write(LStr.Get("_connect_to_server_success_no_unnecessary_check"));
+                Log.Write(LStr.Get("_connect_to_server_success", "", ""));
             }
             else
             {
@@ -390,10 +393,7 @@ namespace CSO2_ComboLauncher
                     }
                 });
 
-                if (online == -1)
-                    Log.Write(LStr.Get("_connect_to_server_success_playerapifailed", ping.RoundtripTime));
-                else
-                    Log.Write(LStr.Get("_connect_to_server_success", ping.RoundtripTime, online));
+                Log.Write(LStr.Get("_connect_to_server_success", LStr.Get("_server_delay", pingdelay), (online == -1) ? "" : LStr.Get("_player_count", online)));
             }
         }
 

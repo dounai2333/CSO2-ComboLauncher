@@ -330,17 +330,17 @@ namespace CSO2_ComboLauncher
                 AddKeyWords("schinese", "_connect_to_server_failed_sus_ipconflict_hint", "有许多原因可以导致\"IP冲突\"\n局域网IP延迟: {0}ms, 公网IP延迟: {1}ms\n如果相比公网延迟, 局域网显得非常低, 那么你遇见了\"IP冲突\".");
                 AddKeyWords("tchinese", "_connect_to_server_failed_sus_ipconflict_hint", "有很多原因可以導致\"IP衝突\"\n局域網IP延遲: {0}ms, 公網IP延遲: {1}ms\n如果相比公網延遲, 局域網非常低, 那麼你有\"IP衝突\".");
 
-                AddKeyWords("english", "_connect_to_server_success", "Server connected, delay: {0}ms, current {1} player(s), you can start the game now!");
-                AddKeyWords("schinese", "_connect_to_server_success", "服务器已连接, 延迟: {0}ms, 当前有{1}名玩家, 你现在可以启动游戏了!");
-                AddKeyWords("tchinese", "_connect_to_server_success", "伺服器已連接, 延遲: {0}ms, 現在有{1}名玩家, 你現在可以開始遊戲了!");
+                AddKeyWords("english", "_connect_to_server_success", "Server connected, {0}{1}you can start the game now!");
+                AddKeyWords("schinese", "_connect_to_server_success", "服务器已连接, {0}{1}你现在可以启动游戏了!");
+                AddKeyWords("tchinese", "_connect_to_server_success", "伺服器已連接, {0}{1}你現在可以開始遊戲了!");
 
-                AddKeyWords("english", "_connect_to_server_success_no_unnecessary_check", "Server connected, you can start the game now!");
-                AddKeyWords("schinese", "_connect_to_server_success_no_unnecessary_check", "服务器已连接, 你现在可以启动游戏了!");
-                AddKeyWords("tchinese", "_connect_to_server_success_no_unnecessary_check", "伺服器已連接, 你現在可以開始遊戲了!");
+                AddKeyWords("english", "_server_delay", "delay: {0}ms, ");
+                AddKeyWords("schinese", "_server_delay", "延迟: {0}ms, ");
+                AddKeyWords("tchinese", "_server_delay", "延遲: {0}ms, ");
 
-                AddKeyWords("english", "_connect_to_server_success_playerapifailed", "Server connected, delay: {0}ms, you can start the game now!");
-                AddKeyWords("schinese", "_connect_to_server_success_playerapifailed", "服务器已连接, 延迟: {0}ms, 你现在可以启动游戏了!");
-                AddKeyWords("tchinese", "_connect_to_server_success_playerapifailed", "伺服器已連接, 延遲: {0}ms, 你現在可以開始遊戲了!");
+                AddKeyWords("english", "_player_count", "current {0} player(s), ");
+                AddKeyWords("schinese", "_player_count", "当前有{0}名玩家, ");
+                AddKeyWords("tchinese", "_player_count", "現在有{0}名玩家, ");
 
                 AddKeyWords("english", "_start_connect_failed_hint", "You have failed to connect to the server, you can still start the game, but most likely you will not be available to login!\n\nContinue?");
                 AddKeyWords("schinese", "_start_connect_failed_hint", "你连接服务器失败了, 你仍然可以启动游戏, 但极大可能你无法进行登录!\n\n确认并继续?");
