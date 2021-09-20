@@ -168,14 +168,21 @@ namespace CSO2_ComboLauncher
                                         }
                                         catch
                                         {
-                                            // safer way if first way is failed due to "Object reference not set to an instance of an object".
+                                            // safer way if first is failed due to "Object reference not set to an instance of an object".
                                             ProgramHelper.Start("netsh.exe", $"interface set interface \"{mo.GetPropertyValue("NetConnectionID")}\" disable", true).WaitForExit();
                                             ProgramHelper.Start("netsh.exe", $"interface set interface \"{mo.GetPropertyValue("NetConnectionID")}\" enable", true).WaitForExit();
                                         }
                                     }
                                     else if (mo.GetPropertyValue("NetConnectionStatus").ToString() == "0")
                                     {
-                                        ProgramHelper.Start("netsh.exe", $"interface set interface \"{mo.GetPropertyValue("NetConnectionID")}\" enable", true).WaitForExit();
+                                        try
+                                        {
+                                            mo.InvokeMethod("Enable", null);
+                                        }
+                                        catch
+                                        {
+                                            ProgramHelper.Start("netsh.exe", $"interface set interface \"{mo.GetPropertyValue("NetConnectionID")}\" enable", true).WaitForExit();
+                                        }
                                     }
                                 }
                                 exist = true;
