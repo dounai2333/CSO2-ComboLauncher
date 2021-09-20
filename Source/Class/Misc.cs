@@ -151,24 +151,36 @@ namespace CSO2_ComboLauncher
             {
                 using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_NetworkAdapter WHERE NetConnectionId != NULL"))
                 {
-                    foreach (ManagementObject mo in searcher.Get())
+                    if (searcher != null && searcher.Get() != null && searcher.Get().Count > 0)
                     {
-                        if (mo.GetPropertyValue("ProductName").ToString() == productorservicename || mo.GetPropertyValue("ServiceName").ToString() == productorservicename)
+                        foreach (ManagementObject mo in searcher.Get())
                         {
-                            if (IsProcessHasAdminAccess())
+                            if (mo.GetPropertyValue("ProductName").ToString() == productorservicename || mo.GetPropertyValue("ServiceName").ToString() == productorservicename)
                             {
-                                if (mo.GetPropertyValue("NetConnectionStatus").ToString() == "2")
+                                if (IsProcessHasAdminAccess())
                                 {
-                                    ProgramHelper.CmdCommand($"netsh interface set interface \"{mo.GetPropertyValue("NetConnectionID")}\" disable", false, true).WaitForExit();
-                                    ProgramHelper.CmdCommand($"netsh interface set interface \"{mo.GetPropertyValue("NetConnectionID")}\" enable", false, true).WaitForExit();
+                                    if (mo.GetPropertyValue("NetConnectionStatus").ToString() == "2")
+                                    {
+                                        try
+                                        {
+                                            mo.InvokeMethod("Disable", null);
+                                            mo.InvokeMethod("Enable", null);
+                                        }
+                                        catch
+                                        {
+                                            // safer way if first way is failed due to "Object reference not set to an instance of an object".
+                                            ProgramHelper.Start("netsh.exe", $"interface set interface \"{mo.GetPropertyValue("NetConnectionID")}\" disable", true).WaitForExit();
+                                            ProgramHelper.Start("netsh.exe", $"interface set interface \"{mo.GetPropertyValue("NetConnectionID")}\" enable", true).WaitForExit();
+                                        }
+                                    }
+                                    else if (mo.GetPropertyValue("NetConnectionStatus").ToString() == "0")
+                                    {
+                                        ProgramHelper.Start("netsh.exe", $"interface set interface \"{mo.GetPropertyValue("NetConnectionID")}\" enable", true).WaitForExit();
+                                    }
                                 }
-                                else if (mo.GetPropertyValue("NetConnectionStatus").ToString() == "0")
-                                {
-                                    ProgramHelper.CmdCommand($"netsh interface set interface \"{mo.GetPropertyValue("NetConnectionID")}\" enable", false, true).WaitForExit();
-                                }
+                                exist = true;
+                                break;
                             }
-                            exist = true;
-                            break;
                         }
                     }
                 }
