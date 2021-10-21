@@ -10,9 +10,9 @@ namespace CSO2_ComboLauncher
         public static string Filename { get; private set; }
 
         /// <summary>
-        /// get download link from qqmail, if success global variable '<see cref="Filename"/>' will be set with the same filename from current link, else it's '<see cref="string.Empty"/>'.
+        /// get download link from QQmail, if success global variable '<see cref="Filename"/>' will be set with the same filename from current link, else it's '<see cref="string.Empty"/>'.
         /// </summary>
-        /// <returns>if link start with 'http' it's a download link, else error message.</returns>
+        /// <returns>download link or error message.</returns>
         public static async Task<string> GetLink(string code, string sha1, string k)
         {
             Filename = string.Empty;
@@ -52,7 +52,7 @@ namespace CSO2_ComboLauncher
             return await Downloader.StringFromHttp(address);
         }
 
-        /// <param name="path">if a folder is given, file name will be from QQ mail server.</param>
+        /// <param name="path">if a folder is given, file name will be from QQmail server.</param>
         public static async Task<bool> DownloadFile(string path, int threads, string code, string sha1, string k)
         {
             string address;
@@ -78,7 +78,7 @@ namespace CSO2_ComboLauncher
             return null;
         }
 
-        /// <param name="path">if a folder is given, file name will be from QQ mail server.</param>
+        /// <param name="path">if a folder is given, filename will use the one come from QQmail server.</param>
         public static async Task<bool> DownloadFile(string path, int threads, string[] code, string sha1, string[] k)
         {
             for (int i = 0; i < k.Count(); i++)
