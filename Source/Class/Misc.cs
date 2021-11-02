@@ -208,6 +208,8 @@ namespace CSO2_ComboLauncher
             catch (Exception ex)
             {
                 string code = DecimalToHex(ex.HResult);
+                // 0x80070020 (ERROR_SHARING_VIOLATION): "The process cannot access the file because it is being used by another process."
+                // 0x80070021 (ERROR_LOCK_VIOLATION): "The process cannot access the file because another process has locked a portion of the file."
                 return code != "0x80070020" && code != "0x80070021";
             }
         }
