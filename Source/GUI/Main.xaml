@@ -48,7 +48,8 @@
             </Grid.Effect>
 
             <TextBlock x:Name="titletext" HorizontalAlignment="Left" Height="19" Margin="10,8,0,0" TextWrapping="Wrap" Text="CSO2 Combo Launcher" VerticalAlignment="Top" Width="215" Foreground="White"/>
-            <ContentControl x:Name="qq" Style="{StaticResource QQ}" Margin="0,0,80,0" MouseLeftButtonDown="QQqun_Click" HorizontalAlignment="Right"/>
+            <ContentControl x:Name="qq" Style="{StaticResource QQ}" Margin="0,0,112,0" MouseLeftButtonDown="QQqun_Click" HorizontalAlignment="Right"/>
+            <ContentControl x:Name="copyright" Style="{StaticResource Copyright}" Margin="0,0,80,0" MouseLeftButtonDown="Copyright_Click" HorizontalAlignment="Right"/>
             <ContentControl x:Name="min" Style="{StaticResource Min}" Margin="0,0,32,0" MouseLeftButtonDown="Min_Click" HorizontalAlignment="Right"/>
             <ContentControl x:Name="close" Style="{StaticResource Close}" MouseLeftButtonDown="Close_Click" HorizontalAlignment="Right"/>
         </Grid>

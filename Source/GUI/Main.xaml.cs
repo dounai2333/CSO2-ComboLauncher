@@ -842,6 +842,11 @@ namespace CSO2_ComboLauncher
             QQGroup.Instance.ShowDialog();
         }
 
+        private void Copyright_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(LStr.Get("_copyright"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
         public void MainButtonStatus(bool enable, bool cfgbutton = true, bool closebutton = true)
         {
             Dispatcher.Invoke(new Action(delegate

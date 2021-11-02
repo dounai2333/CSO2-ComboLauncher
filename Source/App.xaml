@@ -3,24 +3,84 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="GUI/Main.xaml">
     <Application.Resources>
-        <Style x:Key="Close" TargetType="ContentControl">
+        <Style x:Key="QQ" TargetType="ContentControl">
             <Setter Property="Width" Value="32"></Setter>
             <Setter Property="Height" Value="32"></Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate>
                         <Border x:Name="bg" Width="32" Height="32" BorderThickness="0" Background="#00000000">
-                            <Rectangle HorizontalAlignment="Center" VerticalAlignment="Center" Width="13" Height="13">
+                            <Rectangle HorizontalAlignment="Center" VerticalAlignment="Center" Width="14" Height="15" Margin="0,0,0,0">
                                 <Rectangle.Effect>
-                                    <DropShadowEffect x:Name="shadow" ShadowDepth="0" Color="White" BlurRadius="1"/>
+                                    <DropShadowEffect x:Name="shadow" ShadowDepth="0" Color="White" BlurRadius="2"/>
                                 </Rectangle.Effect>
                                 <Rectangle.Fill>
                                     <DrawingBrush>
                                         <DrawingBrush.Drawing>
-                                            <DrawingGroup ClipGeometry="M0,0 V10 H10 V0 H0 Z">
-                                                <DrawingGroup Transform="1,0,0,1,-82,-15">
-                                                    <GeometryDrawing Brush="#FFFFFFFF" Geometry="F0 M10,10z M0,0z M82.8,25.011L81.989,24.2 91.2,14.989 92.011,15.8z M91.195,25.011L92.009,24.197 82.8,14.989 81.986,15.803z" />
-                                                </DrawingGroup>
+                                            <DrawingGroup>
+                                                <GeometryDrawing Brush="#FFFFFFFF" Geometry="F0 M12,1z M0,0z M433.754,420.445C422.228,421.838 388.894,367.704 388.894,367.704 388.894,399.049 372.758,439.951 337.843,469.49 354.685,474.682 392.686,488.657 383.646,503.911 376.33,516.254 258.136,511.792 224.014,507.948 189.892,511.792 71.698,516.254 64.382,503.911 55.337,488.661 93.3,474.697 110.165,469.496 75.245,439.957 59.106,399.051 59.106,367.704 59.106,367.704 25.772,421.838 14.247,420.445 8.87700000000001,419.795 1.82300000000001,390.801 23.594,320.741 33.855,287.717 45.589,260.263 63.738,214.962 60.683,98.063 108.982,0.006 224,0 337.737,0.006 387.156,96.133 384.264,214.963 402.382,260.186 414.176,287.813 424.408,320.741 446.176,390.801 439.124,419.794 433.754,420.445z"/>
+                                            </DrawingGroup>
+                                        </DrawingBrush.Drawing>
+                                    </DrawingBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="shadow" Storyboard.TargetProperty="BlurRadius" Duration="00:00:00.1" To="10">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <QuarticEase EasingMode="EaseOut"/>
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                            <ColorAnimation Storyboard.TargetName="bg" Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" Duration="00:00:00.1" To="#50000000">
+                                                <ColorAnimation.EasingFunction>
+                                                    <QuarticEase EasingMode="EaseOut"/>
+                                                </ColorAnimation.EasingFunction>
+                                            </ColorAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="shadow" Storyboard.TargetProperty="BlurRadius" Duration="00:00:00.1" To="2">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <QuarticEase EasingMode="EaseIn"/>
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                            <ColorAnimation Storyboard.TargetName="bg" Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" Duration="00:00:00.1" To="#00000000">
+                                                <ColorAnimation.EasingFunction>
+                                                    <QuarticEase EasingMode="EaseIn"/>
+                                                </ColorAnimation.EasingFunction>
+                                            </ColorAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="Copyright" TargetType="ContentControl">
+            <Setter Property="Width" Value="32"></Setter>
+            <Setter Property="Height" Value="32"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border x:Name="bg" Width="32" Height="32" BorderThickness="0" Background="#00000000">
+                            <Rectangle HorizontalAlignment="Center" VerticalAlignment="Center" Width="14" Height="15" Margin="0,0,0,0">
+                                <Rectangle.Effect>
+                                    <DropShadowEffect x:Name="shadow" ShadowDepth="0" Color="White" BlurRadius="2"/>
+                                </Rectangle.Effect>
+                                <Rectangle.Fill>
+                                    <DrawingBrush>
+                                        <DrawingBrush.Drawing>
+                                            <DrawingGroup>
+                                                <GeometryDrawing Brush="#FFFFFFFF" Geometry="F0 M400,400z M0,0z M146,13.409C-41.112,75.268 -36.55,335.865 152.526,386.189 320.277,430.838 455.679,240.519 360.705,93.576 317.165,26.212 218.597,-10.592 146,13.409 M237.282,45.981C358.872,77.651 399.694,226.817 309.99,311.656 216.177,400.38 68.882,352.547 43.912,225.249 22.6,116.6 129.153,17.817 237.282,45.981 M168,107.556C91.009,134.907 79.708,250.564 149.792,293.894 183.676,314.844 250.083,312.782 278.362,289.902L290,280.486 277.596,267.916 265.192,255.346 249.655,263.673C200.088,290.239 146.908,260.756 146.289,206.368 145.655,150.587 195.865,121.403 247.313,147.65L263.428,155.871 271.714,142.463C283.156,123.949 282.518,122.065 261.45,112.162 234.715,99.595 195.809,97.677 168,107.556"/>
                                             </DrawingGroup>
                                         </DrawingBrush.Drawing>
                                     </DrawingBrush>
@@ -83,7 +143,7 @@
                                         <DrawingBrush.Drawing>
                                             <DrawingGroup ClipGeometry="M0,0 V1 H12 V0 H0 Z">
                                                 <DrawingGroup Transform="1,0,0,1,-18,-24">
-                                                    <GeometryDrawing Brush="#FFFFFFFF" Geometry="F0 M12,1z M0,0z M18,25L18,24 30,24 30,25 18,25z" />
+                                                    <GeometryDrawing Brush="#FFFFFFFF" Geometry="F0 M12,1z M0,0z M18,25L18,24 30,24 30,25 18,25z"/>
                                                 </DrawingGroup>
                                             </DrawingGroup>
                                         </DrawingBrush.Drawing>
@@ -131,22 +191,24 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style x:Key="QQ" TargetType="ContentControl">
+        <Style x:Key="Close" TargetType="ContentControl">
             <Setter Property="Width" Value="32"></Setter>
             <Setter Property="Height" Value="32"></Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate>
                         <Border x:Name="bg" Width="32" Height="32" BorderThickness="0" Background="#00000000">
-                            <Rectangle HorizontalAlignment="Center" VerticalAlignment="Center" Width="14" Height="15" Margin="0,0,0,0">
+                            <Rectangle HorizontalAlignment="Center" VerticalAlignment="Center" Width="13" Height="13">
                                 <Rectangle.Effect>
-                                    <DropShadowEffect x:Name="shadow" ShadowDepth="0" Color="White" BlurRadius="2"/>
+                                    <DropShadowEffect x:Name="shadow" ShadowDepth="0" Color="White" BlurRadius="1"/>
                                 </Rectangle.Effect>
                                 <Rectangle.Fill>
                                     <DrawingBrush>
                                         <DrawingBrush.Drawing>
-                                            <DrawingGroup>
-                                                <GeometryDrawing Brush="#FFFFFFFF" Geometry="F0 M12,1z M0,0z M433.754,420.445C422.228,421.838 388.894,367.704 388.894,367.704 388.894,399.049 372.758,439.951 337.843,469.49 354.685,474.682 392.686,488.657 383.646,503.911 376.33,516.254 258.136,511.792 224.014,507.948 189.892,511.792 71.698,516.254 64.382,503.911 55.337,488.661 93.3,474.697 110.165,469.496 75.245,439.957 59.106,399.051 59.106,367.704 59.106,367.704 25.772,421.838 14.247,420.445 8.87700000000001,419.795 1.82300000000001,390.801 23.594,320.741 33.855,287.717 45.589,260.263 63.738,214.962 60.683,98.063 108.982,0.006 224,0 337.737,0.006 387.156,96.133 384.264,214.963 402.382,260.186 414.176,287.813 424.408,320.741 446.176,390.801 439.124,419.794 433.754,420.445z" />
+                                            <DrawingGroup ClipGeometry="M0,0 V10 H10 V0 H0 Z">
+                                                <DrawingGroup Transform="1,0,0,1,-82,-15">
+                                                    <GeometryDrawing Brush="#FFFFFFFF" Geometry="F0 M10,10z M0,0z M82.8,25.011L81.989,24.2 91.2,14.989 92.011,15.8z M91.195,25.011L92.009,24.197 82.8,14.989 81.986,15.803z"/>
+                                                </DrawingGroup>
                                             </DrawingGroup>
                                         </DrawingBrush.Drawing>
                                     </DrawingBrush>
