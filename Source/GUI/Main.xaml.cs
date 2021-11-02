@@ -769,7 +769,6 @@ namespace CSO2_ComboLauncher
 
                 App.HideAllWindow();
 
-                Config.UserAgreement = false;
                 Config.DisableSomeCheck = false;
                 Config.EnableConsole = false;
                 Config.SaveConfig();

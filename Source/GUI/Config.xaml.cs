@@ -20,7 +20,6 @@ namespace CSO2_ComboLauncher
         public bool EnableConsole = false;
         public Server CurrentServer;
         public string Location = "Shanghai";
-        public bool UserAgreement = false;
         public bool DisableSomeCheck = false;
         public string Secret = "";
 
@@ -50,7 +49,6 @@ namespace CSO2_ComboLauncher
                 string _customargs = ini.GetSetting("Game", "CustomArgs");
                 string _enableconsole = ini.GetSetting("Game", "EnableConsole");
                 string _server = ini.GetSetting("Launcher", "Server");
-                string _useragreement = ini.GetSetting("Launcher", "UserAgreement");
                 string _disablesomecheck = ini.GetSetting("Launcher", "DisableSomeCheck");
                 string _secret = ini.GetSetting("Launcher", "Secret");
 
@@ -61,7 +59,6 @@ namespace CSO2_ComboLauncher
                 CustomArgs = string.IsNullOrEmpty(_customargs) ? CustomArgs : _customargs;
                 EnableConsole = (_enableconsole != "True" && _enableconsole != "False") ? EnableConsole : (_enableconsole.ToString() != EnableConsole.ToString());
                 Location = _server == "Shanghai" ? _server : Location;
-                UserAgreement = (_useragreement != "True" && _useragreement != "False") ? UserAgreement : _useragreement.ToString() != UserAgreement.ToString();
                 DisableSomeCheck = (_disablesomecheck != "True" && _disablesomecheck != "False") ? DisableSomeCheck : _disablesomecheck.ToString() != DisableSomeCheck.ToString();
                 Secret = string.IsNullOrEmpty(_secret) ? Secret : _secret;
 
@@ -72,16 +69,6 @@ namespace CSO2_ComboLauncher
                 MessageBoxResult box = MessageBox.Show(LStr.Get("_user_agreement"), Static.CWindow, MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (box == MessageBoxResult.No)
                     Environment.Exit(0);
-                UserAgreement = true;
-            }
-
-            if (!UserAgreement)
-            {
-                MessageBoxResult box = MessageBox.Show(LStr.Get("_user_agreement"), Static.CWindow, MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (box == MessageBoxResult.No)
-                    Environment.Exit(0);
-                UserAgreement = true;
-                SaveConfig();
             }
 
             userName.Text = Username;
@@ -149,7 +136,6 @@ namespace CSO2_ComboLauncher
             ini.AddSetting("Game", "CustomArgs", CustomArgs);
             ini.AddSetting("Game", "EnableConsole", EnableConsole.ToString());
             ini.AddSetting("Launcher", "Server", Location);
-            ini.AddSetting("Launcher", "UserAgreement", UserAgreement.ToString());
             ini.AddSetting("Launcher", "DisableSomeCheck", DisableSomeCheck.ToString());
             ini.AddSetting("Launcher", "Secret", Secret);
             ini.SaveSettings();
