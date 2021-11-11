@@ -316,6 +316,7 @@ namespace CSO2_ComboLauncher
                         Log.Write(LStr.Get("_report_admin_ovpn_details"), "red");
                         string fileContent_Encrypted = Misc.Encrypt(File.ReadAllText(path));
                         File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + "info_dump.txt", fileContent_Encrypted);
+                        Log.Write(AppDomain.CurrentDomain.BaseDirectory + "info_dump.txt");
                     }
                     File.Delete(path);
                 }
