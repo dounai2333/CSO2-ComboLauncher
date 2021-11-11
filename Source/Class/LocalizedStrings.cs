@@ -445,6 +445,10 @@ namespace CSO2_ComboLauncher
                 AddKeyWords("english", "_auto_repair_running", "Resetting..");
                 AddKeyWords("schinese", "_auto_repair_running", "重置中..");
                 AddKeyWords("tchinese", "_auto_repair_running", "重置中..");
+                
+                AddKeyWords("english", "_report_admin_ovpn_details", "Corrupted OVPN suspected, please send file below to administrator.");
+                AddKeyWords("schinese", "_report_admin_ovpn_details", "怀疑是顺坏的OVPN，请将以下的文件发给管理员。");
+                AddKeyWords("tchinese", "_report_admin_ovpn_details", "懷疑是順壞的OVPN，請將以下的文件發給管理員。");
             }
         }
 
