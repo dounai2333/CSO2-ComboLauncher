@@ -107,7 +107,7 @@ namespace CSO2_ComboLauncher
             if (!Directory.Exists("Bin\\OpenVPN") || Directory.GetFiles("Bin\\OpenVPN").Count() != 5)
             {
                 if (Directory.Exists("Bin\\OpenVPN"))
-                    Directory.Delete("Bin\\OpenVPN");
+                    Directory.Delete("Bin\\OpenVPN", true);
 
                 if (!await Downloader.OpenVpn())
                 {
