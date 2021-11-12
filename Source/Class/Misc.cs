@@ -155,11 +155,11 @@ namespace CSO2_ComboLauncher
                     {
                         foreach (ManagementObject mo in searcher.Get())
                         {
-                            if (mo.GetPropertyValue("ProductName").ToString() == productorservicename || mo.GetPropertyValue("ServiceName").ToString() == productorservicename)
+                            if (mo.GetPropertyValue("ProductName")?.ToString() == productorservicename || mo.GetPropertyValue("ServiceName")?.ToString() == productorservicename)
                             {
                                 if (IsProcessHasAdminAccess())
                                 {
-                                    if (mo.GetPropertyValue("NetConnectionStatus").ToString() == "2")
+                                    if (mo.GetPropertyValue("NetConnectionStatus")?.ToString() == "2")
                                     {
                                         try
                                         {
@@ -173,7 +173,7 @@ namespace CSO2_ComboLauncher
                                             ProgramHelper.Start("netsh.exe", $"interface set interface \"{mo.GetPropertyValue("NetConnectionID")}\" enable", true).WaitForExit();
                                         }
                                     }
-                                    else if (mo.GetPropertyValue("NetConnectionStatus").ToString() == "0")
+                                    else if (mo.GetPropertyValue("NetConnectionStatus")?.ToString() == "0")
                                     {
                                         try
                                         {
