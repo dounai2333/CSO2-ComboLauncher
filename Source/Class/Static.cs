@@ -16,6 +16,8 @@ namespace CSO2_ComboLauncher
         public static string account = "Ghost";
         public static string password = "made by dounai2333.";
 
+        public static string gameserver = "10.8.0.1";
+
         public static string[] blacklist = { "" };
 
         public static string netadapter = "TAP-Windows Adapter V9";

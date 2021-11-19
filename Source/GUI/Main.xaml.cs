@@ -355,11 +355,11 @@ namespace CSO2_ComboLauncher
             }
             else
             {
-                PingReply ping = await new Ping().SendPingAsync("10.8.0.1", 2000);
+                PingReply ping = await new Ping().SendPingAsync(Static.gameserver, 2000);
                 int pingdelay = (int)ping.RoundtripTime;
                 if (ping.Status == IPStatus.Success)
                 {
-                    int tcpingdelay = await Misc.TCPing("10.8.0.1", 30001);
+                    int tcpingdelay = await Misc.TCPing(Static.gameserver, 30001);
                     if (tcpingdelay == -1)
                     {
                         long delay = (await new Ping().SendPingAsync(Config.CurrentServer.IpAddress, 2000)).RoundtripTime;
@@ -367,7 +367,7 @@ namespace CSO2_ComboLauncher
                         Log.Write(LStr.Get("_connect_to_server_failed_sus_ipconflict"), "red");
                         Log.Write(LStr.Get("_connect_to_server_failed_sus_ipconflict_hint", pingdelay, delay));
                         //OpenVpn.Kill(true); // maybe false possibility
-                        connecterror = true;
+                        //connecterror = true;
                         return;
                     }
                     else if (pingdelay <= 1)
@@ -544,7 +544,7 @@ namespace CSO2_ComboLauncher
                 catch { }
             }
 
-            string args = "-masterip 10.8.0.1 ";
+            string args = $"-masterip {Static.gameserver} ";
             args += $"-lang {Config.GameLanguage} ";
             if (!Config.NoAutoLogin && !connecterror)
                 args += $"-username \"{Misc.ChangeTextEncoding(Config.Username, "UTF-8", "GBK")}\" -password \"{Config.Password}\" ";

@@ -30,11 +30,11 @@ namespace CSO2_ComboLauncher
                 AddKeyWords("schinese", "_net_framework_lower_version", "你的.NET Framework版本低于4.7.2!\n为避免兼容性问题, 你必须安装.NET Framework 4.7.2或更新的版本.\n\n点击'是'打开官网以下载.NET Framework 4.7.2.\n点击'否'忽略并继续尝试运行此程序.");
                 AddKeyWords("tchinese", "_net_framework_lower_version", "你的.NET Framework版本低於4.7.2!\n為了避免兼容性問題, 你必須安裝.NET Framework 4.7.2或更新的版本.\n\n點擊'是'打開官方網站以下載.NET Framework 4.7.2.\n點擊'否'忽略並繼續嘗試運行此程序.");
 
-                AddKeyWords("english", "_no_multi_start", "Another program is already running, this program will not start!");
-                AddKeyWords("schinese", "_no_multi_start", "另一个程序已在运行中, 此程序将不会运行!");
-                AddKeyWords("tchinese", "_no_multi_start", "另一個程式已經在運行著, 這個程序將不會啟動!");
+                AddKeyWords("english", "_no_multi_start", "Another launcher is already running, this program will not start!");
+                AddKeyWords("schinese", "_no_multi_start", "另一个启动器已在运行中, 此程序将不会运行!");
+                AddKeyWords("tchinese", "_no_multi_start", "另一個啟動器已經在運行著, 這個程序將不會啟動!");
 
-                AddKeyWords("english", "_no_network_connection", "You need a normal network connection to start this program.");
+                AddKeyWords("english", "_no_network_connection", "You need a working network connection to start this program.");
                 AddKeyWords("schinese", "_no_network_connection", "你需要一个正常的网络才能启动此程序.");
                 AddKeyWords("tchinese", "_no_network_connection", "你需要一個正常的網路才能啟動這個程式.");
 
