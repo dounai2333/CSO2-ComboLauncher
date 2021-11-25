@@ -452,10 +452,10 @@ namespace CSO2_ComboLauncher
                 // stop being curious, it got reason and necessary to hide some basic info (keep it as a secret even it's easy to decrypt)
                 if (Config.Secret != Misc.Decrypt(Misc.UnicodeToString("\\u0054\\u006b\\u0056\\u0061\\u0052\\u0045\\u0030\\u0077\\u0055\\u006b\\u0052\\u0053\\u0061\\u0031\\u0070\\u0045\\u0055\\u0058\\u0070\\u0072\\u004e\\u0055\\u0035\\u0056\\u0055\\u0058\\u0070\\u0050\\u0051\\u0054\\u0030\\u0039")))
                 {
-                    string[] blacklist = { "\\u006c\\u0070\\u0064\\u007a\\u0064", "\\u8138\\u76ae\\u6321\\u5b50\\u5f39", "\\u8138\\u76ae", "\\u6361\\u76ae", "\\u7751\\u76ae", "\\u68c0\\u76ae", "\\u7877\\u76ae", "\\u81c9\\u76ae" };
+                    string[] blacklist = { "\\u0059\\u006b\\u0068\\u0043\\u0061\\u0032\\u0056\\u0074\\u0055\\u0054\\u0030\\u003d", "\\u004e\\u006b\\u006c\\u0054\\u004e\\u0044\\u0055\\u0031\\u0063\\u0058\\u0055\\u0031\\u0062\\u0033\\u006c\\u006f\\u004e\\u0057\\u0045\\u0079\\u0055\\u0054\\u0056\\u0069\\u0065\\u0054\\u0055\\u003d", "\\u004e\\u006b\\u006c\\u0054\\u004e\\u0044\\u0055\\u0031\\u0063\\u0058\\u0055\\u003d", "\\u004e\\u0057\\u0038\\u0079\\u0061\\u0044\\u0055\\u0031\\u0063\\u0058\\u0055\\u003d", "\\u004e\\u0054\\u0055\\u0079\\u0055\\u006a\\u0055\\u0031\\u0063\\u0058\\u0055\\u003d", "\\u004e\\u0058\\u0046\\u0050\\u0051\\u0054\\u0055\\u0031\\u0063\\u0058\\u0055\\u003d", "\\u004e\\u0054\\u005a\\u0048\\u004d\\u007a\\u0055\\u0031\\u0063\\u0058\\u0055\\u003d", "\\u004e\\u006b\\u006c\\u006c\\u0053\\u006a\\u0055\\u0031\\u0063\\u0058\\u0055\\u003d" };
                     for (int i = 0; i < blacklist.Count(); i++)
                     {
-                        if (name.ToLower().Contains(Misc.UnicodeToString(blacklist[i])))
+                        if (name.ToLower().Contains(Misc.UnicodeToString(Misc.Decrypt(blacklist[i]))))
                         {
                             MessageBox.Show(LStr.Get("_start_name_saved"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
                             return true;
@@ -464,10 +464,10 @@ namespace CSO2_ComboLauncher
                 }
                 if (Config.Secret != Misc.Decrypt(Misc.UnicodeToString("\\u0054\\u0056\\u0056\\u004a\\u0065\\u006c\\u0046\\u0071\\u0053\\u0054\\u0042\\u0053\\u0056\\u0047\\u0068\\u0045\\u0055\\u0057\\u0070\\u0042\\u0065\\u0055\\u0039\\u0046\\u0056\\u0054\\u0056\\u004e\\u0051\\u0054\\u0030\\u0039")))
                 {
-                    string[] blacklist = { "\\u0071\\u0069\\u006e\\u0067\\u0078\\u0075\\u0065", "\\u6674\\u96ea", "\\u775b\\u96ea", "\\u60c5\\u96ea", "\\u8bf7\\u96ea", "\\u873b\\u96ea", "\\u51ca\\u96ea", "\\u5568\\u96ea" };
+                    string[] blacklist = { "\\u0059\\u0031\\u0064\\u0073\\u0064\\u0056\\u006f\\u007a\\u0061\\u0044\\u0046\\u0061\\u0055\\u0054\\u0030\\u0039", "\\u004e\\u0058\\u0042\\u0074\\u004d\\u0044\\u005a\\u0061\\u0064\\u0058\\u0045\\u003d", "\\u004e\\u0054\\u0055\\u0079\\u0059\\u006a\\u005a\\u0061\\u0064\\u0058\\u0045\\u003d", "\\u004e\\u0057\\u0039\\u0050\\u0052\\u006a\\u005a\\u0061\\u0064\\u0058\\u0045\\u003d", "\\u004e\\u006b\\u0073\\u0072\\u004d\\u007a\\u005a\\u0061\\u0064\\u0058\\u0045\\u003d", "\\u004e\\u006b\\u0070\\u0035\\u004e\\u007a\\u005a\\u0061\\u0064\\u0058\\u0045\\u003d", "\\u004e\\u0056\\u006c\\u006c\\u0053\\u007a\\u005a\\u0061\\u0064\\u0058\\u0045\\u003d", "\\u004e\\u0056\\u0070\\u0058\\u0062\\u007a\\u005a\\u0061\\u0064\\u0058\\u0045\\u003d" };
                     for (int i = 0; i < blacklist.Count(); i++)
                     {
-                        if (name.ToLower().Contains(Misc.UnicodeToString(blacklist[i])))
+                        if (name.ToLower().Contains(Misc.UnicodeToString(Misc.Decrypt(blacklist[i]))))
                         {
                             MessageBox.Show(LStr.Get("_start_name_saved"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
                             return true;
@@ -476,10 +476,10 @@ namespace CSO2_ComboLauncher
                 }
                 if (Config.Secret != Misc.Decrypt(Misc.UnicodeToString("\\u0054\\u0030\\u0052\\u0052\\u004e\\u0045\\u0035\\u0036\\u0053\\u0054\\u0042\\u0050\\u0052\\u0046\\u0045\\u0078\\u0055\\u006b\\u0056\\u005a\\u004d\\u0030\\u0031\\u0045\\u0052\\u0054\\u0056\\u004e\\u0051\\u0054\\u0030\\u0039")))
                 {
-                    string[] blacklist = { "\\u0064\\u006f\\u0075\\u006e\\u0061\\u0069", "\\u8c46\\u5976" };
+                    string[] blacklist = { "\\u0057\\u006b\\u0063\\u0035\\u004d\\u0057\\u004a\\u0074\\u0052\\u006e\\u0041\\u003d", "\\u004e\\u006b\\u0078\\u0048\\u0052\\u007a\\u0056\\u0068\\u0056\\u007a\\u0049\\u003d" };
                     for (int i = 0; i < blacklist.Count(); i++)
                     {
-                        if (name.ToLower().Contains(Misc.UnicodeToString(blacklist[i])))
+                        if (name.ToLower().Contains(Misc.UnicodeToString(Misc.Decrypt(blacklist[i]))))
                         {
                             MessageBox.Show(LStr.Get("_start_name_saved"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
                             return true;
