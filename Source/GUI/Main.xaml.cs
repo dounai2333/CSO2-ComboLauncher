@@ -366,10 +366,7 @@ namespace CSO2_ComboLauncher
                     int tcpingdelay = await Misc.TCPing(Static.gameserver, 30001);
                     if (tcpingdelay == -1)
                     {
-                        long delay = (await new Ping().SendPingAsync(Config.CurrentServer.IpAddress, 2000)).RoundtripTime;
-
-                        Log.Write(LStr.Get("_connect_to_server_failed_sus_ipconflict"), "red");
-                        Log.Write(LStr.Get("_connect_to_server_failed_sus_ipconflict_hint", pingdelay, delay));
+                        Log.Write(LStr.Get("_connect_to_server_failed_tcping_no_response"), "red");
                         //OpenVpn.Kill(true); // maybe false possibility
                         //connecterror = true;
                         return;

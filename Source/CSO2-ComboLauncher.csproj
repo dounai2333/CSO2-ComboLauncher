@@ -82,7 +82,6 @@
     <Compile Include="Class\OpenVpn.cs" />
     <Compile Include="Class\ProgramHelper.cs" />
     <Compile Include="Class\QQMail.cs" />
-    <Compile Include="Class\Server.cs" />
     <Compile Include="Class\Static.cs" />
     <Compile Include="Class\Web.cs" />
     <Compile Include="Class\ZipExtracter.cs" />

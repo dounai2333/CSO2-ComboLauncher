@@ -15,8 +15,7 @@
         <ListView x:Name="ServerInfo" Margin="249,10,10,142" SelectionChanged="Server_Changed">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Server" DisplayMemberBinding="{Binding Path=Name}" Width="65"/>
-                    <GridViewColumn Header="Ping" DisplayMemberBinding="{Binding Path=Ping}" Width="50"/>
+                    <GridViewColumn Header="Server" Width="115"/>
                 </GridView>
             </ListView.View>
         </ListView>

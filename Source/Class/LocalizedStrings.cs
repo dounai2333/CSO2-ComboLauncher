@@ -322,13 +322,9 @@ namespace CSO2_ComboLauncher
                 AddKeyWords("schinese", "_connect_to_server_halfway", "连接成功, 正在确认数据...");
                 AddKeyWords("tchinese", "_connect_to_server_halfway", "連接成功, 正在確認數據...");
 
-                AddKeyWords("english", "_connect_to_server_failed_sus_ipconflict", "Success connect to the server, but failed to receive game packet!\nMaybe game server is current offline or you having \"IP Conflict\"!");
-                AddKeyWords("schinese", "_connect_to_server_failed_sus_ipconflict", "与服务器连接成功, 但无法收到游戏数据包回复!\n游戏服务器当前可能离线, 或你遇见了\"IP冲突\"!");
-                AddKeyWords("tchinese", "_connect_to_server_failed_sus_ipconflict", "與伺服器連接成功, 但無法收到遊戲數據包回復!\n遊戲伺服器當前可能離線, 或你遇見了\"IP衝突\"!");
-
-                AddKeyWords("english", "_connect_to_server_failed_sus_ipconflict_hint", "There is many reasons are causing \"IP Conflict\"\nLocal IP delay: {0}ms, public IP delay: {1}ms\nIf the local delay is very low compared to public, then YES.");
-                AddKeyWords("schinese", "_connect_to_server_failed_sus_ipconflict_hint", "有许多原因可以导致\"IP冲突\"\n局域网IP延迟: {0}ms, 公网IP延迟: {1}ms\n如果相比公网延迟, 局域网显得非常低, 那么你遇见了\"IP冲突\".");
-                AddKeyWords("tchinese", "_connect_to_server_failed_sus_ipconflict_hint", "有很多原因可以導致\"IP衝突\"\n局域網IP延遲: {0}ms, 公網IP延遲: {1}ms\n如果相比公網延遲, 局域網非常低, 那麼你有\"IP衝突\".");
+                AddKeyWords("english", "_connect_to_server_failed_tcping_no_response", "Success connect to the server, but failed to receive game packet!\nGame server might be offline now.");
+                AddKeyWords("schinese", "_connect_to_server_failed_tcping_no_response", "与服务器连接成功, 但无法收到游戏数据包回复!\n游戏服务器当前可能处于离线状态.");
+                AddKeyWords("tchinese", "_connect_to_server_failed_tcping_no_response", "與伺服器連接成功, 但無法收到遊戲數據包回復!\n遊戲伺服器當前可能在脫機狀態.");
 
                 AddKeyWords("english", "_connect_to_server_success", "Game server connected, {0}{1}you can start the game now!");
                 AddKeyWords("schinese", "_connect_to_server_success", "游戏服务器已连接, {0}{1}你现在可以启动游戏了!");

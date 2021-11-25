@@ -18,8 +18,7 @@ namespace CSO2_ComboLauncher
         public string GameLanguage = "schinese";
         public string CustomArgs = "";
         public bool EnableConsole = false;
-        public Server CurrentServer;
-        public string Location = "Shanghai";
+        public string Server = "Shanghai";
         public bool DisableSomeCheck = false;
         public string Secret = "";
 
@@ -34,8 +33,7 @@ namespace CSO2_ComboLauncher
             mainGrid.Margin = new Thickness(0);
             LStr.LocalifyControl(mainGrid.Children);
 
-            ServerInfo.Items.Add(new Server("Shanghai", "47.100.199.171"));
-            ServerInfo.SelectedItem = Server.Servers[Location];
+            ServerInfo.Items.Add("Shanghai");
 
             if (File.Exists(ConfigName))
             {
@@ -58,7 +56,7 @@ namespace CSO2_ComboLauncher
                 GameLanguage = string.IsNullOrEmpty(_language) ? GameLanguage : _language;
                 CustomArgs = string.IsNullOrEmpty(_customargs) ? CustomArgs : _customargs;
                 EnableConsole = (_enableconsole != "True" && _enableconsole != "False") ? EnableConsole : (_enableconsole.ToString() != EnableConsole.ToString());
-                Location = _server == "Shanghai" ? _server : Location;
+                Server = _server == "Shanghai" ? _server : Server;
                 DisableSomeCheck = (_disablesomecheck != "True" && _disablesomecheck != "False") ? DisableSomeCheck : _disablesomecheck.ToString() != DisableSomeCheck.ToString();
                 Secret = string.IsNullOrEmpty(_secret) ? Secret : _secret;
 
@@ -77,6 +75,8 @@ namespace CSO2_ComboLauncher
             disableSomeCheck.IsChecked = DisableSomeCheck;
             customArgs.Text = CustomArgs;
             enableConsole.IsChecked = EnableConsole;
+
+            ServerInfo.SelectedItem = Server;
 
             languageList.Items.Add("简体中文 - SChinese");
             languageList.Items.Add("繁體中文 - TChinese");
@@ -135,7 +135,7 @@ namespace CSO2_ComboLauncher
             ini.AddSetting("Game", "Language", GameLanguage);
             ini.AddSetting("Game", "CustomArgs", CustomArgs);
             ini.AddSetting("Game", "EnableConsole", EnableConsole.ToString());
-            ini.AddSetting("Launcher", "Server", Location);
+            ini.AddSetting("Launcher", "Server", Server);
             ini.AddSetting("Launcher", "DisableSomeCheck", DisableSomeCheck.ToString());
             ini.AddSetting("Launcher", "Secret", Secret);
             ini.SaveSettings();
@@ -188,8 +188,7 @@ namespace CSO2_ComboLauncher
 
         private async void Server_Changed(object sender, SelectionChangedEventArgs e)
         {
-            CurrentServer = (Server)ServerInfo.SelectedItem;
-            Location = CurrentServer.Name;
+            Server = ServerInfo.SelectedItem.ToString();
 
             if (Main.Instance != null && Main.Instance.started)
             {
