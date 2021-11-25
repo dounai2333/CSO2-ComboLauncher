@@ -358,9 +358,9 @@ namespace CSO2_ComboLauncher
                 AddKeyWords("schinese", "_start_codepage_wrong", "你的代码页不是\"936 中文(简体, 中国)\", 因此你的游戏名称只能包含英文.\n请修改后再启动游戏.");
                 AddKeyWords("tchinese", "_start_codepage_wrong", "你的代碼頁不是\"936 中文(簡體, 中國)\", 所以你的遊戲名稱只能有英文字符.\n請修改後再開始遊戲.");
 
-                AddKeyWords("english", "_start_name_saved", "Some part of your nickname \"{0}\" has been saved for special user, please change it before start the game.");
-                AddKeyWords("schinese", "_start_name_saved", "你游戏名称的一部分\"{0}\"已保留给特定用户, 请修改后再启动游戏.");
-                AddKeyWords("tchinese", "_start_name_saved", "你的遊戲名稱的一部分\"{0}\"已經留給了部分用戶, 請修改後再開始遊戲.");
+                AddKeyWords("english", "_start_name_saved", "Some part of your nickname has been saved for special user, please change it before start the game.");
+                AddKeyWords("schinese", "_start_name_saved", "你的游戏名称的一部分已保留给特定用户, 请修改后再启动游戏.");
+                AddKeyWords("tchinese", "_start_name_saved", "你的遊戲名稱的一部分已經留給了部分用戶, 請修改後再開始遊戲.");
 
                 AddKeyWords("english", "_start_password_wrongtext", "Your password contains symbol or other not allowed characters, password should be numbers and letters only.\nPlease change it before start the game.");
                 AddKeyWords("schinese", "_start_password_wrongtext", "你的登录密码包含特殊符号或其他不被允许的字符, 密码应只有数字和字母.\n请修改后再启动游戏.");

@@ -206,7 +206,9 @@ namespace CSO2_ComboLauncher
             Log.Write(LStr.Get("_self_checking_mainserverconnection") + Static.AuthorAndLibraryOutput());
             try
             {
-                await Downloader.StringFromMainServer("test");
+                string test = await Downloader.StringFromMainServer("test");
+                if (test != "ok")
+                    mainservererror = true;
             }
             catch
             {
@@ -269,6 +271,8 @@ namespace CSO2_ComboLauncher
             OpenVpn.Start("Bin\\OpenVPN\\openvpn.exe", path);
             Log.Write(LStr.Get("_start_openvpn_and_connect"));
 
+
+            // maybe find a better way to rewrite codes here? it looks awful.
             int wait = 0;
             while (!OpenVpn.IsConnected && !OpenVpn.Process.HasExited)
             {
@@ -451,36 +455,36 @@ namespace CSO2_ComboLauncher
                 // stop being curious, it got reason and necessary to hide some basic info (keep it as a secret even it's easy to decrypt)
                 if (Config.Secret != Misc.Decrypt(Misc.UnicodeToString("\\u0054\\u006b\\u0056\\u0061\\u0052\\u0045\\u0030\\u0077\\u0055\\u006b\\u0052\\u0053\\u0061\\u0031\\u0070\\u0045\\u0055\\u0058\\u0070\\u0072\\u004e\\u0055\\u0035\\u0056\\u0055\\u0058\\u0070\\u0050\\u0051\\u0054\\u0030\\u0039")))
                 {
-                    string[] blacklist = { "脸皮挡子弹", "lpdzd", "脸皮", "捡皮", "睑皮", "检皮", "硷皮", "臉皮" };
+                    string[] blacklist = { "\\u006c\\u0070\\u0064\\u007a\\u0064", "\\u8138\\u76ae\\u6321\\u5b50\\u5f39", "\\u8138\\u76ae", "\\u6361\\u76ae", "\\u7751\\u76ae", "\\u68c0\\u76ae", "\\u7877\\u76ae", "\\u81c9\\u76ae" };
                     for (int i = 0; i < blacklist.Count(); i++)
                     {
-                        if (name.ToLower().Contains(blacklist[i]))
+                        if (name.ToLower().Contains(Misc.UnicodeToString(blacklist[i])))
                         {
-                            MessageBox.Show(LStr.Get("_start_name_saved", blacklist[i]), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show(LStr.Get("_start_name_saved"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
                             return true;
                         }
                     }
                 }
                 if (Config.Secret != Misc.Decrypt(Misc.UnicodeToString("\\u0054\\u0056\\u0056\\u004a\\u0065\\u006c\\u0046\\u0071\\u0053\\u0054\\u0042\\u0053\\u0056\\u0047\\u0068\\u0045\\u0055\\u0057\\u0070\\u0042\\u0065\\u0055\\u0039\\u0046\\u0056\\u0054\\u0056\\u004e\\u0051\\u0054\\u0030\\u0039")))
                 {
-                    string[] blacklist = { "晴雪", "qingxue", "睛雪", "情雪", "请雪", "蜻雪", "凊雪", "啨雪" };
+                    string[] blacklist = { "\\u0071\\u0069\\u006e\\u0067\\u0078\\u0075\\u0065", "\\u6674\\u96ea", "\\u775b\\u96ea", "\\u60c5\\u96ea", "\\u8bf7\\u96ea", "\\u873b\\u96ea", "\\u51ca\\u96ea", "\\u5568\\u96ea" };
                     for (int i = 0; i < blacklist.Count(); i++)
                     {
-                        if (name.ToLower().Contains(blacklist[i]))
+                        if (name.ToLower().Contains(Misc.UnicodeToString(blacklist[i])))
                         {
-                            MessageBox.Show(LStr.Get("_start_name_saved", blacklist[i]), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show(LStr.Get("_start_name_saved"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
                             return true;
                         }
                     }
                 }
                 if (Config.Secret != Misc.Decrypt(Misc.UnicodeToString("\\u0054\\u0030\\u0052\\u0052\\u004e\\u0045\\u0035\\u0036\\u0053\\u0054\\u0042\\u0050\\u0052\\u0046\\u0045\\u0078\\u0055\\u006b\\u0056\\u005a\\u004d\\u0030\\u0031\\u0045\\u0052\\u0054\\u0056\\u004e\\u0051\\u0054\\u0030\\u0039")))
                 {
-                    string[] blacklist = { "豆奶", "dounai" };
+                    string[] blacklist = { "\\u0064\\u006f\\u0075\\u006e\\u0061\\u0069", "\\u8c46\\u5976" };
                     for (int i = 0; i < blacklist.Count(); i++)
                     {
-                        if (name.ToLower().Contains(blacklist[i]))
+                        if (name.ToLower().Contains(Misc.UnicodeToString(blacklist[i])))
                         {
-                            MessageBox.Show(LStr.Get("_start_name_saved", blacklist[i]), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show(LStr.Get("_start_name_saved"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
                             return true;
                         }
                     }
@@ -571,16 +575,8 @@ namespace CSO2_ComboLauncher
                 {
                     if (ee.Data.Contains("Error 12002 has occurred."))
                     {
-                        process.Close();
-
-                        MainButtonStatus(true);
-
-                        Dispatcher.Invoke(new Action(delegate
-                        {
-                            Icon_MouseClick(null, null);
-                        }));
-
-                        process.Dispose();
+                        // when game exiting this problem almost happens 100%, so force to kill it and make launcher response it normally.
+                        process.Kill();
                     }
                 }
                 catch { }
