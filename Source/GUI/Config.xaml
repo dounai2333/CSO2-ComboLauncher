@@ -13,6 +13,11 @@
         <TextBlock Text="_language" Margin="10,77,294,142"/>
         <ComboBox x:Name="languageList" Margin="90,77,150,142" SelectionChanged="LanguageList_SelectionChanged"/>
         <ListView x:Name="ServerInfo" Margin="249,10,10,142" SelectionChanged="Server_Changed">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Server" Width="115"/>
