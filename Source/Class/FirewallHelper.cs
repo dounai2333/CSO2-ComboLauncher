@@ -71,7 +71,8 @@ namespace CSO2_ComboLauncher
             {
                 if (item.ProcessImageFileName == path)
                 {
-                    item.Enabled = enableifdisabled;
+                    if (item.Enabled != enableifdisabled)
+                        item.Enabled = enableifdisabled;
                     return true;
                 }
             }
