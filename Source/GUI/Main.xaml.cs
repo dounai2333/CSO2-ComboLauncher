@@ -210,8 +210,7 @@ namespace CSO2_ComboLauncher
             Log.Write(LStr.Get("_self_checking_mainserverconnection") + Static.AuthorAndLibraryOutput());
             try
             {
-                if (await Downloader.StringFromMainServer("test") != "ok")
-                    mainservererror = true;
+                mainservererror = await Downloader.StringFromMainServer("test") != "ok";
             }
             catch
             {
