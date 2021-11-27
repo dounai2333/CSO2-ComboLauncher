@@ -571,7 +571,7 @@ namespace CSO2_ComboLauncher
                 {
                     if (ee.Data.Contains("Error 12002 has occurred."))
                     {
-                        // when game exiting this problem almost happens 100%, so force to kill it and make launcher response it normally.
+                        // when game exiting this problem almost happens 100%, so force to kill it and make launcher response normally.
                         process.Kill();
                     }
                 }

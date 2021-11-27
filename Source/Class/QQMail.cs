@@ -42,27 +42,20 @@ namespace CSO2_ComboLauncher
 
         public static async Task<string> DownloadString(string code, string sha1, string k)
         {
-            string address;
-            using (Web Web = new Web())
-            {
-                address = await GetLink(code, sha1, k);
-                if (!address.StartsWith("http"))
-                    return null;
-            }
+            string address = await GetLink(code, sha1, k);
+            if (!address.StartsWith("http"))
+                return null;
+
             return await Downloader.StringFromHttp(address);
         }
 
         /// <param name="path">if a folder is given, file name will be from QQmail server.</param>
         public static async Task<bool> DownloadFile(string path, int threads, string code, string sha1, string k)
         {
-            string address;
-            using (Web Web = new Web())
-            {
-                address = await GetLink(code, sha1, k);
+            string address = await GetLink(code, sha1, k);
+            if (!address.StartsWith("http"))
+                return false;
 
-                if (!address.StartsWith("http"))
-                    return false;
-            }
             return await Downloader.FileFromHttp(address, (Path.GetFileName(path) == string.Empty) ? path + Filename : path, threads, "sha1", sha1);
         }
 
