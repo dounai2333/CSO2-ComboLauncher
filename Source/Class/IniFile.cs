@@ -31,11 +31,11 @@ namespace CSO2_ComboLauncher
                     for (strLine = reader.ReadLine(); strLine != null; strLine = reader.ReadLine())
                     {
                         strLine = strLine.Trim();
-                        if (strLine.StartsWith("//"))
+                        if (strLine.Trim().StartsWith("//"))
                         {
                             continue;
                         }
-                        if (strLine != "")
+                        if (!string.IsNullOrWhiteSpace(strLine))
                         {
                             if (strLine.StartsWith("[") && strLine.EndsWith("]"))
                             {

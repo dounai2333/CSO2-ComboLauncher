@@ -75,8 +75,8 @@ namespace CSO2_ComboLauncher
                 {
                     using (Socket sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
                     {
-                        sock.SendTimeout = 250;
-                        sock.ReceiveTimeout = 250;
+                        sock.SendTimeout = 1000;
+                        sock.ReceiveTimeout = 1000;
 
                         Stopwatch stopwatch = new Stopwatch();
                         stopwatch.Start();
@@ -254,7 +254,7 @@ namespace CSO2_ComboLauncher
             if (!IsFileAvailable(file, FileAccess.Read))
                 return "";
 
-            byte[] fb = { };
+            byte[] fb = {};
             await Task.Run(() =>
             {
                 using (FileStream fs = new FileInfo(file).Open(FileMode.Open, FileAccess.Read, FileShare.Read))
@@ -318,10 +318,11 @@ namespace CSO2_ComboLauncher
 
         public static bool DecryptFile(string file, string newfile)
         {
-            if (!File.Exists(file) || !IsBase64String(File.ReadAllText(file, Encoding.UTF8)))
+            string text = File.ReadAllText(file, Encoding.UTF8);
+            if (!File.Exists(file) || !IsBase64String(text))
                 return false;
 
-            string decrypted = Decrypt(File.ReadAllText(file, Encoding.UTF8));
+            string decrypted = Decrypt(text);
             File.WriteAllText(newfile, decrypted, Encoding.UTF8);
             return true;
         }

@@ -62,14 +62,21 @@ namespace CSO2_ComboLauncher
 
         public void RemoveProgramException(string path)
         {
+            Mgr.LocalPolicy.CurrentProfile.AuthorizedApplications.Remove(path);
+        }
+
+        public bool CheckProgramExceptionExist(string path, bool enableifdisabled)
+        {
             foreach (INetFwAuthorizedApplication item in Mgr.LocalPolicy.CurrentProfile.AuthorizedApplications)
             {
                 if (item.ProcessImageFileName == path)
                 {
-                    Mgr.LocalPolicy.CurrentProfile.AuthorizedApplications.Remove(path);
-                    break;
+                    item.Enabled = enableifdisabled;
+                    return true;
                 }
             }
+
+            return false;
         }
 
         public void Dispose()

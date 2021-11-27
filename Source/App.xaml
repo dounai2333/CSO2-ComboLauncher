@@ -72,7 +72,7 @@
                 <Setter.Value>
                     <ControlTemplate>
                         <Border x:Name="bg" Width="32" Height="32" BorderThickness="0" Background="#00000000">
-                            <Rectangle HorizontalAlignment="Center" VerticalAlignment="Center" Width="14" Height="15" Margin="0,0,0,0">
+                            <Rectangle HorizontalAlignment="Center" VerticalAlignment="Center" Width="17" Height="17" Margin="0,0,0,0">
                                 <Rectangle.Effect>
                                     <DropShadowEffect x:Name="shadow" ShadowDepth="0" Color="White" BlurRadius="2"/>
                                 </Rectangle.Effect>

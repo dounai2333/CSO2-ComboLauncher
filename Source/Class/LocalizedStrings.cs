@@ -474,12 +474,12 @@ namespace CSO2_ComboLauncher
                 else if (element is CheckBox)
                 {
                     var textBlock = element as CheckBox;
-                    textBlock.Content = Get((textBlock.Content as string));
+                    textBlock.Content = Get(textBlock.Content as string);
                 }
                 else if (element is Button)
                 {
                     var button = element as Button;
-                    button.Content = Get((button.Content as string));
+                    button.Content = Get(button.Content as string);
                 }
                 else if (element is Grid)
                 {
@@ -488,7 +488,7 @@ namespace CSO2_ComboLauncher
                 else if (element is GroupBox)
                 {
                     var groupBox = element as GroupBox;
-                    groupBox.Header = Get((groupBox.Header as string));
+                    groupBox.Header = Get(groupBox.Header as string);
                     LocalifyControl(((element as GroupBox).Content as Grid).Children);
                 }
             }

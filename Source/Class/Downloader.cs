@@ -93,7 +93,7 @@ namespace CSO2_ComboLauncher
                     }
                     else
                     {
-                        MessageBox.Show(LStr.Get("_self_checking_launcherupdate_failed", latestversion, logmessage), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Warning);
+                        MessageBox.Show(LStr.Get("_self_checking_launcherupdate_failed"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
                 }
             }
@@ -101,6 +101,8 @@ namespace CSO2_ComboLauncher
 
         public static async Task<bool> GameClientUpdate()
         {
+            // GameUpdate() also do the job, I'm not sure this should be keeped, maybe delete?
+
             string gameclientinfo = Misc.Decrypt(await StringFromMainServer("updates/game/gameclient.txt"));
             string[] infoarray = Misc.SplitString(gameclientinfo);
 
@@ -253,9 +255,7 @@ namespace CSO2_ComboLauncher
                 {
                     File.Delete(path);
                     if (await ProgramHelper.StartAndGetExitCode("Bin\\OpenVPN\\TAP-Windows\\tapinstall.exe", install ? "install \"Bin\\OpenVPN\\TAP-Windows\\tap0901.inf\" tap0901" : "remove tap0901", true) == 0)
-                    {
                         return true;
-                    }
                 }
             }
 

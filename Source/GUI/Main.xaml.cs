@@ -59,9 +59,12 @@ namespace CSO2_ComboLauncher
             // check if any necessary game dll files is missing
             Log.Clear();
             Log.Write(LStr.Get("_self_checking_gamefiledll") + Static.AuthorAndLibraryOutput());
-            string[] dllfiles = { "BugTrapU.dll", "client.dll", "d3dx9_33.dll", "datacache.dll", "engine.dll", "FileSystem_Stdio.dll", "inputsystem.dll", "MaterialSystem.dll", "Mss32.dll",
-                                  "mssmp3.asi", "mssvoice.asi", "nmcogame.dll", "NPS.dll", "scenefilecache.dll", "server.dll", "shaderapidx9.dll", "SoundEmitterSystem.dll", "stdshader_dx9.dll",
-                                  "StudioRender.dll", "tier0.dll", "unicode.dll", "vaudio_miles.dll", "vaudio_speex.dll", "vgui2.dll", "vguimatsurface.dll", "video_services.dll", "vphysics.dll", "vstdlib.dll", "xinput1_3.dll" };
+            string[] dllfiles =
+            {
+                "BugTrapU.dll", "client.dll", "d3dx9_33.dll", "datacache.dll", "engine.dll", "FileSystem_Stdio.dll", "inputsystem.dll", "MaterialSystem.dll", "Mss32.dll", "mssmp3.asi",
+                "mssvoice.asi", "nmcogame.dll", "NPS.dll", "scenefilecache.dll", "server.dll", "shaderapidx9.dll", "SoundEmitterSystem.dll", "stdshader_dx9.dll", "StudioRender.dll",
+                "tier0.dll", "unicode.dll", "vaudio_miles.dll", "vaudio_speex.dll", "vgui2.dll", "vguimatsurface.dll", "video_services.dll", "vphysics.dll", "vstdlib.dll", "xinput1_3.dll"
+            };
             string missedfiles = "";
             for (int i = 0; i < dllfiles.Count(); i++)
                 if (!File.Exists("Bin\\" + dllfiles[i]))
@@ -152,6 +155,7 @@ namespace CSO2_ComboLauncher
                         else if (service.Status == ServiceControllerStatus.Paused)
                             service.Continue();
 
+                        // if timed out, TimeoutException is throw.
                         service.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromSeconds(7.5));
                     }
                     catch
@@ -165,7 +169,7 @@ namespace CSO2_ComboLauncher
 
             await Misc.Sleep(250);
 
-            // add game client and program itself to the filewall exception list (trusted)
+            // add game client and program itself to the filewall exception list (trusted application)
             Log.Clear();
             Log.Write(LStr.Get("_self_checking_firewall_addexception") + Static.AuthorAndLibraryOutput());
             using (Firewall Firewall = new Firewall())
@@ -269,7 +273,6 @@ namespace CSO2_ComboLauncher
 
             OpenVpn.Start("Bin\\OpenVPN\\openvpn.exe", path);
             Log.Write(LStr.Get("_start_openvpn_and_connect"));
-
 
             // maybe find a better way to rewrite codes here? it looks awful.
             int wait = 0;

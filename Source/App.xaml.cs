@@ -22,43 +22,24 @@ namespace CSO2_ComboLauncher
         {
             // From dbghelp.h:
             Normal = 0x00000000,
-
             WithDataSegs = 0x00000001,
-
             WithFullMemory = 0x00000002,
-
             WithHandleData = 0x00000004,
-
             FilterMemory = 0x00000008,
-
             ScanMemory = 0x00000010,
-
             WithUnloadedModules = 0x00000020,
-
             WithIndirectlyReferencedMemory = 0x00000040,
-
             FilterModulePaths = 0x00000080,
-
             WithProcessThreadData = 0x00000100,
-
             WithPrivateReadWriteMemory = 0x00000200,
-
             WithoutOptionalData = 0x00000400,
-
             WithFullMemoryInfo = 0x00000800,
-
             WithThreadInfo = 0x00001000,
-
             WithCodeSegs = 0x00002000,
-
             WithoutAuxiliaryState = 0x00004000,
-
             WithFullAuxiliaryState = 0x00008000,
-
             WithPrivateWriteCopyMemory = 0x00010000,
-
             IgnoreInaccessibleMemory = 0x00020000,
-
             ValidTypeFlags = 0x0003ffff
         };
 
@@ -149,7 +130,7 @@ namespace CSO2_ComboLauncher
                         MessageBoxResult box = MessageBox.Show(LStr.Get("_net_framework_lower_version"), Static.CWindow, MessageBoxButton.YesNo, MessageBoxImage.Warning);
                         if (box == MessageBoxResult.Yes)
                         {
-                            Process.Start("https://dotnet.microsoft.com/download/dotnet-framework/thank-you/net472-offline-installer");
+                            Process.Start("https://dotnet.microsoft.com/download/dotnet-framework/thank-you/net48-offline-installer");
                             Environment.Exit(1);
                         }
                     }).Wait();
@@ -161,7 +142,7 @@ namespace CSO2_ComboLauncher
             {
                 if ((ni.OperationalStatus != OperationalStatus.Up) || (ni.NetworkInterfaceType == NetworkInterfaceType.Loopback) || (ni.NetworkInterfaceType == NetworkInterfaceType.Tunnel))
                     continue;
-                if (ni.Speed < 100000000) // 100M
+                if (ni.Speed < 10000000) // 10M
                     continue;
                 if (ni.Name.ToLower().Contains("virtual") || ni.Description.ToLower().Contains("virtual"))
                     continue;
@@ -205,7 +186,7 @@ namespace CSO2_ComboLauncher
             }
 
             // setup window, Main will be called after this function ends
-            //new Config(); // bugged when cso2_launcher.ini is not exist
+            //new Config(); // bugged when cso2_launcher.ini is not exist, it been called in Main.xaml.cs
             new QQGroup();
             new Download();
             Download.StartLoop();
@@ -256,7 +237,7 @@ namespace CSO2_ComboLauncher
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            Exception expection = e.ExceptionObject as Exception;
+            Exception ex = e.ExceptionObject as Exception;
 
             HideAllWindow();
 
@@ -273,12 +254,12 @@ namespace CSO2_ComboLauncher
             MiniDumpHelper.Write($"errorminidumps\\error_{timeo}.mdmp", MiniDumpHelper.Option.WithFullMemoryInfo);
             File.WriteAllText($"errorminidumps\\error_{timeo}.txt",
                               LStr.Get("_error_time") + time + Environment.NewLine + Environment.NewLine
-                              + expection.Message + Environment.NewLine + Environment.NewLine
-                              + ((expection.InnerException != null) ? expection.InnerException.ToString() : string.Empty) + Environment.NewLine + Environment.NewLine
-                              + expection.StackTrace, Encoding.UTF8);
+                              + ex.Message + Environment.NewLine + Environment.NewLine
+                              + ((ex.InnerException != null) ? ex.InnerException.ToString() : string.Empty) + Environment.NewLine + Environment.NewLine
+                              + ex.StackTrace, Encoding.UTF8);
 
             string methods = "";
-            string[] messages = Misc.SplitString(expection.StackTrace);
+            string[] messages = Misc.SplitString(ex.StackTrace);
             for (int i = 0; i < messages.Count(); i++)
             {
                 if (messages[i].Contains("CSO2_ComboLauncher"))
@@ -292,14 +273,14 @@ namespace CSO2_ComboLauncher
 
             MessageBox.Show(LStr.Get("_error_msg") + "\n\n"
                             + LStr.Get("_error_time") + time + "\n"
-                            + LStr.Get("_error_code") + Misc.DecimalToHex(expection.HResult) + "\n"
-                            + LStr.Get("_error_info") + "\n" + expection.Message + "\n"
+                            + LStr.Get("_error_code") + Misc.DecimalToHex(ex.HResult) + "\n"
+                            + LStr.Get("_error_info") + "\n" + ex.Message + "\n"
                             + LStr.Get("_error_method") + "\n" + methods
                             + "\n\n" + LStr.Get("_error_hint")
                             , Static.CWindow
                             , MessageBoxButton.OK
                             , MessageBoxImage.Error);
-            Environment.Exit(expection.HResult);
+            Environment.Exit(ex.HResult);
         }
     }
 }
