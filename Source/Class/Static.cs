@@ -30,7 +30,7 @@ namespace CSO2_ComboLauncher
         {
             icon.Text = CWindow;
             icon.Visible = false;
-            icon.Icon = new Icon(App.GetResourceStream(new Uri("pack://application:,,,/icon.ico")).Stream);
+            icon.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
         }
 
         public static string AuthorAndLibraryOutput()

@@ -138,7 +138,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Resource Include="icon.ico" />
+    <None Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\app.manifest">
