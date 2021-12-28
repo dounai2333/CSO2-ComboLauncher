@@ -86,7 +86,7 @@ namespace CSO2_ComboLauncher
                 lock (fs)
                 {
                     fs.SetLength(0);
-                    Process.GetCurrentProcess().WaitForExit();
+                    Static.CurrentProcess.WaitForExit();
                 }
             });
 
@@ -263,9 +263,8 @@ namespace CSO2_ComboLauncher
 
         public static bool Write(SafeHandle fileHandle, Option options, ExceptionInfo exceptionInfo)
         {
-            Process currentProcess = Process.GetCurrentProcess();
-            IntPtr currentProcessHandle = currentProcess.Handle;
-            uint currentProcessId = (uint)currentProcess.Id;
+            IntPtr currentProcessHandle = Static.CurrentProcess.Handle;
+            uint currentProcessId = (uint)Static.CurrentProcess.Id;
             MiniDumpExceptionInformation exp;
             exp.ThreadId = GetCurrentThreadId();
             exp.ClientPointers = false;

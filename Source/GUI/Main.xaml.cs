@@ -180,7 +180,7 @@ namespace CSO2_ComboLauncher
                         Firewall.ICMPRequestAllowed = true;
                     if (File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "Bin\\CounterStrikeOnine2.exe")))
                         Firewall.AddProgramException("CSO2", Path.Combine(Directory.GetCurrentDirectory(), "Bin\\CounterStrikeOnine2.exe"));
-                    Firewall.AddProgramException(Static.CWindow, Process.GetCurrentProcess().MainModule.FileName);
+                    Firewall.AddProgramException(Static.CWindow, Static.CurrentProcess.MainModule.FileName);
                 }
             }
 
@@ -767,7 +767,7 @@ namespace CSO2_ComboLauncher
                 Config.EnableConsole = false;
                 Config.SaveConfig();
 
-                ProgramHelper.CmdCommand($"timeout /nobreak /t 2 && start \"\" \"{Process.GetCurrentProcess().ProcessName}.exe\"", false, true);
+                ProgramHelper.CmdCommand($"timeout /nobreak /t 2 && start \"\" \"{Static.CurrentProcess.MainModule.FileName}\"", false, true);
                 Environment.Exit(0);
             }
         }

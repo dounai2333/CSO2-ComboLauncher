@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Drawing;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace CSO2_ComboLauncher
@@ -26,11 +27,13 @@ namespace CSO2_ComboLauncher
         public static string AuthorAndHelper = "_author_and_helper";
         public static string ThirdPartyLibrary = "_third_party_library";
 
+        public static Process CurrentProcess = Process.GetCurrentProcess();
+
         public static void SetupIcon()
         {
             icon.Text = CWindow;
             icon.Visible = false;
-            icon.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+            icon.Icon = Icon.ExtractAssociatedIcon(CurrentProcess.MainModule.FileName);
         }
 
         public static string AuthorAndLibraryOutput()

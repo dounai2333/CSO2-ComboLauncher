@@ -83,11 +83,10 @@ namespace CSO2_ComboLauncher
                     if (await QQMail.DownloadFile($"CSO2 Launcher V{latestversion}.exe", 2, code, sha1, k))
                     {
                         App.HideAllWindow();
-                        Process process = Process.GetCurrentProcess();
-                        if (process.ProcessName.StartsWith("CSO2 Launcher V"))
-                            ProgramHelper.CmdCommand($"timeout /nobreak /t 2 && del /q \"{process.ProcessName}.exe\" && start \"\" \"CSO2 Launcher V{latestversion}.exe\"", false, true);
+                        if (Static.CurrentProcess.ProcessName.StartsWith("CSO2 Launcher V"))
+                            ProgramHelper.CmdCommand($"timeout /nobreak /t 2 && del /q \"{Static.CurrentProcess.MainModule.FileName}\" && start \"\" \"CSO2 Launcher V{latestversion}.exe\"", false, true);
                         else
-                            ProgramHelper.CmdCommand($"timeout /nobreak /t 2 && move /y \"CSO2 Launcher V{latestversion}.exe\" \"{process.ProcessName}.exe\" && start \"\" \"{process.ProcessName}.exe\"", false, true);
+                            ProgramHelper.CmdCommand($"timeout /nobreak /t 2 && move /y \"CSO2 Launcher V{latestversion}.exe\" \"{Static.CurrentProcess.MainModule.FileName}\" && start \"\" \"{Static.CurrentProcess.MainModule.FileName}\"", false, true);
 
                         Environment.Exit(0);
                     }
