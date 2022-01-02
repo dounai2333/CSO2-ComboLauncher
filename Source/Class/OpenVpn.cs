@@ -278,7 +278,7 @@ namespace CSO2_ComboLauncher
                 {
                     "Notified TAP-Windows driver", msg =>
                     {
-                        currentIp = new Regex(@"((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})(\.((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})){3}").Match(msg).Value;
+                        currentIp = new Regex(@"\b((([0-2]\d[0-5])|(\d{2})|(\d))\.){3}(([0-2]\d[0-5])|(\d{2})|(\d))\b").Match(msg).Value;
                         interfaceGuid = msg.Substring(msg.IndexOf("{", StringComparison.Ordinal), 39);
                         OnConnect();
                     }

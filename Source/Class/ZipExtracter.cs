@@ -21,7 +21,7 @@ namespace CSO2_ComboLauncher
             ZipWorker.Instance.Show();
 
             int totalfiles = file.Entries.Count();
-            for (int i=0;i<totalfiles;i++)
+            for (int i = 0; i < totalfiles; i++)
             {
                 ZipArchiveEntry target = file.Entries[i];
                 if (string.IsNullOrEmpty(target.Name))
