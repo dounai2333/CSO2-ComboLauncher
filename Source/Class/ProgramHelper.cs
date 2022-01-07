@@ -47,7 +47,7 @@ namespace CSO2_ComboLauncher
         /// <param name="withoutwindow">if enabled, 'pausebeforeexit' will be force to 'false'.</param>
         public static Process CmdCommand(string command, bool pausebeforeexit = false, bool withoutwindow = false)
         {
-            return Start(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.SystemX86), "cmd.exe"), $"/C \"{command} {(!withoutwindow ? (pausebeforeexit ? "&& pause" : "") : "")}\"", withoutwindow);
+            return Start(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "cmd.exe"), $"/C \"{command} {(!withoutwindow ? (pausebeforeexit ? "&& pause" : "") : "")}\"", withoutwindow);
         }
     }
 }

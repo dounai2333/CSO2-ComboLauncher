@@ -169,8 +169,8 @@ namespace CSO2_ComboLauncher
                                         catch
                                         {
                                             // safer way if first is failed due to "Object reference not set to an instance of an object".
-                                            ProgramHelper.Start(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.SystemX86), "netsh.exe"), $"interface set interface \"{mo.GetPropertyValue("NetConnectionID")}\" disable", true).WaitForExit();
-                                            ProgramHelper.Start(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.SystemX86), "netsh.exe"), $"interface set interface \"{mo.GetPropertyValue("NetConnectionID")}\" enable", true).WaitForExit();
+                                            ProgramHelper.Start(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "netsh.exe"), $"interface set interface \"{mo.GetPropertyValue("NetConnectionID")}\" disable", true).WaitForExit();
+                                            ProgramHelper.Start(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "netsh.exe"), $"interface set interface \"{mo.GetPropertyValue("NetConnectionID")}\" enable", true).WaitForExit();
                                         }
                                     }
                                     else if (mo.GetPropertyValue("NetConnectionStatus")?.ToString() == "0")
@@ -181,7 +181,7 @@ namespace CSO2_ComboLauncher
                                         }
                                         catch
                                         {
-                                            ProgramHelper.Start(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.SystemX86), "netsh.exe"), $"interface set interface \"{mo.GetPropertyValue("NetConnectionID")}\" enable", true).WaitForExit();
+                                            ProgramHelper.Start(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "netsh.exe"), $"interface set interface \"{mo.GetPropertyValue("NetConnectionID")}\" enable", true).WaitForExit();
                                         }
                                     }
                                 }
