@@ -16,7 +16,7 @@
         <Button x:Name="copy2" Content="_copy" Margin="116,133,102,58" Click="Copy2_Click" FontWeight="Bold"></Button>
         <Button x:Name="join2" Content="_oneclick" Margin="197,133,21,58" Click="Join2_Click" FontWeight="Bold"></Button>
         <TextBlock Text="_group_3" Margin="10,157,10,28" FontSize="20"></TextBlock>
-        <TextBox x:Name="text3" Text="1014256762" Margin="10,183,183,8" IsReadOnly="True" FontSize="14" FontWeight="Bold"/>
+        <TextBox x:Name="text3" Text="651075424" Margin="10,183,183,8" IsReadOnly="True" FontSize="14" FontWeight="Bold"/>
         <Button x:Name="copy3" Content="_copy" Margin="116,183,102,8" Click="Copy3_Click" FontWeight="Bold"></Button>
         <Button x:Name="join3" Content="_oneclick" Margin="197,183,21,8" Click="Join3_Click" FontWeight="Bold"></Button>
     </Grid>

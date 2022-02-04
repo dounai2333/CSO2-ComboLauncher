@@ -417,7 +417,7 @@ namespace CSO2_ComboLauncher
                     return true;
             }
 
-            if (Encoding.Default.CodePage != 936)
+            if (Encoding.Default.CodePage != 936) // 中文(简体, 中国)
             {
                 if (Encoding.UTF8.GetByteCount(name) != name.Length)
                 {

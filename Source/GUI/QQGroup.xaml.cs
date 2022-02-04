@@ -55,7 +55,7 @@ namespace CSO2_ComboLauncher
         
         private void Join1_Click(object sender, RoutedEventArgs e)
         {
-            Start("7B2267726F757055696E223A3739333539373634342C2274696D655374616D70223A313539383039393535357D0A");
+            Start("7B2267726F757055696E223A3739333539373634342C2274696D655374616D70223A313539383039393535357D");
         }
 
         private void Copy2_Click(object sender, RoutedEventArgs e)
@@ -65,7 +65,7 @@ namespace CSO2_ComboLauncher
 
         private void Join2_Click(object sender, RoutedEventArgs e)
         {
-            Start("7B2267726F757055696E223A3831303436353537352C2274696D655374616D70223A313539383136373734367D0A");
+            Start("7B2267726F757055696E223A3831303436353537352C2274696D655374616D70223A313539383136373734367D");
         }
         
         private void Copy3_Click(object sender, RoutedEventArgs e)
@@ -75,7 +75,7 @@ namespace CSO2_ComboLauncher
 
         private void Join3_Click(object sender, RoutedEventArgs e)
         {
-            Start("7B2267726F757055696E223A313031343235363736322C2274696D655374616D70223A313539383136373830347D0A");
+            Start("7B2267726F757055696E223A3635313037353432342C2274696D655374616D70223A313634333938373136307D");
         }
     }
 }
