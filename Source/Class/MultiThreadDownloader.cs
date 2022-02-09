@@ -45,7 +45,7 @@ namespace CSO2_ComboLauncher
             HttpDlBuilder = new SimpleDownloadBuilder(RequestBuilder, DlChecker);
             ResumingDlBuilder = new ResumingDownloadBuilder(10000, 100, 9999, HttpDlBuilder);
             AlreadyDownloadedRanges = null;
-            SpeedMonitor = new DownloadSpeedMonitor(maxSampleCount: 512);
+            SpeedMonitor = new DownloadSpeedMonitor(512);
             ProgressMonitor = new DownloadProgressMonitor();
 
             Downloading = false;
@@ -116,9 +116,9 @@ namespace CSO2_ComboLauncher
                     if (!Downloading || !CSO2_ComboLauncher.Download.Instance.IsVisible)
                         continue;
 
-                    var alreadyDownloadedSizeInBytes = ProgressMonitor.GetCurrentProgressInBytes(Download);
-                    var totalDownloadSizeInBytes = ProgressMonitor.GetTotalFilesizeInBytes(Download);
-                    var currentSpeedInBytesPerSecond = SpeedMonitor.GetCurrentBytesPerSecond();
+                    long alreadyDownloadedSizeInBytes = ProgressMonitor.GetCurrentProgressInBytes(Download);
+                    long totalDownloadSizeInBytes = ProgressMonitor.GetTotalFilesizeInBytes(Download);
+                    long currentSpeedInBytesPerSecond = SpeedMonitor.GetCurrentBytesPerSecond();
                     int currentProgressInPercent = (int)(ProgressMonitor.GetCurrentProgressPercentage(Download) * 100);
 
                     CSO2_ComboLauncher.Download.MainOutput(alreadyDownloadedSizeInBytes, totalDownloadSizeInBytes, currentSpeedInBytesPerSecond, currentProgressInPercent);

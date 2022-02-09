@@ -142,13 +142,13 @@ namespace CSO2_ComboLauncher
             if (!assemblyName.Name.StartsWith("Toqe.Downloader.Business") && assemblyName.Name != "Chsword.JDynamic")
                 return null;
 
-            var path = "CSO2_ComboLauncher.Library." + assemblyName.Name + ".dll";
+            string path = "CSO2_ComboLauncher.Library." + assemblyName.Name + ".dll";
             using (Stream stream = executingAssembly.GetManifestResourceStream(path))
             {
                 if (stream == null)
                     return null;
 
-                var assemblyRawBytes = new byte[stream.Length];
+                byte[] assemblyRawBytes = new byte[stream.Length];
                 stream.Read(assemblyRawBytes, 0, assemblyRawBytes.Length);
                 return Assembly.Load(assemblyRawBytes);
             }
