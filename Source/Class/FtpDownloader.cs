@@ -33,8 +33,8 @@ namespace CSO2_ComboLauncher
             Request.Credentials = new NetworkCredential(Username, Password);
 
             Request.Proxy = null;
-            Request.Timeout = 3000;
-            Request.ReadWriteTimeout = 15000;
+            Request.Timeout = 10000;
+            Request.ReadWriteTimeout = 60000;
         }
 
         public async Task<bool> DownloadFile(string path, string serverpath)
