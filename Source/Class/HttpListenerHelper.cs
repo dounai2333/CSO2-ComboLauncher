@@ -1,10 +1,11 @@
 ﻿using System;
 using System.IO;
-using System.Net;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Mime;
 
 namespace CSO2_ComboLauncher
 {
@@ -75,10 +76,12 @@ namespace CSO2_ComboLauncher
                             {
                                 byte[] data = File.ReadAllBytes(localpath);
 
-                                context.Response.ContentLength64 = data.Length;
-                                context.Response.OutputStream.Write(data, 0, data.Length);
                                 context.Response.StatusCode = 200;
                                 context.Response.StatusDescription = "Success (200)";
+                                context.Response.ContentType = MediaTypeNames.Application.Octet;
+
+                                context.Response.ContentLength64 = data.Length;
+                                context.Response.OutputStream.Write(data, 0, data.Length);
                                 context.Response.Close();
                                 needcontinue = true;
                                 break;
@@ -100,10 +103,12 @@ namespace CSO2_ComboLauncher
                                     {
                                         byte[] data = File.ReadAllBytes(RequestUrlList_Response[i]);
 
-                                        context.Response.ContentLength64 = data.Length;
-                                        context.Response.OutputStream.Write(data, 0, data.Length);
                                         context.Response.StatusCode = 200;
                                         context.Response.StatusDescription = "Success (200)";
+                                        context.Response.ContentType = MediaTypeNames.Application.Octet;
+
+                                        context.Response.ContentLength64 = data.Length;
+                                        context.Response.OutputStream.Write(data, 0, data.Length);
                                         context.Response.Close();
                                         needcontinue = true;
                                         break;
@@ -111,10 +116,12 @@ namespace CSO2_ComboLauncher
                                 }
                                 else
                                 {
-                                    using (StreamWriter sw = new StreamWriter(context.Response.OutputStream, Encoding.UTF8))
-                                        sw.Write(RequestUrlList_Response[i]);
                                     context.Response.StatusCode = 200;
                                     context.Response.StatusDescription = "Success (200)";
+                                    context.Response.ContentType = MediaTypeNames.Text.Plain;
+
+                                    using (StreamWriter sw = new StreamWriter(context.Response.OutputStream, Encoding.UTF8))
+                                        sw.Write(RequestUrlList_Response[i]);
                                     context.Response.Close();
                                     needcontinue = true;
                                     break;
@@ -125,10 +132,12 @@ namespace CSO2_ComboLauncher
                     if (needcontinue)
                         continue;
 
-                    using (StreamWriter sw = new StreamWriter(context.Response.OutputStream, Encoding.UTF8))
-                        sw.Write("Not Found (404)");
                     context.Response.StatusCode = 404;
                     context.Response.StatusDescription = "Not Found (404)";
+                    context.Response.ContentType = MediaTypeNames.Text.Plain;
+
+                    using (StreamWriter sw = new StreamWriter(context.Response.OutputStream, Encoding.UTF8))
+                        sw.Write("Not Found (404)");
                     context.Response.Close();
                 }
             });
