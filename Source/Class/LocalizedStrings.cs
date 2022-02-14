@@ -116,9 +116,9 @@ namespace CSO2_ComboLauncher
                 AddKeyWords("schinese", "_lang_file_not_exist", "无法找到当前选择的语言的文件, 请修改语言, 否则启动游戏将会导致报错!\n\n如果你希望使用这个语言,请自行寻找相关的语言包!");
                 AddKeyWords("tchinese", "_lang_file_not_exist", "無法找到當前選擇的語言的文件, 請修改語言, 強行開始遊戲將會導致出現錯誤!\n\n如果你希望使用這個語言,請自己尋找相關的語言文件!");
 
-                AddKeyWords("english", "_enable_console_hint", "Console is only for debugging!\nYou should not enable it if you don't know what it is.\n\nDon't report any bug after you used console, it's 'normal'.\nIf you cannot close console window:\n- Click 'X' of the console window\n- execute 'toggleconsole' command\n\nConfirm to enable?");
-                AddKeyWords("schinese", "_enable_console_hint", "控制台仅供调试使用!\n如果你不知道它是什么, 那就别勾选.\n\n使用控制台后, 不要汇报任何BUG, 都是'正常现象'.\n如果你无法关闭控制台窗口:\n- 点击控制台窗口的'X'\n- 执行'toggleconsole'命令\n\n是否确定勾选?");
-                AddKeyWords("tchinese", "_enable_console_hint", "控制台僅為調試時使用!\n如果你不知道它是什麼, 那就不要勾選.\n\n使用控制台後, 不要匯報任何BUG, 這都是'正常現象'.\n-如果你無法關閉控制台窗口:\n- 點擊控制台窗口的'X'\n- 執行'toggleconsole'命令\n\n是否確定勾選?");
+                AddKeyWords("english", "_enable_console_hint", "Console is only for debugging!\nYou should not enable it if you don't know what it is.\n\nDon't report any bug after you used console, it's 'normal'.\nIf you cannot close console window:\n- Click 'X' of the console window\n- Execute 'toggleconsole' command\n- Press 'ALT + F4' once\n\nConfirm to enable?");
+                AddKeyWords("schinese", "_enable_console_hint", "控制台仅供调试使用!\n如果你不知道它是什么, 那就别勾选.\n\n使用控制台后, 不要汇报任何BUG, 都是'正常现象'.\n如果你无法关闭控制台窗口:\n- 点击控制台窗口的'X'\n- 执行'toggleconsole'命令\n- 按一次'ALT+F4'\n\n是否确定勾选?");
+                AddKeyWords("tchinese", "_enable_console_hint", "控制台僅為調試時使用!\n如果你不知道它是什麼, 那就不要勾選.\n\n使用控制台後, 不要匯報任何BUG, 這都是'正常現象'.\n-如果你無法關閉控制台窗口:\n- 點擊控制台窗口的'X'\n- 執行'toggleconsole'命令\n- 使用一次'ALT+F4'\n\n是否確定勾選?");
             }
 
             // QQGroup strings
