@@ -109,11 +109,11 @@ namespace CSO2_ComboLauncher
             string code = infoarray[1];
             string sha1 = infoarray[2];
 
-            if (File.Exists("Bin\\CounterStrikeOnine2.exe"))
-                if (await Misc.GetHash("Bin\\CounterStrikeOnine2.exe", "sha1") == sha1)
+            if (File.Exists("Bin\\CounterStrikeOnline2.exe"))
+                if (await Misc.GetHash("Bin\\CounterStrikeOnline2.exe", "sha1") == sha1)
                     return true;
 
-            return await QQMail.DownloadFile("Bin\\CounterStrikeOnine2.exe", 2, code, sha1, k);
+            return await QQMail.DownloadFile("Bin\\CounterStrikeOnline2.exe", 2, code, sha1, k);
         }
 
         public static async Task<bool> GameUpdate()

@@ -178,8 +178,8 @@ namespace CSO2_ComboLauncher
                 {
                     if (!Firewall.ICMPRequestAllowed)
                         Firewall.ICMPRequestAllowed = true;
-                    if (File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "Bin\\CounterStrikeOnine2.exe")))
-                        Firewall.AddProgramException("CSO2", Path.Combine(Directory.GetCurrentDirectory(), "Bin\\CounterStrikeOnine2.exe"));
+                    if (File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "Bin\\CounterStrikeOnline2.exe")))
+                        Firewall.AddProgramException("CSO2", Path.Combine(Directory.GetCurrentDirectory(), "Bin\\CounterStrikeOnline2.exe"));
                     Firewall.AddProgramException(Static.CWindow, Static.CurrentProcess.MainModule.FileName);
                 }
             }
@@ -559,7 +559,7 @@ namespace CSO2_ComboLauncher
                 EnableRaisingEvents = true,
                 StartInfo = new ProcessStartInfo
                 {
-                    FileName = "Bin\\CounterStrikeOnine2.exe",
+                    FileName = "Bin\\CounterStrikeOnline2.exe",
                     Arguments = args,
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
