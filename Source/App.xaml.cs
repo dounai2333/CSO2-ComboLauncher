@@ -210,26 +210,26 @@ namespace CSO2_ComboLauncher
         public enum Option : uint
         {
             // From dbghelp.h:
-            Normal = 0x00000000,
-            WithDataSegs = 0x00000001,
-            WithFullMemory = 0x00000002,
-            WithHandleData = 0x00000004,
-            FilterMemory = 0x00000008,
-            ScanMemory = 0x00000010,
-            WithUnloadedModules = 0x00000020,
-            WithIndirectlyReferencedMemory = 0x00000040,
-            FilterModulePaths = 0x00000080,
-            WithProcessThreadData = 0x00000100,
-            WithPrivateReadWriteMemory = 0x00000200,
-            WithoutOptionalData = 0x00000400,
-            WithFullMemoryInfo = 0x00000800,
-            WithThreadInfo = 0x00001000,
-            WithCodeSegs = 0x00002000,
-            WithoutAuxiliaryState = 0x00004000,
-            WithFullAuxiliaryState = 0x00008000,
-            WithPrivateWriteCopyMemory = 0x00010000,
-            IgnoreInaccessibleMemory = 0x00020000,
-            ValidTypeFlags = 0x0003ffff
+            Normal = 0,
+            WithDataSegs = 0x1,
+            WithFullMemory = 0x2,
+            WithHandleData = 0x4,
+            FilterMemory = 0x8,
+            ScanMemory = 0x10,
+            WithUnloadedModules = 0x20,
+            WithIndirectlyReferencedMemory = 0x40,
+            FilterModulePaths = 0x80,
+            WithProcessThreadData = 0x100,
+            WithPrivateReadWriteMemory = 0x200,
+            WithoutOptionalData = 0x400,
+            WithFullMemoryInfo = 0x800,
+            WithThreadInfo = 0x1000,
+            WithCodeSegs = 0x2000,
+            WithoutAuxiliaryState = 0x4000,
+            WithFullAuxiliaryState = 0x8000,
+            WithPrivateWriteCopyMemory = 0x10000,
+            IgnoreInaccessibleMemory = 0x20000,
+            ValidTypeFlags = 0x3FFFF
         };
 
         public enum ExceptionInfo

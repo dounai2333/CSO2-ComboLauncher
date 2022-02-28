@@ -24,9 +24,6 @@ namespace CSO2_ComboLauncher
         public static string netadapter = "TAP-Windows Adapter V9";
         public static string netadapterintername = "tap0901";
 
-        public static string AuthorAndHelper = "_author_and_helper";
-        public static string ThirdPartyLibrary = "_third_party_library";
-
         public static Process CurrentProcess = Process.GetCurrentProcess();
 
         public static void SetupIcon()
@@ -38,7 +35,7 @@ namespace CSO2_ComboLauncher
 
         public static string AuthorAndLibraryOutput()
         {
-            return $"\n\n{LStr.Get(AuthorAndHelper)}\n{LStr.Get(ThirdPartyLibrary)}";
+            return $"\n\n{LStr.Get("_author_and_helper")}\n{LStr.Get("_third_party_library")}";
         }
 
         public static int[] versionarray = { 0x35528, 0x35528 + 2, 0x35528 + 4 };
