@@ -176,8 +176,8 @@ namespace CSO2_ComboLauncher
             {
                 if (Firewall.Mgr != null && Firewall.Running)
                 {
-                    if (!Firewall.ICMPRequestAllowed)
-                        Firewall.ICMPRequestAllowed = true;
+                    //if (!Firewall.ICMPRequestAllowed)
+                        //Firewall.ICMPRequestAllowed = true;
                     if (File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "Bin\\CounterStrikeOnline2.exe")))
                         Firewall.AddProgramException("CSO2", Path.Combine(Directory.GetCurrentDirectory(), "Bin\\CounterStrikeOnline2.exe"));
                     Firewall.AddProgramException(Static.CWindow, Static.CurrentProcess.MainModule.FileName);
