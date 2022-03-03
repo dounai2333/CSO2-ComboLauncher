@@ -13,7 +13,7 @@ namespace CSO2_ComboLauncher
         public static string CVersion = "6.5.1.18"; // 启动器版本 (记得也换程序集信息)
         public static string CWindow = "CSO2 Combo Launcher V" + CVersion;
 
-        public static string service = "cn-zz-bgp-5.natfrp.cloud:49971"; // hosted on Sakura Frp (www.natfrp.com)
+        public static string service = "cn-cd-dx-6.natfrp.cloud:49971"; // hosted on Sakura Frp (www.natfrp.com)
         public static string account = "Ghost";
         public static string password = "made by dounai2333.";
 
