@@ -139,6 +139,12 @@ namespace CSO2_ComboLauncher
                         {
                             File.Delete(path);
                             currentversion++;
+
+                            Static.SetGameVersion(currentversion);
+                            Main.Instance.Dispatcher.Invoke(new Action(delegate
+                            {
+                                Main.Instance.version.Content = LStr.Get("_version_info", Static.CVersion, currentversion);
+                            }));
                         }
                         else
                         {
