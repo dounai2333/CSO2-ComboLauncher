@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.ServiceProcess;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.NetworkInformation;
 using System.Windows;
 using System.Windows.Controls;
@@ -189,19 +190,22 @@ namespace CSO2_ComboLauncher
             // enable HttpListener for image showing and future API
             Log.Clear();
             Log.Write(LStr.Get("_self_checking_httplistener") + Static.AuthorAndLibraryOutput());
-            Http = new HttpListenerHelper(27482);
-            Http.Start();
-            Http.AddResponse("test", "ok", false);
-
-            Http.AddResponse("username", Config.Username, false);
-            _ = Task.Run(() =>
+            if (HttpListener.IsSupported)
             {
-                while (true)
+                Http = new HttpListenerHelper(27482);
+                Http.Start();
+                Http.AddResponse("test", "ok", false);
+
+                Http.AddResponse("username", Config.Username, false);
+                _ = Task.Run(() =>
                 {
-                    Misc.Sleep(1000, false);
-                    Http.RefreshResponse("username", Config.NoAutoLogin ? "" : Config.Username, false);
-                }
-            });
+                    while (true)
+                    {
+                        Misc.Sleep(1000, false);
+                        Http.RefreshResponse("username", Config.NoAutoLogin ? "" : Config.Username, false);
+                    }
+                });
+            }
 
             await Misc.Sleep(250);
 
@@ -451,18 +455,6 @@ namespace CSO2_ComboLauncher
                 }
 
                 // stop being curious, it got reason and necessary to hide some basic info (keep it as a secret even it's easy to decrypt)
-                if (Config.Secret != Misc.Decrypt(Misc.UnicodeToString("\\u0054\\u006b\\u0056\\u0061\\u0052\\u0045\\u0030\\u0077\\u0055\\u006b\\u0052\\u0053\\u0061\\u0031\\u0070\\u0045\\u0055\\u0058\\u0070\\u0072\\u004e\\u0055\\u0035\\u0056\\u0055\\u0058\\u0070\\u0050\\u0051\\u0054\\u0030\\u0039")))
-                {
-                    string[] blacklist = { "\\u0059\\u006b\\u0068\\u0043\\u0061\\u0032\\u0056\\u0074\\u0055\\u0054\\u0030\\u003d", "\\u004e\\u006b\\u006c\\u0054\\u004e\\u0044\\u0055\\u0031\\u0063\\u0058\\u0055\\u0031\\u0062\\u0033\\u006c\\u006f\\u004e\\u0057\\u0045\\u0079\\u0055\\u0054\\u0056\\u0069\\u0065\\u0054\\u0055\\u003d", "\\u004e\\u006b\\u006c\\u0054\\u004e\\u0044\\u0055\\u0031\\u0063\\u0058\\u0055\\u003d", "\\u004e\\u0057\\u0038\\u0079\\u0061\\u0044\\u0055\\u0031\\u0063\\u0058\\u0055\\u003d", "\\u004e\\u0054\\u0055\\u0079\\u0055\\u006a\\u0055\\u0031\\u0063\\u0058\\u0055\\u003d", "\\u004e\\u0058\\u0046\\u0050\\u0051\\u0054\\u0055\\u0031\\u0063\\u0058\\u0055\\u003d", "\\u004e\\u0054\\u005a\\u0048\\u004d\\u007a\\u0055\\u0031\\u0063\\u0058\\u0055\\u003d", "\\u004e\\u006b\\u006c\\u006c\\u0053\\u006a\\u0055\\u0031\\u0063\\u0058\\u0055\\u003d" };
-                    for (int i = 0; i < blacklist.Count(); i++)
-                    {
-                        if (name.ToLower().Contains(Misc.Decrypt(Misc.UnicodeToString(blacklist[i]))))
-                        {
-                            MessageBox.Show(LStr.Get("_start_name_saved"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
-                            return true;
-                        }
-                    }
-                }
                 if (Config.Secret != Misc.Decrypt(Misc.UnicodeToString("\\u0054\\u0056\\u0056\\u004a\\u0065\\u006c\\u0046\\u0071\\u0053\\u0054\\u0042\\u0053\\u0056\\u0047\\u0068\\u0045\\u0055\\u0057\\u0070\\u0042\\u0065\\u0055\\u0039\\u0046\\u0056\\u0054\\u0056\\u004e\\u0051\\u0054\\u0030\\u0039")))
                 {
                     string[] blacklist = { "\\u0059\\u0031\\u0064\\u0073\\u0064\\u0056\\u006f\\u007a\\u0061\\u0044\\u0046\\u0061\\u0055\\u0054\\u0030\\u0039", "\\u004e\\u0058\\u0042\\u0074\\u004d\\u0044\\u005a\\u0061\\u0064\\u0058\\u0045\\u003d", "\\u004e\\u0054\\u0055\\u0079\\u0059\\u006a\\u005a\\u0061\\u0064\\u0058\\u0045\\u003d", "\\u004e\\u0057\\u0039\\u0050\\u0052\\u006a\\u005a\\u0061\\u0064\\u0058\\u0045\\u003d", "\\u004e\\u006b\\u0073\\u0072\\u004d\\u007a\\u005a\\u0061\\u0064\\u0058\\u0045\\u003d", "\\u004e\\u006b\\u0070\\u0035\\u004e\\u007a\\u005a\\u0061\\u0064\\u0058\\u0045\\u003d", "\\u004e\\u0056\\u006c\\u006c\\u0053\\u007a\\u005a\\u0061\\u0064\\u0058\\u0045\\u003d", "\\u004e\\u0056\\u0070\\u0058\\u0062\\u007a\\u005a\\u0061\\u0064\\u0058\\u0045\\u003d" };
