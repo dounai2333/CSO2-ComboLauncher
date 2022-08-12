@@ -24,17 +24,15 @@ namespace CSO2_ComboLauncher
             {
                 using (TextReader reader = new StreamReader(path))
                 {
-                    string strLine = "";
                     string currentRoot = "";
                     string[] keyPair = { };
 
-                    for (strLine = reader.ReadLine(); strLine != null; strLine = reader.ReadLine())
+                    for (string strLine = reader.ReadLine(); strLine != null; strLine = reader.ReadLine())
                     {
                         strLine = strLine.Trim();
-                        if (strLine.Trim().StartsWith("//"))
-                        {
+                        if (strLine.StartsWith("//"))
                             continue;
-                        }
+
                         if (!string.IsNullOrWhiteSpace(strLine))
                         {
                             if (strLine.StartsWith("[") && strLine.EndsWith("]"))
@@ -44,13 +42,10 @@ namespace CSO2_ComboLauncher
                             else
                             {
                                 if (strLine.Contains("//"))
-                                {
                                     strLine = strLine.Substring(0, strLine.IndexOf("//") - 1);
-                                }
 
                                 keyPair = strLine.Split(new char[] { '=' }, 2);
                                 SectionPair pair;
-                                string value = null;
 
                                 if (currentRoot == null)
                                     currentRoot = "ROOT";
@@ -58,10 +53,7 @@ namespace CSO2_ComboLauncher
                                 pair.Section = currentRoot;
                                 pair.Key = keyPair[0];
 
-                                if (keyPair.Length > 1)
-                                    value = keyPair[1];
-
-                                this.keyPair.Add(pair, value);
+                                this.keyPair.Add(pair, keyPair.Length > 1 ? keyPair[1] : null);
                             }
                         }
                     }
@@ -115,7 +107,6 @@ namespace CSO2_ComboLauncher
         public async Task SaveSettings(string filepath)
         {
             List<string> sections = new List<string>();
-            string tmpValue = "";
             string strToSave = "";
 
             foreach (SectionPair sectionPair in keyPair.Keys)
@@ -132,7 +123,7 @@ namespace CSO2_ComboLauncher
                 {
                     if (sectionPair.Section == section)
                     {
-                        tmpValue = keyPair[sectionPair];
+                        string tmpValue = keyPair[sectionPair];
 
                         if (tmpValue != null)
                             tmpValue = "=" + tmpValue;

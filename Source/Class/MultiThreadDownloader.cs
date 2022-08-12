@@ -68,14 +68,12 @@ namespace CSO2_ComboLauncher
             else
                 File.WriteAllText(path, string.Empty);
 
-            Uri url = new Uri(link);
-            FileInfo file = new FileInfo(path);
-            Download = new MultiPartDownload(url, 8192, threads, ResumingDlBuilder, RequestBuilder, DlChecker, AlreadyDownloadedRanges);
+            Download = new MultiPartDownload(new Uri(link), 8192, threads, ResumingDlBuilder, RequestBuilder, DlChecker, AlreadyDownloadedRanges);
             Download.DownloadCompleted += MultiPartDownload_OnCompleted;
             SpeedMonitor.Attach(Download);
             ProgressMonitor.Attach(Download);
 
-            DlSaver = new DownloadToFileSaver(file);
+            DlSaver = new DownloadToFileSaver(new FileInfo(path));
             DlSaver.Attach(Download);
 
             Downloading = true;

@@ -26,7 +26,7 @@ namespace CSO2_ComboLauncher
                 AddKeyWords("schinese", "_tier0_broken", "你的tier0.dll文件已损坏!\n你必须先修复这个问题才能启动此程序.");
                 AddKeyWords("tchinese", "_tier0_broken", "你的tier0.dll文件已被破壞!\n你必須先修復這個問題才能啟動程式.");
 
-                AddKeyWords("english", "_net_framework_lower_version", "Your .NET Framework version is lower than 4.7.2!\nTo avoid compatibility issues, you must install .NET Framework 4.7.2 or newer version.\n\nClick 'Yes' to open official website to download the .NET Framework 4.7.2.\nClick 'No' to ignore this and keep try run this program.");
+                AddKeyWords("english", "_net_framework_lower_version", "Your .NET Framework version is lower than 4.7.2!\nTo avoid compatibility issues, you must install .NET Framework 4.7.2 or newer version.\n\nClick 'Yes' to open official website to download the .NET Framework 4.8.\nClick 'No' to ignore this and keep try run this program.");
                 AddKeyWords("schinese", "_net_framework_lower_version", "你的.NET Framework版本低于4.7.2!\n为避免兼容性问题, 你必须安装.NET Framework 4.7.2或更新的版本.\n\n点击'是'打开官网以下载.NET Framework 4.8.\n点击'否'忽略并继续尝试运行此程序.");
                 AddKeyWords("tchinese", "_net_framework_lower_version", "你的.NET Framework版本低於4.7.2!\n為了避免兼容性問題, 你必須安裝.NET Framework 4.7.2或更新的版本.\n\n點擊'是'打開官方網站以下載.NET Framework 4.8.\n點擊'否'忽略並繼續嘗試運行此程序.");
 
