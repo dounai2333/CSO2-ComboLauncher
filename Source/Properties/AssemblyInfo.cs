@@ -52,6 +52,6 @@ using System.Windows;
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("4.7.2.0")]
-[assembly: AssemblyFileVersion("6.5.1.18")]
+[assembly: AssemblyFileVersion("6.5.1.19")]
 [assembly: NeutralResourcesLanguage("")]
 [assembly: Guid("88cb5560-b96c-4491-bdfd-962447aa6f1a")]
