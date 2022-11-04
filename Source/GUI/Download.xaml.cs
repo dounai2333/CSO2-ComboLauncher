@@ -53,11 +53,14 @@ namespace CSO2_ComboLauncher
             WriteThread = null;
         }
 
-        public static void MainOutput(long BytesReceived, long TotalBytesToReceive, long CurrentSpeed, int ProgressPercentage)
+        public static void MainOutput(long BytesReceived, long TotalBytesToReceive, string CurrentState, int ProgressPercentage)
         {
+            if (long.TryParse(CurrentState, out long CurrentSpeed))
+                CurrentState = Misc.ConvertByteTo(CurrentSpeed, "best", true) + "/s";
+
             Instance.Dispatcher.Invoke(new Action(delegate
             {
-                Instance.dwldtext.Text = $"{Misc.ConvertByteTo(BytesReceived, "best", true)} / {Misc.ConvertByteTo(TotalBytesToReceive, "best", true)}\n{Misc.ConvertByteTo(CurrentSpeed, "best", true)}/s";
+                Instance.dwldtext.Text = $"{Misc.ConvertByteTo(BytesReceived, "best", true)} / {Misc.ConvertByteTo(TotalBytesToReceive, "best", true)}\n{CurrentState}";
                 Instance.dwldprogress.Value = ProgressPercentage;
             }));
         }

@@ -133,7 +133,7 @@ namespace CSO2_ComboLauncher
                     }
                     else
                     {
-                        Download.MainOutput(BytesReceived, TotalBytesToReceive, BytesReceived - logbyte, ProgressPercentage);
+                        Download.MainOutput(BytesReceived, TotalBytesToReceive, (BytesReceived - logbyte).ToString(), ProgressPercentage);
                         logbyte = BytesReceived;
                     }
 
@@ -162,7 +162,7 @@ namespace CSO2_ComboLauncher
             {
                 if (shouldoutput)
                 {
-                    Download.MainOutput(BytesReceived, TotalBytesToReceive, BytesReceived - logbyte, ProgressPercentage);
+                    Download.MainOutput(BytesReceived, TotalBytesToReceive, (BytesReceived - logbyte).ToString(), ProgressPercentage);
                     logbyte = BytesReceived;
                     shouldoutput = false;
                 }
