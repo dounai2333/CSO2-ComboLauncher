@@ -76,7 +76,7 @@ namespace CSO2_ComboLauncher
             StartCounter();
         }
 
-        public async Task<bool> DownloadFile(string web, string path, string hashchecktype = "", string hash = "")
+        public async Task<bool> DownloadFile(string link, string path, string hashchecktype = "", string hash = "")
         {
             if (Download.Instance.IsVisible)
                 return false;
@@ -91,7 +91,7 @@ namespace CSO2_ComboLauncher
 
             try
             {
-                await Client.DownloadFileTaskAsync(web, path);
+                await Client.DownloadFileTaskAsync(link, path);
             }
             catch
             {
@@ -114,6 +114,11 @@ namespace CSO2_ComboLauncher
             }
 
             return true;
+        }
+
+        public void StopDownloading()
+        {
+            Client.CancelAsync();
         }
 
         private void StartCounter()
@@ -149,7 +154,8 @@ namespace CSO2_ComboLauncher
             TotalBytesToReceive = 0;
             BytesReceived = 0;
 
-            Download.ResetStatus();
+            if (!e.Cancelled)
+                Download.ResetStatus();
         }
 
         private void Downloader_AsyncProgressChanged(object sender, DownloadProgressChangedEventArgs e)

@@ -74,7 +74,7 @@ namespace CSO2_ComboLauncher
             else
                 File.WriteAllText(path, string.Empty);
 
-            Download = new MultiPartDownload(new Uri(link), 8192, threads, ResumingDlBuilder, RequestBuilder, DlChecker, AlreadyDownloadedRanges);
+            Download = new MultiPartDownload(new Uri(link), 2048, threads, ResumingDlBuilder, RequestBuilder, DlChecker, AlreadyDownloadedRanges);
             Download.DownloadCompleted += MultiPartDownload_OnCompleted;
             SpeedMonitor.Attach(Download);
             ProgressMonitor.Attach(Download);
@@ -88,7 +88,7 @@ namespace CSO2_ComboLauncher
 
             Download.Start();
 
-            while (Downloading || Download.State != DownloadState.Finished)
+            while (Downloading || (Download != null && Download.State != DownloadState.Finished))
                 await Misc.Sleep(100);
 
             while (!Misc.IsFileAvailable(path))
@@ -108,6 +108,20 @@ namespace CSO2_ComboLauncher
             }
 
             return true;
+        }
+
+        public void StopDownloading()
+        {
+            if (Download == null)
+                return;
+
+            CSO2_ComboLauncher.Download.ResetStatus();
+
+            Downloading = false;
+            Download.Stop();
+            Download.DetachAllHandlers();
+            Download.Dispose();
+            Download = null;
         }
 
         public void Pause()
@@ -168,8 +182,8 @@ namespace CSO2_ComboLauncher
         void MultiPartDownload_OnCompleted(DownloadEventArgs args)
         {
             // this is an important thing to do after a download isn't used anymore, otherwise you will run into a memory leak.
-            args.Download.DetachAllHandlers();
-            
+            Download.DetachAllHandlers();
+
             Downloading = false;
             CSO2_ComboLauncher.Download.ResetStatus();
         }
