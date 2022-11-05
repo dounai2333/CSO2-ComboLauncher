@@ -126,7 +126,7 @@ namespace CSO2_ComboLauncher
 
         public void Pause()
         {
-            if (Download == null)
+            if (Download == null || Downloading == false)
                 return;
 
             Downloading = false;

@@ -233,6 +233,26 @@ namespace CSO2_ComboLauncher
             return dst;
         }
 
+        public static string StringToHex(string input, string encode = "UTF-8")
+        {
+            string result = "";
+            byte[] bytes = Encoding.GetEncoding(encode).GetBytes(input);
+
+            foreach (byte text in bytes)
+                result += text.ToString("X2");
+
+            return result;
+        }
+
+        public static string HexToString(string input, string encode = "UTF-8")
+        {
+            byte[] bytes = new byte[input.Length / 2];
+            for (var i = 0; i < bytes.Length; i++)
+                bytes[i] = Convert.ToByte(input.Substring(i * 2, 2), 16);
+
+            return Encoding.GetEncoding(encode).GetString(bytes);
+        }
+
         public static string DecimalToHex(int input, bool withhexmark = true)
         {
             return (withhexmark ? "0x" : "") + input.ToString("X").ToUpper();

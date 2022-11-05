@@ -124,33 +124,9 @@ namespace CSO2_ComboLauncher
             // QQGroup strings
             if (true)
             {
-                AddKeyWords("english", "_join_qqqun", "Join Our QQ Group");
-                AddKeyWords("schinese", "_join_qqqun", "加入我们的QQ群");
-                AddKeyWords("tchinese", "_join_qqqun", "加入我們的QQ群組");
-
-                AddKeyWords("english", "_copy", "Copy");
-                AddKeyWords("schinese", "_copy", "复制");
-                AddKeyWords("tchinese", "_copy", "複製");
-
-                AddKeyWords("english", "_copied", "Copied!");
-                AddKeyWords("schinese", "_copied", "已复制!");
-                AddKeyWords("tchinese", "_copied", "已複製!");
-
                 AddKeyWords("english", "_oneclick", "Join Now");
                 AddKeyWords("schinese", "_oneclick", "一键加群");
                 AddKeyWords("tchinese", "_oneclick", "一鍵加入");
-
-                AddKeyWords("english", "_group_1", "Our group 1");
-                AddKeyWords("schinese", "_group_1", "我们的1群");
-                AddKeyWords("tchinese", "_group_1", "我們的1群");
-
-                AddKeyWords("english", "_group_2", "Our group 2");
-                AddKeyWords("schinese", "_group_2", "我们的2群");
-                AddKeyWords("tchinese", "_group_2", "我們的2群");
-
-                AddKeyWords("english", "_group_3", "Our group 3");
-                AddKeyWords("schinese", "_group_3", "我们的3群");
-                AddKeyWords("tchinese", "_group_3", "我們的3群");
             }
 
             // MainWindow strings
