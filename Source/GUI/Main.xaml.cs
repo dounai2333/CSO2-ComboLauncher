@@ -170,23 +170,6 @@ namespace CSO2_ComboLauncher
 
             await Misc.Sleep(250);
 
-            // add game client and program itself to the filewall exception list (trusted application)
-            Log.Clear();
-            Log.Write(LStr.Get("_self_checking_firewall_addexception") + Static.AuthorAndLibraryOutput());
-            using (Firewall Firewall = new Firewall())
-            {
-                if (Firewall.Mgr != null && Firewall.Running)
-                {
-                    //if (!Firewall.ICMPRequestAllowed)
-                        //Firewall.ICMPRequestAllowed = true;
-                    if (File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "Bin\\CounterStrikeOnline2.exe")))
-                        Firewall.AddProgramException("CSO2", Path.Combine(Directory.GetCurrentDirectory(), "Bin\\CounterStrikeOnline2.exe"));
-                    Firewall.AddProgramException(Static.CWindow, Static.CurrentProcess.MainModule.FileName);
-                }
-            }
-
-            await Misc.Sleep(250);
-
             // enable HttpListener for image showing and future API
             Log.Clear();
             Log.Write(LStr.Get("_self_checking_httplistener") + Static.AuthorAndLibraryOutput());
