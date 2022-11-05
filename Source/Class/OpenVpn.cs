@@ -76,10 +76,14 @@ namespace CSO2_ComboLauncher
         public static event Disconnected OnDisconnected;
 
         public delegate void Connected();
-        public static event Disconnected OnConnected;
+        public static event Connected OnConnected;
 
         private static void ResetValue()
         {
+            OnProgressCompleted = (ProgressCompleted)Delegate.RemoveAll(OnProgressCompleted, OnProgressCompleted);
+            OnDisconnected = (Disconnected)Delegate.RemoveAll(OnDisconnected, OnDisconnected);
+            OnConnected = (Connected)Delegate.RemoveAll(OnConnected, OnConnected);
+
             noTapWindowsAvailable = false;
             noTapWindowsExist = false;
             exitedWithFatalError = false;

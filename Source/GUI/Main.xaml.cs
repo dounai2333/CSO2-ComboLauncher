@@ -260,13 +260,19 @@ namespace CSO2_ComboLauncher
             OpenVpn.Start("Bin\\OpenVPN\\openvpn.exe", path);
             Log.Write(LStr.Get("_start_openvpn_and_connect"));
 
-            // maybe find a better way to rewrite codes here? it looks awful.
-            int wait = 0;
-            while (!OpenVpn.IsConnected && !OpenVpn.Process.HasExited)
+            int time = 0;
+            OpenVpn.OnConnected += () =>
+            {
+                Log.Write(LStr.Get("_connect_to_server_halfway"));
+                File.Delete(path);
+                time = 0;
+            };
+
+            while (!OpenVpn.Process.HasExited && !OpenVpn.IsProgressCompleted)
             {
                 await Misc.Sleep(100);
-                wait++;
-                if (wait >= 150)
+                time++;
+                if (time >= 150) // 15sec
                 {
                     Log.Write(LStr.Get("_connect_to_server_failed"), "red");
                     await OpenVpn.Kill(true);
@@ -276,7 +282,6 @@ namespace CSO2_ComboLauncher
                     return;
                 }
             }
-            File.Delete(path);
 
             if (OpenVpn.Process.HasExited)
             {
@@ -313,34 +318,7 @@ namespace CSO2_ComboLauncher
                 return;
             }
 
-            Log.Write(LStr.Get("_connect_to_server_halfway"));
-            while (!OpenVpn.IsProgressCompleted && !OpenVpn.Process.HasExited)
-            {
-                await Misc.Sleep(100);
-                wait++;
-                if (wait >= 150)
-                {
-                    Log.Write(LStr.Get("_connect_to_server_failed"), "red");
-                    await OpenVpn.Kill(true);
-                    connecterror = true;
-                    MainButtonStatus(true);
-                    return;
-                }
-            }
-
             MainButtonStatus(true);
-
-            if (OpenVpn.Process.HasExited)
-            {
-                if (OpenVpn.ExitedWithFatalError)
-                    Log.Write(LStr.Get("_connect_to_server_failed_openvpnexited_fatalerror"), "red");
-                else
-                    Log.Write(LStr.Get("_connect_to_server_failed_openvpnexited"), "red");
-
-                connecterror = true;
-                return;
-            }
-
             if (Config.DisableSomeCheck)
             {
                 Log.Write(LStr.Get("_connect_to_server_success", "", ""));

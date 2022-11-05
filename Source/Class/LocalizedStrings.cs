@@ -290,7 +290,7 @@ namespace CSO2_ComboLauncher
                 AddKeyWords("schinese", "_connect_to_server_failed_openvpnexited", "OpenVPN过早退出!\n请检查你的杀毒软件是否进行了拦截.");
                 AddKeyWords("tchinese", "_connect_to_server_failed_openvpnexited", "OpenVPN太早退出!\n請檢查你的殺毒軟體是否攔下了它.");
 
-                AddKeyWords("english", "_connect_to_server_halfway", "Connect success, confirmation data...");
+                AddKeyWords("english", "_connect_to_server_halfway", "Connect success, confirming data from server...");
                 AddKeyWords("schinese", "_connect_to_server_halfway", "连接成功, 正在确认数据...");
                 AddKeyWords("tchinese", "_connect_to_server_halfway", "連接成功, 正在確認數據...");
 
