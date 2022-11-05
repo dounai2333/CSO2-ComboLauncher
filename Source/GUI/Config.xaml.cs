@@ -33,6 +33,7 @@ namespace CSO2_ComboLauncher
             mainGrid.Margin = new Thickness(0);
             LStr.LocalifyControl(mainGrid.Children);
 
+            // check OpenVpnServer() on Downloader.cs also!
             ServerInfo.Items.Add("Shanghai");
 
             if (File.Exists(ConfigName))

@@ -18,9 +18,9 @@ namespace CSO2_ComboLauncher
             // App strings
             if (true)
             {
-                AddKeyWords("english", "_wrong_folder", "Please place this launcher to the cso2 root folder!\nroot folder = having 'Bin', 'custom' and 'Data' exists.");
-                AddKeyWords("schinese", "_wrong_folder", "请将启动器放置于cso2根目录下!\n同时拥有Bin、custom和Data三个文件夹的就是'根目录'.");
-                AddKeyWords("tchinese", "_wrong_folder", "請將啟動器放置於cso2根目錄下!\n放有Bin、custom和Data的資料夾就是'根目錄'.");
+                AddKeyWords("english", "_wrong_folder", "Please place this launcher to the cso2 root folder!\nroot folder = having 'Bin', 'custom' and 'Data' exists.\nMissing '{0}'");
+                AddKeyWords("schinese", "_wrong_folder", "请将启动器放置于cso2根目录下!\n同时拥有Bin、custom和Data三个文件夹的就是'根目录'.\n缺少'{0}'");
+                AddKeyWords("tchinese", "_wrong_folder", "請將啟動器放置於cso2根目錄下!\n放有Bin、custom和Data的資料夾就是'根目錄'.\n缺少'{0}'");
 
                 AddKeyWords("english", "_tier0_broken", "Your tier0.dll file is broken!\nYou have to fix it before start this program.");
                 AddKeyWords("schinese", "_tier0_broken", "你的tier0.dll文件已损坏!\n你必须先修复这个问题才能启动此程序.");
