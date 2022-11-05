@@ -7,5 +7,6 @@
         <TextBlock x:Name="dwldfile" Margin="5,30,5,65" Width="290" Height="30" TextAlignment="Center" FontSize="14" Foreground="Black" FontWeight="Bold"/>
         <TextBlock x:Name="dwldtext" Margin="5,50,5,35" Width="290" Height="40" TextAlignment="Center" FontSize="14" Foreground="Black" FontWeight="Bold"/>
         <ProgressBar x:Name="dwldprogress" Margin="5,96,5,5" Width="290" Height="24"/>
+        <Button x:Name="retry" Content="Retry" Margin="245,75,5,30" Width="50" Height="20" Click="Retry_Click" IsEnabled="False" FontWeight="Bold"/>
     </Grid>
 </Window>

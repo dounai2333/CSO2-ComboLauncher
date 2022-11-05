@@ -86,6 +86,13 @@ namespace CSO2_ComboLauncher
             CSO2_ComboLauncher.Download.Instance.dwldfile.Text = Misc.PathLengthSaver(Path.GetFileName(path), 35);
             CSO2_ComboLauncher.Download.Instance.Show();
 
+            CSO2_ComboLauncher.Download.OnRetry += async () =>
+            {
+                Pause();
+                await Misc.Sleep(2000);
+                Resume();
+            };
+
             Download.Start();
 
             while (Downloading || (Download != null && Download.State != DownloadState.Finished))

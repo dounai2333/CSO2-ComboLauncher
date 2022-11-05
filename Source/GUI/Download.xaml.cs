@@ -12,6 +12,9 @@ namespace CSO2_ComboLauncher
 
         private static Thread WriteThread { get; set; }
 
+        public delegate void RetryListener();
+        public static event RetryListener OnRetry;
+
         public Download()
         {
             if (Instance == null)
@@ -62,17 +65,22 @@ namespace CSO2_ComboLauncher
             {
                 Instance.dwldtext.Text = $"{Misc.ConvertByteTo(BytesReceived, "best", true)} / {Misc.ConvertByteTo(TotalBytesToReceive, "best", true)}\n{CurrentState}";
                 Instance.dwldprogress.Value = ProgressPercentage;
+
+                if (ProgressPercentage >= 35 && CurrentState != "Paused")
+                    Instance.retry.IsEnabled = true;
             }));
         }
 
         public static void ResetStatus()
         {
+            OnRetry = (RetryListener)Delegate.RemoveAll(OnRetry, OnRetry);
             Instance.Dispatcher.Invoke(new Action(delegate
             {
                 Instance.dw.Text = "Downloading";
                 Instance.dwldfile.Text = string.Empty;
                 Instance.dwldtext.Text = string.Empty;
                 Instance.dwldprogress.Value = 0;
+                Instance.retry.IsEnabled = false;
                 Instance.Hide();
             }));
         }
@@ -88,6 +96,11 @@ namespace CSO2_ComboLauncher
         {
             if (e.ChangedButton == MouseButton.Left && e.ButtonState == MouseButtonState.Pressed)
                 DragMove();
+        }
+
+        private void Retry_Click(object sender, RoutedEventArgs e)
+        {
+            OnRetry?.Invoke();
         }
     }
 }
