@@ -197,12 +197,9 @@ namespace CSO2_ComboLauncher
 
         public static bool IsFileAvailable(string file, FileAccess fa = FileAccess.ReadWrite)
         {
-            if (!File.Exists(file))
-                return true;
-
             try
             {
-                using (FileStream fs = new FileInfo(file).Open(FileMode.Open, fa, (FileShare)fa))
+                using (FileStream fs = new FileStream(file, FileMode.Open, fa))
                     return true;
             }
             catch (Exception ex)
