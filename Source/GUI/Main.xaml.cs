@@ -891,7 +891,7 @@ namespace CSO2_ComboLauncher
             {
                 using (StreamWriter sw = new StreamWriter(Static.logfile, Encoding.UTF8, 4096, true))
                 {
-                    sw.WriteLine("[" + DateTime.Now.ToString("yyyy-MM-dd H:mm:ss") + $"] {text}");
+                    sw.WriteLine("[" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + $"] {text}");
                 }
             }
 
