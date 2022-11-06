@@ -108,7 +108,7 @@ namespace CSO2_ComboLauncher
             // check and download OpenVPN if necessary
             Log.Clear();
             Log.Write(LStr.Get("_self_checking_openvpnfile") + Static.AuthorAndLibraryOutput());
-            if (!Directory.Exists("Bin\\OpenVPN") || Directory.GetFiles("Bin\\OpenVPN").Count() != 5)
+            if (!Directory.Exists("Bin\\OpenVPN") || Directory.GetFiles("Bin\\OpenVPN").Count() < 5)
             {
                 if (Directory.Exists("Bin\\OpenVPN"))
                     Directory.Delete("Bin\\OpenVPN", true);
@@ -849,6 +849,8 @@ namespace CSO2_ComboLauncher
 
             App.HideAllWindow();
 
+            Static.logfile.Dispose();
+
             Static.icon.Visible = false;
             Static.icon.Dispose();
 
@@ -887,7 +889,10 @@ namespace CSO2_ComboLauncher
 
             public void WriteToFile(object text)
             {
-
+                using (StreamWriter sw = new StreamWriter(Static.logfile, Encoding.UTF8, 4096, true))
+                {
+                    sw.WriteLine("[" + DateTime.Now.ToString("yyyy-MM-dd H:mm:ss") + $"] {text}");
+                }
             }
 
             public async void Clear()

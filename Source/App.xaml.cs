@@ -90,7 +90,7 @@ namespace CSO2_ComboLauncher
             }
             else
             {
-                Static.logfile = new FileStream("combolauncher.log", FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read);
+                Static.logfile = new FileStream("combolauncher.log", FileMode.Append, FileAccess.Write, FileShare.Read);
             }
 
             if (!Directory.Exists("errorminidumps"))
