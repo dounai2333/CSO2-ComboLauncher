@@ -26,6 +26,8 @@ namespace CSO2_ComboLauncher
 
         public static Process CurrentProcess = Process.GetCurrentProcess();
 
+        public static FileStream logfile = null;
+
         public static void SetupIcon()
         {
             icon.Text = CWindow;

@@ -885,6 +885,11 @@ namespace CSO2_ComboLauncher
                 Log.Write(Environment.NewLine, "", false);
             }
 
+            public void WriteToFile(object text)
+            {
+
+            }
+
             public async void Clear()
             {
                 await LogDisplay.Dispatcher.BeginInvoke(new Action(() =>

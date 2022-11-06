@@ -83,20 +83,15 @@ namespace CSO2_ComboLauncher
                 Environment.Exit(1);
             }
 
-            if (!Misc.IsFileAvailable(Path.GetTempPath() + "combolauncher.log"))
+            if (!Misc.IsFileAvailable("combolauncher.log"))
             {
                 MessageBox.Show(LStr.Get("_no_multi_start"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
                 Environment.Exit(1);
             }
-            Task.Run(() =>
+            else
             {
-                FileStream fs = new FileStream(Path.GetTempPath() + "combolauncher.log", FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None);
-                lock (fs)
-                {
-                    fs.SetLength(0);
-                    Static.CurrentProcess.WaitForExit();
-                }
-            });
+                Static.logfile = new FileStream("combolauncher.log", FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read);
+            }
 
             if (!Directory.Exists("errorminidumps"))
             {
