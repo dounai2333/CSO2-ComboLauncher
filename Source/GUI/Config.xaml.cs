@@ -10,8 +10,6 @@ namespace CSO2_ComboLauncher
     {
         public static Config Instance { get; private set; }
 
-        private static string ConfigName = "cso2_launcher.ini";
-
         public string Username = "";
         public string Password = "";
         public bool NoAutoLogin = false;
@@ -36,11 +34,11 @@ namespace CSO2_ComboLauncher
             // check OpenVpnServer() on Downloader.cs also!
             ServerInfo.Items.Add("Shanghai");
 
-            if (File.Exists(ConfigName))
+            if (File.Exists(Static.Config))
             {
-                Misc.DecryptFile(ConfigName, ConfigName);
+                Misc.DecryptFile(Static.Config, Static.Config);
 
-                IniParser ini = new IniParser(ConfigName);
+                IniParser ini = new IniParser(Static.Config);
                 string _name = ini.GetSetting("Game", "Name");
                 string _password = ini.GetSetting("Game", "Password");
                 string _noautologin = ini.GetSetting("Game", "DisableAutoLogin");
@@ -110,7 +108,7 @@ namespace CSO2_ComboLauncher
                 passWord.IsEnabled = false;
             }
 
-            if (!File.Exists(ConfigName))
+            if (!File.Exists(Static.Config))
                 ShowDialog();
         }
 
@@ -127,9 +125,9 @@ namespace CSO2_ComboLauncher
 
         public void SaveConfig()
         {
-            File.WriteAllText(ConfigName, string.Empty);
+            File.WriteAllText(Static.Config, string.Empty);
 
-            IniParser ini = new IniParser(ConfigName);
+            IniParser ini = new IniParser(Static.Config);
             ini.AddSetting("Game", "Name", Username);
             ini.AddSetting("Game", "Password", Password);
             ini.AddSetting("Game", "DisableAutoLogin", NoAutoLogin.ToString());
@@ -141,7 +139,7 @@ namespace CSO2_ComboLauncher
             ini.AddSetting("Launcher", "Secret", Secret);
             ini.SaveSettings();
 
-            Misc.EncryptFile(ConfigName, ConfigName);
+            Misc.EncryptFile(Static.Config, Static.Config);
         }
 
         private void Config_Closing(object sender, CancelEventArgs e)
@@ -191,7 +189,7 @@ namespace CSO2_ComboLauncher
         {
             Server = ServerInfo.SelectedItem.ToString();
 
-            if (Main.Instance != null && Main.Instance.started)
+            if (Static.started)
             {
                 ServerInfo.IsEnabled = false;
                 await Main.Instance.StartOpenVpn();

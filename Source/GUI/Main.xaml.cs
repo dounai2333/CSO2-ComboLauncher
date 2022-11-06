@@ -28,9 +28,7 @@ namespace CSO2_ComboLauncher
 
         private Config Config { get; set; }
 
-        public bool started = false;
         public static bool connecterror = false;
-        public static bool mainservererror = false;
 
         public Main()
         {
@@ -197,17 +195,17 @@ namespace CSO2_ComboLauncher
             Log.Write(LStr.Get("_self_checking_mainserverconnection") + Static.AuthorAndLibraryOutput());
             try
             {
-                mainservererror = await Downloader.StringFromMainServer("test") != "ok";
+                Static.mainserveronline = await Downloader.StringFromMainServer("test") == "ok";
             }
             catch
             {
-                mainservererror = true;
+                Static.mainserveronline = false;
             }
 
             await Misc.Sleep(250);
 
             // check program itself for updates (ignored if 'No Unnecessary Checks' is checked or main server is offline)
-            if (!Config.DisableSomeCheck && !mainservererror)
+            if (!Config.DisableSomeCheck && Static.mainserveronline)
             {
                 Log.Clear();
                 Log.Write(LStr.Get("_self_checking_launcherupdate") + Static.AuthorAndLibraryOutput());
@@ -218,20 +216,20 @@ namespace CSO2_ComboLauncher
 
             // download promotional images for let game showing it (ignored if main server is offline) and text blacklist for banning insulting or inappropriate username
             Log.Clear();
-            Log.Write(LStr.Get("_self_checking_download_resource", LStr.Get(mainservererror ? "_server_backup" : "_server_main")) + Static.AuthorAndLibraryOutput());
-            if (!mainservererror)
+            Log.Write(LStr.Get("_self_checking_download_resource", LStr.Get(Static.mainserveronline ? "_server_main" : "_server_backup")) + Static.AuthorAndLibraryOutput());
+            if (Static.mainserveronline)
             {
                 List<string> files = await Downloader.PromoImage();
                 if (files != null && files.Count() >= 1)
                     for (int i = 0; i < files.Count(); i++)
                         Http.AddResponse(files[i], Path.GetTempPath() + "_" + files[i], true);
             }
-            Static.blacklist = await Downloader.BlackList(mainservererror);
+            Static.blacklist = await Downloader.BlackList(!Static.mainserveronline);
 
             await Misc.Sleep(250);
 
             await StartOpenVpn();
-            started = true;
+            Static.started = true;
         }
 
         public async Task StartOpenVpn()
@@ -247,8 +245,8 @@ namespace CSO2_ComboLauncher
             await OpenVpn.Kill(true);
             await Misc.ResetNetAdapter(Static.netadapter);
 
-            Log.Write(LStr.Get("_download_server_info", LStr.Get(mainservererror ? "_server_backup" : "_server_main")));
-            string path = await Downloader.OpenVpnServer(mainservererror);
+            Log.Write(LStr.Get("_download_server_info", LStr.Get(Static.mainserveronline ? "_server_main" : "_server_backup")));
+            string path = await Downloader.OpenVpnServer(!Static.mainserveronline);
             if (string.IsNullOrEmpty(path))
             {
                 Log.Write(LStr.Get("_download_server_info_failed"), "red");
@@ -485,7 +483,7 @@ namespace CSO2_ComboLauncher
 
             MainButtonStatus(false, false);
 
-            if (!Config.DisableSomeCheck && !mainservererror)
+            if (!Config.DisableSomeCheck && Static.mainserveronline)
             {
                 try
                 {
@@ -730,14 +728,14 @@ namespace CSO2_ComboLauncher
             MainButtonStatus(false, false);
             try
             {
-                mainservererror = await Downloader.StringFromMainServer("test") != "ok";
+                Static.mainserveronline = await Downloader.StringFromMainServer("test") == "ok";
             }
             catch
             {
-                mainservererror = true;
+                Static.mainserveronline = false;
             }
 
-            if (mainservererror)
+            if (!Static.mainserveronline)
             {
                 MessageBox.Show(LStr.Get("_update_check_main_server_offline"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
                 MainButtonStatus(true);

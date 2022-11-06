@@ -83,17 +83,16 @@ namespace CSO2_ComboLauncher
                 Environment.Exit(1);
             }
 
-            if (!Misc.IsFileAvailable("combolauncher.log"))
+            if (!Misc.IsFileAvailable(Static.Log))
             {
                 MessageBox.Show(LStr.Get("_no_multi_start"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
                 Environment.Exit(1);
             }
             else
             {
-                FileInfo log = new FileInfo("combolauncher.log");
-                if (log.Exists)
-                    if (log.Length > 10485760) // 10MB
-                        log.Delete();
+                FileInfo log = new FileInfo(Static.Log);
+                if (log.Exists && log.Length > 10485760) // 10MB
+                    log.Delete();
 
                 Static.logfile = log.Open(FileMode.Append, FileAccess.Write, FileShare.Read);
             }

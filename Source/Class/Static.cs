@@ -17,7 +17,16 @@ namespace CSO2_ComboLauncher
         public static string account = "Ghost";
         public static string password = "made by dounai2333.";
 
+        public static bool mainserveronline = true;
+
         public static string gameserver = "10.8.0.1";
+
+        public static string Config = "cso2_launcher.ini";
+        public static string Log = "cso2_launcher.log";
+
+        public static FileStream logfile = null;
+
+        public static bool started = false;
 
         public static string[] blacklist = {};
 
@@ -25,8 +34,6 @@ namespace CSO2_ComboLauncher
         public static string netadapterintername = "tap0901";
 
         public static Process CurrentProcess = Process.GetCurrentProcess();
-
-        public static FileStream logfile = null;
 
         public static void SetupIcon()
         {
