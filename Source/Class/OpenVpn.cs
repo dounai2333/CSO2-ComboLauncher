@@ -58,9 +58,9 @@ namespace CSO2_ComboLauncher
 
         private static bool noTapWindowsExist = false;
 
-        private static string interfaceGuid = "";
+        private static string interfaceGuid = string.Empty;
 
-        private static string currentIp = "";
+        private static string currentIp = string.Empty;
 
         private static bool isConnected = false;
 
@@ -84,11 +84,13 @@ namespace CSO2_ComboLauncher
             OnDisconnected = (Disconnected)Delegate.RemoveAll(OnDisconnected, OnDisconnected);
             OnConnected = (Connected)Delegate.RemoveAll(OnConnected, OnConnected);
 
+            ExitEvent.Reset();
+
             noTapWindowsAvailable = false;
             noTapWindowsExist = false;
             exitedWithFatalError = false;
-            interfaceGuid = "";
-            currentIp = "";
+            interfaceGuid = string.Empty;
+            currentIp = string.Empty;
             isConnected = false;
             isProgressCompleted = false;
         }
@@ -103,8 +105,7 @@ namespace CSO2_ComboLauncher
             if (IsRunning)
                 return;
 
-            ResetValue();
-            ExitEvent.Reset();
+            Process?.Dispose();
 
             Process = new Process
             {
@@ -121,9 +122,13 @@ namespace CSO2_ComboLauncher
                     Arguments = $"--config \"{configFile}\" --suppress-timestamps --service \"{ExitEvent.Event}\" 0"
                 }
             };
-            Process.Exited += OnExit;
-            Process.OutputDataReceived += OnOutputDataReceived;
-            Process.ErrorDataReceived += OnErrorDataReceived;
+            Process.OutputDataReceived += OnDataReceived;
+            Process.ErrorDataReceived += OnDataReceived;
+            Process.Exited += (s, e) =>
+            {
+                Main.Log.WriteToFile("OpenVPN: exited with exitcode " + Misc.DecimalToHex(Process.ExitCode));
+                ResetValue();
+            };
 
             Process.Start();
             Process.BeginErrorReadLine();
@@ -133,24 +138,36 @@ namespace CSO2_ComboLauncher
         /// <summary>
         /// Gracefully stops the OpenVPN process, notifying the server of the disconnect
         /// </summary>
-        public static void Kill()
+        public static bool Kill()
         {
             if (!IsRunning)
-                return;
-            ExitEvent.Toggle();
+                return false;
+
+            return ExitEvent.Toggle();
         }
 
         /// <summary>
         /// Gracefully stops the OpenVPN process, notifying the server of the disconnect
         /// </summary>
         /// <param name="wait">Wait for the process to exit</param>
-        public static async Task Kill(bool wait = true)
+        public static async Task<bool> Kill(bool wait = true)
         {
             if (!IsRunning)
-                return;
-            ExitEvent.Toggle();
+                return false;
+
             if (wait)
-                await Task.Run(() => Process.WaitForExit());
+            {
+                if (ExitEvent.Toggle())
+                {
+                    await Task.Run(() => Process.WaitForExit());
+                    return true;
+                }
+                return false;
+            }
+            else
+            {
+                return ExitEvent.Toggle();
+            }
         }
 
         /// <summary>
@@ -167,19 +184,18 @@ namespace CSO2_ComboLauncher
         /// <summary>
         /// Kill all related openvpn process to prevent unexpected error
         /// </summary>
-        public static void KillAllRelated()
+        public static bool KillAllRelated()
         {
-            ExitEvent.Toggle();
+            return ExitEvent.Toggle();
         }
 
-        private static void OnErrorDataReceived(object sender, DataReceivedEventArgs dataReceivedEventArgs)
+        private static void OnDataReceived(object sender, DataReceivedEventArgs e)
         {
-            OpenVpnInterpreter.Message(dataReceivedEventArgs.Data);
-        }
+            if (string.IsNullOrWhiteSpace(e.Data))
+                return;
 
-        private static void OnOutputDataReceived(object sender, DataReceivedEventArgs dataReceivedEventArgs)
-        {
-            OpenVpnInterpreter.Message(dataReceivedEventArgs.Data);
+            Main.Log.WriteToFile("OpenVPN: " + e.Data);
+            CheckMessage(e.Data);
         }
 
         private static void OnConnect()
@@ -190,8 +206,8 @@ namespace CSO2_ComboLauncher
 
         private static void OnDisconnect()
         {
-            interfaceGuid = "";
-            currentIp = "";
+            interfaceGuid = string.Empty;
+            currentIp = string.Empty;
             isConnected = false;
             isProgressCompleted = false;
             OnDisconnected?.Invoke();
@@ -203,13 +219,24 @@ namespace CSO2_ComboLauncher
             OnProgressCompleted?.Invoke();
         }
 
-        private static void OnExit(object sender, EventArgs e)
+        private static void CheckMessage(string message)
         {
-            interfaceGuid = "";
-            currentIp = "";
-            isConnected = false;
-            isProgressCompleted = false;
-            ExitEvent.Reset();
+            if (message.Contains("Closing TUN/TAP interface"))
+                OnDisconnect();
+            else if (message.Contains("Initialization Sequence Completed"))
+                OnProgressComplete();
+            else if (message.Contains("Exiting due to fatal error"))
+                exitedWithFatalError = true;
+            else if (message.Contains("All TAP-Windows adapters on this system are currently in use"))
+                noTapWindowsAvailable = true;
+            else if (message.Contains("There are no TAP-Windows adapters on this system"))
+                noTapWindowsExist = true;
+            else if (message.Contains("Notified TAP-Windows driver"))
+            {
+                currentIp = new Regex(@"\b((([0-2]\d[0-5])|(\d{2})|(\d))\.){3}(([0-2]\d[0-5])|(\d{2})|(\d))\b").Match(message).Value;
+                interfaceGuid = message.Substring(message.IndexOf("{", StringComparison.Ordinal), 39);
+                OnConnect();
+            }
         }
 
         /// <summary>
@@ -219,76 +246,21 @@ namespace CSO2_ComboLauncher
         {
             public const string Event = "CSO2_OpenVPN";
 
-            public static void Reset()
+            public static bool Reset()
             {
                 if (EventWaitHandle.TryOpenExisting(Event, out EventWaitHandle handle))
-                    handle?.Reset();
+                    return handle.Reset();
+
+                return false;
             }
 
-            public static void Toggle()
+            public static bool Toggle()
             {
                 if (EventWaitHandle.TryOpenExisting(Event, out EventWaitHandle handle))
-                    handle?.Set();
+                    return handle.Set();
+
+                return false;
             }
         }
-
-        internal class OpenVpnInterpreter
-        {
-            private delegate void MsgPass(string msg);
-
-            public static void Message(string msg)
-            {
-                foreach (var action in OVpnActions.Where(action => msg != null).Where(action => msg.Contains(action.Key)))
-                {
-                    action.Value(msg);
-                }
-            }
-
-            /// <summary>
-            /// When messages from the OpenVPN process come in, they are run through this to process the data for anything that actionable
-            /// </summary>
-            private static readonly Dictionary<string, MsgPass> OVpnActions = new Dictionary<string, MsgPass>()
-            {
-                {
-                    "Closing TUN/TAP interface", msg =>
-                    {
-                        OnDisconnect();
-                    }
-                },
-                {
-                    "Initialization Sequence Completed", msg =>
-                    {
-                        OnProgressComplete();
-                    }
-                },
-                {
-                    "Exiting due to fatal error", msg =>
-                    {
-                        exitedWithFatalError = true;
-                    }
-                },
-                {
-                    "All TAP-Windows adapters on this system are currently in use", msg =>
-                    {
-                        noTapWindowsAvailable = true;
-                    }
-                },
-                {
-                    "There are no TAP-Windows adapters on this system", msg =>
-                    {
-                        noTapWindowsExist = true;
-                    }
-                },
-                {
-                    "Notified TAP-Windows driver", msg =>
-                    {
-                        currentIp = new Regex(@"\b((([0-2]\d[0-5])|(\d{2})|(\d))\.){3}(([0-2]\d[0-5])|(\d{2})|(\d))\b").Match(msg).Value;
-                        interfaceGuid = msg.Substring(msg.IndexOf("{", StringComparison.Ordinal), 39);
-                        OnConnect();
-                    }
-                }
-            };
-        }
-
     }
 }

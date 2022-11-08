@@ -176,6 +176,7 @@ namespace CSO2_ComboLauncher
             string timeo = DateTime.Now.ToString("yyyy-MM-dd--HH-mm-ss");
 
             CSO2_ComboLauncher.Main.Log.WriteToFile($"Error: uncatched exception happens. detail saved to errorminidumps/error_{timeo}.mdmp.");
+            //Static.logfile.Dispose(); // the program will exit in a short time anyway ¯\_(ツ)_/¯
 
             if (!Directory.Exists("errorminidumps"))
                 Directory.CreateDirectory("errorminidumps");

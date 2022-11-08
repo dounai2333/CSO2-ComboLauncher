@@ -191,7 +191,7 @@ namespace CSO2_ComboLauncher
                                         }
                                         exist = true;
                                     }
-                                    mo.Dispose();
+                                    mo?.Dispose();
                                 }
                             }
                         }

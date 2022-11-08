@@ -106,7 +106,7 @@ namespace CSO2_ComboLauncher
             // check and download OpenVPN if necessary
             Log.Clear();
             Log.Write(LStr.Get("_self_checking_openvpnfile") + Static.AuthorAndLibraryOutput());
-            if (!Directory.Exists("Bin\\OpenVPN") || Directory.GetFiles("Bin\\OpenVPN").Count() < 5)
+            if (!Directory.Exists("Bin\\OpenVPN") || Directory.GetFiles("Bin\\OpenVPN").Count() != 5)
             {
                 if (Directory.Exists("Bin\\OpenVPN"))
                     Directory.Delete("Bin\\OpenVPN", true);
@@ -845,14 +845,14 @@ namespace CSO2_ComboLauncher
                 return;
             }
 
+            OpenVpn.Kill();
+
             App.HideAllWindow();
 
-            Static.logfile.Dispose();
+            //Static.logfile.Dispose(); // the program will exit in a short time anyway ¯\_(ツ)_/¯
 
             Static.icon.Visible = false;
             Static.icon.Dispose();
-
-            OpenVpn.Kill();
 
             Environment.Exit(0);
         }
