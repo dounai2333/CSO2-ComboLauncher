@@ -101,6 +101,7 @@ namespace CSO2_ComboLauncher
         private void Retry_Click(object sender, RoutedEventArgs e)
         {
             // does nothing if download request is from Web.cs.
+            retry.IsEnabled = false;
             OnRetry?.Invoke();
         }
     }
