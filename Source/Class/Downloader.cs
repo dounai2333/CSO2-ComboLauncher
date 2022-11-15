@@ -183,9 +183,9 @@ namespace CSO2_ComboLauncher
 
         public static async Task<bool> OpenVpn()
         {
-            string k = "cbc66d34d5378bc7f9b51f34323234644f83103430323464111600500803575c0d581c5753060249000155571d530d015514040606005002015a0203010a3f647b49545a66627a4a4e5041203133daf1344ec6cad90f1a3a9566044c2d80cb91";
-            string code = "4914024d";
-            string sha1 = "0101EE950077F7FEE93D2E5EA15F35781DB2FFF5";
+            string k = "9bcd6e618166ddc0a9be1c61666362631f88136164636263411d02525206545a520b1f030051544e5004035449020705501f0a050007550053505703500169632b42570f32332c4d1e5b4275f0afe382aab3606bb3637d813b5522d47174ebdf";
+            string code = "d22adcbc";
+            string sha1 = "94CC81E1CE81520AD7001FE25F6710B5151789BC";
             string path = Path.GetTempPath() + "OpenVPN.zip";
 
             if (await QQMail.DownloadFile(path, 2, code, sha1, k))
@@ -204,17 +204,17 @@ namespace CSO2_ComboLauncher
         /// <param name="install">if false, then uninstall TAP-Windows.</param>
         public static async Task<bool> TapWindows(bool install = true)
         {
-            string k = "cfca5234dc3ddbc7fdb91c343b3864647689323439386464151a04050d01565208051f0c080f054904540003145a515c5518040c5d0e515d020d5650015d6b64647462196e510a005f42411a43511470b45a0d34e4daf81a4f6f78ad1acb155e3ebf0ec9";
-            string code = "052498dd";
-            string sha1 = "846F3F00DDE29C7E7F5A4A9923F3713A0E8A3CFD";
+            string k = "cc9d0264d46486c5feee4c643361396675de626431613966164d5b555454015304504f5206510a4b075252571c000c05054f525750585d500404015c5304366667233249660857025c15114a4b08497242251cb815bbe176f6bb85239a9862721122339f";
+            string code = "3bbd1a9f";
+            string sha1 = "71477EDC24DAD810C5D9E747ABF95B14224051FB";
             string path = Path.GetTempPath() + "TAP-Windows.zip";
 
             if (!Environment.Is64BitOperatingSystem)
             {
-                k = "9d9c016687618896afef4b66606437354ab0656662643735474c53565a5605015156485f51070718565700564f5d0301004e54030157550004025707075524353622354b350d59510d1416391a5c011b180a1572858453d624d739233a2fb351279364d161472acd";
-                code = "bcefbd75";
-                sha1 = "E7E064E346B45C45584B846445F001B703231DF8";
-                path = Path.GetTempPath() + "TAP-Windows_x86.zip";
+                k = "ca9e5232d4608995f8ed1832336536361db2363231653636104e57565451575550501b57505d0e1b015954561c045705534c030555540e0251570354055125366120661f660c58525a16456d495d00184f0846262273eef50c6d0f69647116d1100de92b02b35d77";
+                code = "5a621e66";
+                sha1 = "1316D8C3390C395B551420E7256CDF1933D66B41";
+                path = path.Replace("TAP-Windows", "TAP-Windows_x86");
             }
 
             if (await QQMail.DownloadFile(path, 2, code, sha1, k))
@@ -267,9 +267,9 @@ namespace CSO2_ComboLauncher
             }
             else
             {
-                string k = "cb9b5b34d137dcc7f9e8163436326364754a383434326364114b0f0707055201075415040457064900070e571950560203490d56505352520100080d50017164430b4a506b500f05570f545d47464d1e5d142cdd64843c17c6e8d4dcfe96495bd8b86c4a477e6a";
-                string code = "4d8442cd";
-                string sha1 = "E950B65F73F28CECE8CAA42A3FECDC547E734C09";
+                string k = "9ccf526180328797aebc1f6167373834221e316165373834461f030254010b5754551c50530f0d1957045759480f5951501d065407515c510606050756542a34145f43053a555455005b5d081643164e0a4025ba8b24dac90991af0bdf3bc2b84769339642fde8";
+                string code = "c01ae784";
+                string sha1 = "DBEE13E2FD6AA19E6ABA0CFA8C245902F727CAD0";
                 string path = Path.GetTempPath() + "word_blacklist.zip";
 
                 if (await QQMail.DownloadFile(path, 2, code, sha1, k))
@@ -317,9 +317,9 @@ namespace CSO2_ComboLauncher
             }
             else
             {
-                string k = "cf9c6b6581648b97fdef1865666134348324366564613434154c06060152075702551b5756070219045b075649590005544e055c50510c050457070757583834630b570b0309555d1e174e1170a1f6d765c534515fed3185e5859dd99b58cfe1b2";
-                string code = "0c6eda44";
-                string sha1 = "C0C2E355A602343B8C05B1D5E6ABBCFF39FBD582";
+                string k = "c6c66f65d3358997f4b51c6534303634827e3265363036341c16505d05080f010d0a1f5c50550e190d5851531b520657581405500e565202585c565c52023a346a51530b5158575d174d4a1122a602436073a2b46edb9650e29718c7883fb5a830";
+                string code = "992e6064";
+                string sha1 = "963477594A90D158EBA064DBAE2AA2BE0F839C09";
 
                 string text = await QQMail.DownloadString(code, sha1, k);
                 if (!string.IsNullOrEmpty(text))
@@ -334,9 +334,9 @@ namespace CSO2_ComboLauncher
 
         public static async Task<string> FileCheckReq()
         {
-            string k = "c8cf5462866687c7fabc1b62616338647906346263633864121f530754020c5054541801565459490351055a4e5b0b07041d540707000a50520857015b01286451595907000b5d075c4250134d195114239c4cb96270ad790acf5b1ac453e1162171127dfc";
-            string code = "705bcc8d";
-            string sha1 = "AC79DB0113951D3DFF6E78A730D9721641271F9F";
+            string k = "9ac80266863d8b92a8bb4d66613834312b0162666338343140185a50535a515206054e070209071c510606044e000001571a51570500565552010057015a2431035e0f03005051520e4506174d425d4171cc76397b2480ae65b32a9b64bc13c43b0731e71d";
+            string code = "e7cfc841";
+            string sha1 = "FB155F181CB49F008449FD078427F55E3052817E";
             string path = Path.GetTempPath() + "filecheckreq.zip";
             string unzippath = Path.GetTempPath() + Path.GetFileNameWithoutExtension(Path.GetRandomFileName());
 
