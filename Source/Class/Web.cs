@@ -62,7 +62,7 @@ namespace CSO2_ComboLauncher
                 Proxy = null,
                 Encoding = Encoding.GetEncoding("GBK"),
             };
-            TimeoutClient.Headers[HttpRequestHeader.UserAgent] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36";
+            TimeoutClient.Headers[HttpRequestHeader.UserAgent] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36";
             TimeoutClient.Headers[HttpRequestHeader.AcceptLanguage] = "zh-CN,zh;q=0.9";
 
             msgpassivemode = passiveoutput;
