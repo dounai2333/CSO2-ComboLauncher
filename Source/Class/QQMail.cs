@@ -40,7 +40,7 @@ namespace CSO2_ComboLauncher
             }
         }
 
-        public static async Task<string> DownloadString(string code, string sha1, string k)
+        public static async Task<string> DownloadString(string code, string k)
         {
             string address = await GetLink(code, k);
             if (!address.StartsWith("http"))
@@ -59,11 +59,11 @@ namespace CSO2_ComboLauncher
             return await Downloader.FileFromHttp(address, (Path.GetFileName(path) == string.Empty) ? path + Filename : path, threads, "sha1", sha1);
         }
 
-        public static async Task<string> DownloadString(string[] code, string sha1, string[] k)
+        public static async Task<string> DownloadString(string[] code, string[] k)
         {
             for (int i = 0; i < k.Count(); i++)
             {
-                string result = await DownloadString(code[i], sha1, k[i]);
+                string result = await DownloadString(code[i], k[i]);
                 if (!string.IsNullOrEmpty(result))
                     return result;
             }

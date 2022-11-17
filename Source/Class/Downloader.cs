@@ -319,9 +319,9 @@ namespace CSO2_ComboLauncher
             {
                 string k = "c6c66f65d3358997f4b51c6534303634827e3265363036341c16505d05080f010d0a1f5c50550e190d5851531b520657581405500e565202585c565c52023a346a51530b5158575d174d4a1122a602436073a2b46edb9650e29718c7883fb5a830";
                 string code = "992e6064";
-                string sha1 = "963477594A90D158EBA064DBAE2AA2BE0F839C09";
+                //string sha1 = "963477594A90D158EBA064DBAE2AA2BE0F839C09";
 
-                string text = await QQMail.DownloadString(code, sha1, k);
+                string text = await QQMail.DownloadString(code, k);
                 if (!string.IsNullOrEmpty(text))
                 {
                     File.WriteAllText(path, Misc.Decrypt(text));
