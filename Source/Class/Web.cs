@@ -52,7 +52,7 @@ namespace CSO2_ComboLauncher
                 Proxy = null,
                 Encoding = Encoding.GetEncoding("GBK"),
             };
-            Client.Headers[HttpRequestHeader.UserAgent] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36";
+            Client.Headers[HttpRequestHeader.UserAgent] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36";
             Client.Headers[HttpRequestHeader.AcceptLanguage] = "zh-CN,zh;q=0.9";
             Client.DownloadProgressChanged += Downloader_AsyncProgressChanged;
             Client.DownloadFileCompleted += Downloader_AsyncCompleted;

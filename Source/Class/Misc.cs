@@ -217,7 +217,7 @@ namespace CSO2_ComboLauncher
             }
         }
 
-        /// <param name="srcText">only unicode text accepted, else throw exception.</param>
+        /// <param name="srcText">only unicode text accepted, else exception is thrown.</param>
         public static string UnicodeToString(string srcText)
         {
             string dst = "";
@@ -280,7 +280,7 @@ namespace CSO2_ComboLauncher
             byte[] fb = {};
             await Task.Run(() =>
             {
-                using (FileStream fs = new FileInfo(file).Open(FileMode.Open, FileAccess.Read, FileShare.Read))
+                using (FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Read))
                     fb = ((HashAlgorithm)CryptoConfig.CreateFromName(type)).ComputeHash(fs);
             });
             

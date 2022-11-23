@@ -15,10 +15,7 @@ namespace CSO2_ComboLauncher
             Regex regex = new Regex(@"\\u[a-zA-Z0-9]{4}");
             MatchCollection mc = regex.Matches(jsonstring);
             foreach (Match match in mc)
-            {
-                string text = match.Value;
-                jsonstring = jsonstring.Replace(text, Misc.UnicodeToString(text));
-            }
+                jsonstring = jsonstring.Replace(match.Value, Misc.UnicodeToString(match.Value));
 
             return new JDynamic(jsonstring);
         }

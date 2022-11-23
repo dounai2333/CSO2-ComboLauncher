@@ -25,16 +25,15 @@ namespace CSO2_ComboLauncher
 
             LStr.InitLocalizedStrings();
 
-            if (!File.Exists("Bin\\engine.dll") || !File.Exists("Bin\\tier0.dll") || !File.Exists("Data\\1b87c6b551e518d11114ee21b7645a47.pkg"))
+            string missing = "";
+            if (!File.Exists("Bin\\engine.dll"))
+                missing += " Bin/engine.dll";
+            if (!File.Exists("Bin\\tier0.dll"))
+                missing += " Bin/tier0.dll";
+            if (!File.Exists("Data\\1b87c6b551e518d11114ee21b7645a47.pkg"))
+                missing += " Data/1b87c6b551e518d11114ee21b7645a47.pkg";
+            if (!string.IsNullOrEmpty(missing))
             {
-                string missing = "";
-                if (!File.Exists("Bin\\engine.dll"))
-                    missing += " Bin/engine.dll";
-                if (!File.Exists("Bin\\tier0.dll"))
-                    missing += " Bin/tier0.dll";
-                if (!File.Exists("Data\\1b87c6b551e518d11114ee21b7645a47.pkg"))
-                    missing += " Data/1b87c6b551e518d11114ee21b7645a47.pkg";
-
                 MessageBox.Show(LStr.Get("_wrong_folder", missing), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
                 Environment.Exit(1);
             }
@@ -117,7 +116,6 @@ namespace CSO2_ComboLauncher
             new ZipWorker();
             ZipWorker.StartLoop();
 
-            // force to use Tls 1.2 so some PC that has default setting with Tls 1.1 will works
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
         }
 

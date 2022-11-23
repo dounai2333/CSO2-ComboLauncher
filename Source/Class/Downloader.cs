@@ -99,8 +99,6 @@ namespace CSO2_ComboLauncher
 
         public static async Task<bool> GameClientUpdate()
         {
-            // GameUpdate() also do the job, I'm not sure this should be keeped, maybe delete?
-
             string gameclientinfo = Misc.Decrypt(await StringFromMainServer("updates/game/gameclient.txt"));
             string[] infoarray = Misc.SplitString(gameclientinfo);
 
@@ -201,7 +199,7 @@ namespace CSO2_ComboLauncher
             return false;
         }
 
-        /// <param name="install">if false, then uninstall TAP-Windows.</param>
+        /// <param name="install">set to 'false' to uninstall TAP-Windows driver.</param>
         public static async Task<bool> TapWindows(bool install = true)
         {
             string k = "cc9d0264d46486c5feee4c643361396675de626431613966164d5b555454015304504f5206510a4b075252571c000c05054f525750585d500404015c5304366667233249660857025c15114a4b08497242251cb815bbe176f6bb85239a9862721122339f";

@@ -21,9 +21,9 @@ namespace CSO2_ComboLauncher
             LStr.LocalifyControl(mainGrid.Children);
         }
 
-        private void Start(string qq)
+        private void Start(string qqgroup)
         {
-            Process.Start($"tencent://groupwpa/?subcmd=all&param={Misc.StringToHex($"{{\"groupUin\":{qq}}}")}");
+            Process.Start($"tencent://groupwpa/?subcmd=all&param={Misc.StringToHex($"{{\"groupUin\":{qqgroup}}}")}");
         }
 
         private void QQGroup_Closing(object sender, CancelEventArgs e)

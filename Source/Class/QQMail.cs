@@ -40,15 +40,6 @@ namespace CSO2_ComboLauncher
             }
         }
 
-        public static async Task<string> DownloadString(string code, string k)
-        {
-            string address = await GetLink(code, k);
-            if (!address.StartsWith("http"))
-                return null;
-
-            return await Downloader.StringFromHttp(address);
-        }
-
         /// <param name="path">if a folder is given, file name will be from QQmail server.</param>
         public static async Task<bool> DownloadFile(string path, int threads, string code, string sha1, string k)
         {
@@ -57,6 +48,25 @@ namespace CSO2_ComboLauncher
                 return false;
 
             return await Downloader.FileFromHttp(address, (Path.GetFileName(path) == string.Empty) ? path + Filename : path, threads, "sha1", sha1);
+        }
+
+        /// <param name="path">if a folder is given, filename will use the one come from QQmail server.</param>
+        public static async Task<bool> DownloadFile(string path, int threads, string[] code, string sha1, string[] k)
+        {
+            for (int i = 0; i < k.Count(); i++)
+                if (await DownloadFile(path, threads, code[i], sha1, k[i]))
+                    return true;
+
+            return false;
+        }
+
+        public static async Task<string> DownloadString(string code, string k)
+        {
+            string address = await GetLink(code, k);
+            if (!address.StartsWith("http"))
+                return null;
+
+            return await Downloader.StringFromHttp(address);
         }
 
         public static async Task<string> DownloadString(string[] code, string[] k)
@@ -69,16 +79,6 @@ namespace CSO2_ComboLauncher
             }
 
             return null;
-        }
-
-        /// <param name="path">if a folder is given, filename will use the one come from QQmail server.</param>
-        public static async Task<bool> DownloadFile(string path, int threads, string[] code, string sha1, string[] k)
-        {
-            for (int i = 0; i < k.Count(); i++)
-                if (await DownloadFile(path, threads, code[i], sha1, k[i]))
-                    return true;
-
-            return false;
         }
     }
 }
