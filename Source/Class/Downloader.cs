@@ -87,7 +87,7 @@ namespace CSO2_ComboLauncher
                         else
                             ProgramHelper.CmdCommand($"timeout /nobreak /t 2 && move /y \"CSO2 Launcher V{latestversion}.exe\" \"{Static.CurrentProcess.MainModule.FileName}\" && start \"\" \"{Static.CurrentProcess.MainModule.FileName}\"", false, true);
 
-                        Environment.Exit(0);
+                        App.Exit(0);
                     }
                     else
                     {

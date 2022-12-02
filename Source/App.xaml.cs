@@ -138,6 +138,20 @@ namespace CSO2_ComboLauncher
             }));
         }
 
+        public static new void Exit(int exitcode)
+        {
+            OpenVpn.Kill();
+
+            HideAllWindow();
+
+            //Static.logfile.Dispose(); // the program will exit in a short time anyway ¯\_(ツ)_/¯
+
+            Static.icon.Visible = false;
+            Static.icon.Dispose();
+
+            Environment.Exit(exitcode);
+        }
+
         private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs e)
         {
             Assembly executingAssembly = Assembly.GetExecutingAssembly();

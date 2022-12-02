@@ -74,8 +74,7 @@ namespace CSO2_ComboLauncher
                 MessageBoxResult box = MessageBox.Show(LStr.Get("_self_checking_gamefiledll_failed", missedfiles), Static.CWindow, MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if (box == MessageBoxResult.No)
                 {
-                    App.HideAllWindow();
-                    Environment.Exit(1);
+                    App.Exit(1);
                 }
             }
 
@@ -96,8 +95,7 @@ namespace CSO2_ComboLauncher
                 MessageBoxResult box = MessageBox.Show(LStr.Get("_self_checking_gamefilepkg_failed", pkgfiles.Count(), rightpkgcount), Static.CWindow, MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if (box == MessageBoxResult.No)
                 {
-                    App.HideAllWindow();
-                    Environment.Exit(1);
+                    App.Exit(1);
                 }
             }
 
@@ -115,7 +113,7 @@ namespace CSO2_ComboLauncher
                 {
                     App.HideAllWindow();
                     MessageBox.Show(LStr.Get("_self_checking_openvpnfile_failed"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
-                    Environment.Exit(1);
+                    App.Exit(1);
                 }
             }
 
@@ -130,7 +128,7 @@ namespace CSO2_ComboLauncher
                 {
                     App.HideAllWindow();
                     MessageBox.Show(LStr.Get("_self_checking_tapwindows_failed"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
-                    Environment.Exit(1);
+                    App.Exit(1);
                 }
             }
 
@@ -161,7 +159,7 @@ namespace CSO2_ComboLauncher
                     {
                         App.HideAllWindow();
                         MessageBox.Show(LStr.Get("_self_checking_dhcpclient_failed"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
-                        Environment.Exit(1);
+                        App.Exit(1);
                     }
                 }
             });
@@ -289,7 +287,7 @@ namespace CSO2_ComboLauncher
                     {
                         App.HideAllWindow();
                         MessageBox.Show(LStr.Get("_connect_to_server_failed_openvpnexited_fatalerror_notapwindows"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
-                        Environment.Exit(1);
+                        App.Exit(1);
                     }
                     else if (OpenVpn.NoTapWindowsAvailable)
                     {
@@ -719,7 +717,7 @@ namespace CSO2_ComboLauncher
                 Config.SaveConfig();
 
                 ProgramHelper.CmdCommand($"timeout /nobreak /t 2 && start \"\" \"{Static.CurrentProcess.MainModule.FileName}\"", false, true);
-                Environment.Exit(0);
+                App.Exit(0);
             }
         }
 
@@ -834,27 +832,12 @@ namespace CSO2_ComboLauncher
 
         private void Close_Click(object sender, MouseButtonEventArgs e)
         {
-            Main_Closing(null, null);
+            App.Exit(0);
         }
 
         private void Main_Closing(object sender, CancelEventArgs e)
         {
-            if (!close.IsEnabled)
-            {
-                e.Cancel = true;
-                return;
-            }
-
-            OpenVpn.Kill();
-
-            App.HideAllWindow();
-
-            //Static.logfile.Dispose(); // the program will exit in a short time anyway ¯\_(ツ)_/¯
-
-            Static.icon.Visible = false;
-            Static.icon.Dispose();
-
-            Environment.Exit(0);
+            App.Exit(0);
         }
 
         public class Logger
