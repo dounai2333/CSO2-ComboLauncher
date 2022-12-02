@@ -59,11 +59,11 @@ namespace CSO2_ComboLauncher
 
             TimeoutClient = new TimeoutWebClient
             {
-                Proxy = null,
-                Encoding = Encoding.GetEncoding("GBK"),
+                Proxy = Client.Proxy,
+                Encoding = Client.Encoding,
             };
-            TimeoutClient.Headers[HttpRequestHeader.UserAgent] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36";
-            TimeoutClient.Headers[HttpRequestHeader.AcceptLanguage] = "zh-CN,zh;q=0.9";
+            TimeoutClient.Headers[HttpRequestHeader.UserAgent] = Client.Headers[HttpRequestHeader.UserAgent];
+            TimeoutClient.Headers[HttpRequestHeader.AcceptLanguage] = Client.Headers[HttpRequestHeader.AcceptLanguage];
 
             msgpassivemode = passiveoutput;
             shouldoutput = false;

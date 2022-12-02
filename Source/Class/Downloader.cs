@@ -29,7 +29,7 @@ namespace CSO2_ComboLauncher
 
         public static async Task<bool> FileFromHttp(string link, string path, int threads, string checkhashtype = "", string hash = "")
         {
-            if (threads == 1)
+            if (threads <= 1)
             {
                 using (Web Web = new Web())
                 {

@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Net;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
@@ -13,67 +14,109 @@ namespace CSO2_ComboLauncher
         /// get download link from QQmail, if success global variable '<see cref="Filename"/>' will be set with the same filename from current link, else it's '<see cref="string.Empty"/>'.
         /// </summary>
         /// <returns>download link or error message.</returns>
-        public static async Task<string> GetLink(string code, string k)
+        public static async Task<string> GetLink(string code, string key)
         {
             Filename = string.Empty;
 
             using (Web Web = new Web())
             {
-                string page = await Web.Client.DownloadStringTaskAsync($"https://mail.qq.com/cgi-bin/ftnExs_download?t=exs_ftn_download&code={code}&k={k}");
+                string page = await Web.Client.DownloadStringTaskAsync($"https://mail.qq.com/cgi-bin/ftnExs_download?t=exs_ftn_download&code={code}&k={key}");
                 Regex regex = new Regex("http[^\"]+");
-                MatchCollection links = regex.Matches(page);
-                foreach (Match link in links)
+
+                foreach (Match address in regex.Matches(page))
                 {
-                    if (link.Value.EndsWith(code))
+                    if (address.Value.Contains("ftn.qq.com"))
                     {
-                        Filename = new Regex("(?<=fname=).+?(?=&)").Match(link.Value).Value;
-                        return link.Value;
+                        Match filenameMatch = new Regex("(?<=fname=).+?(?=&)").Match(address.Value);
+                        if (filenameMatch.Success)
+                        {
+                            Filename = filenameMatch.Value;
+                        }
+                        else
+                        {
+                            filenameMatch = new Regex("(?<=\"ft_d_filename\">).+?(?=</div>)").Match(page);
+                            if (filenameMatch.Success)
+                            {
+                                Main.Log.Write(filenameMatch.Value);
+                                Filename = filenameMatch.Value;
+                            }
+                        }
+
+                        return address.Value;
                     }
                 }
 
-                regex = new Regex("(?<=\"ft_d_error infobar error\" ><p>).+?(?=<)|(?<=\"ft_d_error infobar error\"><p>).+?(?=<)");
-                Match match = regex.Match(page);
-                if (match.Success)
-                    return match.Value;
+                Match messageMatch = new Regex("(?<=\"ft_d_error infobar error\" ><p>).+?(?=</p>)|(?<=\"ft_d_error infobar error\"><p>).+?(?=</p>)").Match(page);
+                if (messageMatch.Success)
+                    return messageMatch.Value.Replace("<br />", "\n").Replace("<br>", "\n");
 
                 return "address is not found.";
             }
         }
 
         /// <param name="path">if a folder is given, file name will be from QQmail server.</param>
-        public static async Task<bool> DownloadFile(string path, int threads, string code, string sha1, string k)
+        public static async Task<bool> DownloadFile(string path, int threads, string code, string sha1, string key)
         {
-            string address = await GetLink(code, k);
-            if (!address.StartsWith("http"))
-                return false;
+            Filename = string.Empty;
 
-            return await Downloader.FileFromHttp(address, (Path.GetFileName(path) == string.Empty) ? path + Filename : path, threads, "sha1", sha1);
+            try
+            {
+                HttpWebRequest hwr = WebRequest.Create($"https://wx.mail.qq.com/ftn/download?func=4&code={code}&key={key}") as HttpWebRequest;
+                hwr.Proxy = null;
+                hwr.Method = WebRequestMethods.Http.Head;
+                hwr.Timeout = 5000;
+                hwr.AllowAutoRedirect = false;
+                hwr.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36";
+                hwr.Headers.Add(HttpRequestHeader.AcceptLanguage, "zh-CN,zh;q=0.9");
+
+                using (HttpWebResponse webResponse = (HttpWebResponse)await hwr.GetResponseAsync())
+                {
+                    // we only need header info, not the response stream.
+                    webResponse.GetResponseStream().Dispose();
+
+                    if (webResponse.StatusCode == HttpStatusCode.Redirect && !string.IsNullOrEmpty(webResponse.Headers.Get("Location")))
+                    {
+                        string address = webResponse.Headers.Get("Location");
+                        Match filenameMatch = new Regex("(?<=fname=).+?(?=&)").Match(address);
+                        if (filenameMatch.Success)
+                            Filename = filenameMatch.Value;
+
+                        return await Downloader.FileFromHttp(address, (Path.GetFileName(path) == string.Empty) ? path + Filename : path, threads, "sha1", sha1);
+                    }
+                }
+            }
+            catch
+            {
+                return false;
+            }
+
+            return false;
         }
 
         /// <param name="path">if a folder is given, filename will use the one come from QQmail server.</param>
-        public static async Task<bool> DownloadFile(string path, int threads, string[] code, string sha1, string[] k)
+        public static async Task<bool> DownloadFile(string path, int threads, string[] code, string sha1, string[] key)
         {
-            for (int i = 0; i < k.Count(); i++)
-                if (await DownloadFile(path, threads, code[i], sha1, k[i]))
+            for (int i = 0; i < key.Count(); i++)
+                if (await DownloadFile(path, threads, code[i], sha1, key[i]))
                     return true;
 
             return false;
         }
 
-        public static async Task<string> DownloadString(string code, string k)
+        public static async Task<string> DownloadString(string code, string key)
         {
-            string address = await GetLink(code, k);
+            string address = await GetLink(code, key);
             if (!address.StartsWith("http"))
                 return null;
 
             return await Downloader.StringFromHttp(address);
         }
 
-        public static async Task<string> DownloadString(string[] code, string[] k)
+        public static async Task<string> DownloadString(string[] code, string[] key)
         {
-            for (int i = 0; i < k.Count(); i++)
+            for (int i = 0; i < key.Count(); i++)
             {
-                string result = await DownloadString(code[i], k[i]);
+                string result = await DownloadString(code[i], key[i]);
                 if (!string.IsNullOrEmpty(result))
                     return result;
             }
