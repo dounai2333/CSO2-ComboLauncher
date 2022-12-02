@@ -75,8 +75,8 @@ namespace CSO2_ComboLauncher
                 {
                     using (Socket sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
                     {
-                        sock.SendTimeout = 1000;
-                        sock.ReceiveTimeout = 1000;
+                        sock.SendTimeout = 2000;
+                        sock.ReceiveTimeout = 2000;
 
                         Stopwatch stopwatch = new Stopwatch();
                         stopwatch.Start();

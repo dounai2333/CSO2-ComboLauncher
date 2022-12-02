@@ -14,7 +14,7 @@ namespace CSO2_ComboLauncher
         {
             private int Timeoutms { get; set; }
 
-            public TimeoutWebClient(int timeoutms = 3000)
+            public TimeoutWebClient(int timeoutms = 5000)
             {
                 Timeoutms = timeoutms;
             }

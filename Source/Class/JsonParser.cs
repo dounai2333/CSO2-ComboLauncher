@@ -10,7 +10,7 @@ namespace CSO2_ComboLauncher
         public static dynamic Parse(string jsonstring)
         {
             // JDynamic doesn't support \" in json string.
-            jsonstring = jsonstring.Replace("\\\"", "'");
+            jsonstring = jsonstring.Replace("\\\"", "'").Replace("\\n", "\n");
 
             Regex regex = new Regex(@"\\u[a-zA-Z0-9]{4}");
             MatchCollection mc = regex.Matches(jsonstring);
