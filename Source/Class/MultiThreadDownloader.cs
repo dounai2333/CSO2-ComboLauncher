@@ -188,9 +188,6 @@ namespace CSO2_ComboLauncher
 
         void MultiPartDownload_OnCompleted(DownloadEventArgs args)
         {
-            // this is an important thing to do after a download isn't used anymore, otherwise you will run into a memory leak.
-            Download.DetachAllHandlers();
-
             Downloading = false;
             CSO2_ComboLauncher.Download.ResetStatus();
         }

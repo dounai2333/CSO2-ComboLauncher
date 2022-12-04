@@ -12,8 +12,7 @@ namespace CSO2_ComboLauncher
             // JDynamic doesn't support \" in json string.
             jsonstring = jsonstring.Replace("\\\"", "'").Replace("\\n", "\n");
 
-            Regex regex = new Regex(@"\\u[a-zA-Z0-9]{4}");
-            MatchCollection mc = regex.Matches(jsonstring);
+            MatchCollection mc = new Regex(@"\\u[a-zA-Z0-9]{4}").Matches(jsonstring);
             foreach (Match match in mc)
                 jsonstring = jsonstring.Replace(match.Value, Misc.UnicodeToString(match.Value));
 

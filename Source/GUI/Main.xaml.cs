@@ -67,7 +67,7 @@ namespace CSO2_ComboLauncher
             string missedfiles = "";
             for (int i = 0; i < dllfiles.Count(); i++)
                 if (!File.Exists("Bin\\" + dllfiles[i]))
-                    missedfiles = (missedfiles == "") ? dllfiles[i] : missedfiles + " - " + dllfiles[i];
+                    missedfiles = string.IsNullOrEmpty(missedfiles) ? dllfiles[i] : missedfiles + " - " + dllfiles[i];
 
             if (!string.IsNullOrEmpty(missedfiles))
             {

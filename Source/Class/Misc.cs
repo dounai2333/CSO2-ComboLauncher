@@ -53,9 +53,9 @@ namespace CSO2_ComboLauncher
             return Encoding.GetEncoding(to).GetString(Encoding.GetEncoding(from).GetBytes(text));
         }
 
-        public static async void Sleep(int ms, bool multithreaded = false)
+        public static async void Sleep(int ms, bool async = false)
         {
-            if (multithreaded)
+            if (async)
                 await Sleep(ms);
             else
                 Thread.Sleep(ms);
@@ -341,13 +341,18 @@ namespace CSO2_ComboLauncher
 
         public static bool DecryptFile(string file, string newfile)
         {
-            string text = File.ReadAllText(file, Encoding.UTF8);
-            if (!File.Exists(file) || !IsBase64String(text))
+            if (!File.Exists(file))
                 return false;
 
-            string decrypted = Decrypt(text);
-            File.WriteAllText(newfile, decrypted, Encoding.UTF8);
-            return true;
+            string text = File.ReadAllText(file, Encoding.UTF8);
+            if (IsBase64String(text))
+            {
+                string decrypted = Decrypt(text);
+                File.WriteAllText(newfile, decrypted, Encoding.UTF8);
+                return true;
+            }
+
+            return false;
         }
     }
 }

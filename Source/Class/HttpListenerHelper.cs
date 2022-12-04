@@ -67,7 +67,7 @@ namespace CSO2_ComboLauncher
                     if (string.IsNullOrEmpty(Path.GetFileName(requesturl)))
                         requesturl += "index.html";
 
-                    for (int i=0;i<RequestUrlList_Overall.Count();i++)
+                    for (int i = 0; i < RequestUrlList_Overall.Count(); i++)
                     {
                         if (requesturl.StartsWith(RequestUrlList_Overall[i]))
                         {
