@@ -14,7 +14,7 @@ namespace CSO2_ComboLauncher
         {
             private int Timeoutms { get; set; }
 
-            public TimeoutWebClient(int timeoutms = 5000)
+            public TimeoutWebClient(int timeoutms)
             {
                 Timeoutms = timeoutms;
             }
@@ -45,7 +45,7 @@ namespace CSO2_ComboLauncher
         
         private long BytesReceived { get; set; }
 
-        public Web(bool passiveoutput = false)
+        public Web(bool passiveoutput = false, int clienttimeout = 5000)
         {
             Client = new WebClient
             {
@@ -57,7 +57,7 @@ namespace CSO2_ComboLauncher
             Client.DownloadProgressChanged += Downloader_AsyncProgressChanged;
             Client.DownloadFileCompleted += Downloader_AsyncCompleted;
 
-            TimeoutClient = new TimeoutWebClient
+            TimeoutClient = new TimeoutWebClient(clienttimeout)
             {
                 Proxy = Client.Proxy,
                 Encoding = Client.Encoding,
@@ -134,14 +134,12 @@ namespace CSO2_ComboLauncher
                     if (msgpassivemode)
                     {
                         shouldoutput = true;
-                        continue;
                     }
                     else
                     {
                         Download.MainOutput(BytesReceived, TotalBytesToReceive, (BytesReceived - logbyte).ToString(), ProgressPercentage);
                         logbyte = BytesReceived;
                     }
-
                 }
             });
             counter.Start();
