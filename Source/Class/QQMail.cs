@@ -36,10 +36,7 @@ namespace CSO2_ComboLauncher
                         {
                             filenameMatch = new Regex("(?<=\"ft_d_filename\">).+?(?=</div>)").Match(page);
                             if (filenameMatch.Success)
-                            {
-                                Main.Log.Write(filenameMatch.Value);
                                 Filename = filenameMatch.Value;
-                            }
                         }
 
                         return address.Value;
