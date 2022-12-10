@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Net;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 
@@ -30,7 +29,7 @@ namespace CSO2_ComboLauncher
                         Match filenameMatch = new Regex("(?<=fname=).+?(?=&)").Match(address.Value);
                         if (filenameMatch.Success)
                         {
-                            Filename = filenameMatch.Value;
+                            Filename = FixFilename(filenameMatch.Value);
                         }
                         else
                         {
@@ -76,7 +75,7 @@ namespace CSO2_ComboLauncher
                         string address = webResponse.Headers.Get("Location");
                         Match filenameMatch = new Regex("(?<=fname=).+?(?=&)").Match(address);
                         if (filenameMatch.Success)
-                            Filename = filenameMatch.Value;
+                            Filename = FixFilename(filenameMatch.Value);
 
                         return await Downloader.FileFromHttp(address, string.IsNullOrEmpty(Path.GetFileName(path)) ? path + Filename : path, threads, "sha1", sha1);
                     }
@@ -97,6 +96,19 @@ namespace CSO2_ComboLauncher
                 return null;
 
             return await Downloader.StringFromHttp(address);
+        }
+
+        private static string FixFilename(string filename)
+        {
+            filename = filename.Replace("+", " ");
+            Match match = new Regex("(%[a-zA-Z0-9]{2})+").Match(filename);
+            if (match.Success)
+            {
+                string result = Misc.HexToString(match.Value.Replace("%", ""));
+                filename = filename.Replace(match.Value, result);
+            }
+
+            return filename;
         }
     }
 }
