@@ -36,6 +36,8 @@ namespace CSO2_ComboLauncher
 
         private Thread Counter { get; set; }
 
+        private long logbyte { get; set; }
+
         private bool Downloading { get; set; }
 
         private string Link { get; set; }
@@ -49,10 +51,11 @@ namespace CSO2_ComboLauncher
             HttpDlBuilder = new SimpleDownloadBuilder(RequestBuilder, DlChecker);
             ResumingDlBuilder = new ResumingDownloadBuilder(10000, 1000, 9999, HttpDlBuilder);
             AlreadyDownloadedRanges = null;
-            SpeedMonitor = new DownloadSpeedMonitor(512);
+            SpeedMonitor = null /*new DownloadSpeedMonitor(256)*/;
             ProgressMonitor = new DownloadProgressMonitor();
 
             Downloading = false;
+            logbyte = 0;
 
             StartCounter();
         }
@@ -76,7 +79,7 @@ namespace CSO2_ComboLauncher
 
             Download = new MultiPartDownload(new Uri(link), 2048, threads, ResumingDlBuilder, RequestBuilder, DlChecker, AlreadyDownloadedRanges);
             Download.DownloadCompleted += MultiPartDownload_OnCompleted;
-            SpeedMonitor.Attach(Download);
+            //SpeedMonitor.Attach(Download);
             ProgressMonitor.Attach(Download);
 
             DlSaver = new DownloadToFileSaver(new FileInfo(path));
@@ -143,6 +146,7 @@ namespace CSO2_ComboLauncher
             long totalDownloadSizeInBytes = ProgressMonitor.GetTotalFilesizeInBytes(Download);
             int currentProgressInPercent = (int)(ProgressMonitor.GetCurrentProgressPercentage(Download) * 100);
             CSO2_ComboLauncher.Download.MainOutput(alreadyDownloadedSizeInBytes, totalDownloadSizeInBytes, "Paused", currentProgressInPercent);
+            logbyte = alreadyDownloadedSizeInBytes;
         }
 
         public void Resume()
@@ -156,9 +160,9 @@ namespace CSO2_ComboLauncher
             Download.DetachAllHandlers();
             Download.Dispose();
 
-            Download = new MultiPartDownload(new Uri(Link), 8192, Threads, ResumingDlBuilder, RequestBuilder, DlChecker, AlreadyDownloadedRanges);
+            Download = new MultiPartDownload(new Uri(Link), 2048, Threads, ResumingDlBuilder, RequestBuilder, DlChecker, AlreadyDownloadedRanges);
             Download.DownloadCompleted += MultiPartDownload_OnCompleted;
-            SpeedMonitor.Attach(Download);
+            //SpeedMonitor.Attach(Download);
             ProgressMonitor.Attach(Download);
             DlSaver.Attach(Download);
 
@@ -177,10 +181,10 @@ namespace CSO2_ComboLauncher
 
                     long alreadyDownloadedSizeInBytes = ProgressMonitor.GetCurrentProgressInBytes(Download);
                     long totalDownloadSizeInBytes = ProgressMonitor.GetTotalFilesizeInBytes(Download);
-                    long currentSpeedInBytesPerSecond = SpeedMonitor.GetCurrentBytesPerSecond();
                     int currentProgressInPercent = (int)(ProgressMonitor.GetCurrentProgressPercentage(Download) * 100);
 
-                    CSO2_ComboLauncher.Download.MainOutput(alreadyDownloadedSizeInBytes, totalDownloadSizeInBytes, currentSpeedInBytesPerSecond.ToString(), currentProgressInPercent);
+                    CSO2_ComboLauncher.Download.MainOutput(alreadyDownloadedSizeInBytes, totalDownloadSizeInBytes, (alreadyDownloadedSizeInBytes - logbyte).ToString(), currentProgressInPercent);
+                    logbyte = alreadyDownloadedSizeInBytes;
                 }
             });
             Counter.Start();
@@ -189,6 +193,7 @@ namespace CSO2_ComboLauncher
         void MultiPartDownload_OnCompleted(DownloadEventArgs args)
         {
             Downloading = false;
+            logbyte = 0;
             CSO2_ComboLauncher.Download.ResetStatus();
         }
 
