@@ -34,6 +34,8 @@ namespace CSO2_ComboLauncher
 
         private DownloadToFileSaver DlSaver { get; set; }
 
+        private int Buffer { get; set; }
+
         private Thread Counter { get; set; }
 
         private long logbyte { get; set; }
@@ -53,6 +55,7 @@ namespace CSO2_ComboLauncher
             AlreadyDownloadedRanges = null;
             SpeedMonitor = null /*new DownloadSpeedMonitor(256)*/;
             ProgressMonitor = new DownloadProgressMonitor();
+            Buffer = 1024;
 
             Downloading = false;
             logbyte = 0;
@@ -77,7 +80,7 @@ namespace CSO2_ComboLauncher
             else
                 File.WriteAllText(path, string.Empty);
 
-            Download = new MultiPartDownload(new Uri(link), 2048, threads, ResumingDlBuilder, RequestBuilder, DlChecker, AlreadyDownloadedRanges);
+            Download = new MultiPartDownload(new Uri(link), Buffer, threads, ResumingDlBuilder, RequestBuilder, DlChecker, AlreadyDownloadedRanges);
             Download.DownloadCompleted += MultiPartDownload_OnCompleted;
             //SpeedMonitor.Attach(Download);
             ProgressMonitor.Attach(Download);
@@ -128,6 +131,7 @@ namespace CSO2_ComboLauncher
             CSO2_ComboLauncher.Download.ResetStatus();
 
             Downloading = false;
+            logbyte = 0;
             Download.Stop();
             Download.DetachAllHandlers();
             Download.Dispose();
@@ -160,7 +164,7 @@ namespace CSO2_ComboLauncher
             Download.DetachAllHandlers();
             Download.Dispose();
 
-            Download = new MultiPartDownload(new Uri(Link), 2048, Threads, ResumingDlBuilder, RequestBuilder, DlChecker, AlreadyDownloadedRanges);
+            Download = new MultiPartDownload(new Uri(Link), Buffer, Threads, ResumingDlBuilder, RequestBuilder, DlChecker, AlreadyDownloadedRanges);
             Download.DownloadCompleted += MultiPartDownload_OnCompleted;
             //SpeedMonitor.Attach(Download);
             ProgressMonitor.Attach(Download);
