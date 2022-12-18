@@ -716,6 +716,9 @@ namespace CSO2_ComboLauncher
                 Config.EnableConsole = false;
                 Config.SaveConfig();
 
+                Static.logfile.Dispose();
+                File.Delete(Static.Log);
+
                 ProgramHelper.CmdCommand($"timeout /nobreak /t 2 && start \"\" \"{Static.CurrentProcess.MainModule.FileName}\"", false, true);
                 App.Exit(0);
             }
