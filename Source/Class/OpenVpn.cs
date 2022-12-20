@@ -191,7 +191,7 @@ namespace CSO2_ComboLauncher
                 if (proc.MainModule.FileName.StartsWith(System.IO.Path.GetDirectoryName(Static.CurrentProcess.MainModule.FileName)))
                     proc.Kill();
 
-            return ExitEvent.Toggle();
+            return ExitEvent.Reset();
         }
 
         private static void OnDataReceived(object sender, DataReceivedEventArgs e)
