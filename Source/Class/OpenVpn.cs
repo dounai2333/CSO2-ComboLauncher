@@ -105,6 +105,7 @@ namespace CSO2_ComboLauncher
             if (IsRunning)
                 return;
 
+            ResetValue();
             Process?.Dispose();
 
             Process = new Process
@@ -127,7 +128,6 @@ namespace CSO2_ComboLauncher
             Process.Exited += (s, e) =>
             {
                 Main.Log.WriteToFile("OpenVPN: exited with exitcode " + Misc.DecimalToHex(Process.ExitCode));
-                ResetValue();
             };
 
             Process.Start();
@@ -186,6 +186,11 @@ namespace CSO2_ComboLauncher
         /// </summary>
         public static bool KillAllRelated()
         {
+            Process[] processes = Process.GetProcessesByName("openvpn");
+            foreach (Process proc in processes)
+                if (proc.MainModule.FileName.StartsWith(System.IO.Path.GetDirectoryName(Static.CurrentProcess.MainModule.FileName)))
+                    proc.Kill();
+
             return ExitEvent.Toggle();
         }
 
