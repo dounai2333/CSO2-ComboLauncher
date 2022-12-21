@@ -53,40 +53,11 @@ namespace CSO2_ComboLauncher
         /// <param name="path">if a folder is given, file name will be from QQmail server.</param>
         public static async Task<bool> DownloadFile(string path, int threads, string code, string sha1, string key)
         {
-            Filename = string.Empty;
-
-            try
-            {
-                HttpWebRequest hwr = WebRequest.Create($"https://wx.mail.qq.com/ftn/download?func=4&code={code}&key={key}") as HttpWebRequest;
-                hwr.Proxy = null;
-                hwr.Method = WebRequestMethods.Http.Head;
-                hwr.Timeout = 5000;
-                hwr.AllowAutoRedirect = false;
-                hwr.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36";
-                hwr.Headers.Add(HttpRequestHeader.AcceptLanguage, "zh-CN,zh;q=0.9");
-
-                using (HttpWebResponse webResponse = (HttpWebResponse)await hwr.GetResponseAsync())
-                {
-                    // we only need header info, not the response stream.
-                    webResponse.GetResponseStream().Dispose();
-
-                    if (webResponse.StatusCode == HttpStatusCode.Redirect && !string.IsNullOrEmpty(webResponse.Headers.Get("Location")))
-                    {
-                        string address = webResponse.Headers.Get("Location");
-                        Match filenameMatch = new Regex("(?<=fname=).+?(?=&)").Match(address);
-                        if (filenameMatch.Success)
-                            Filename = FixFilename(filenameMatch.Value);
-
-                        return await Downloader.FileFromHttp(address, string.IsNullOrEmpty(Path.GetFileName(path)) ? path + Filename : path, threads, "sha1", sha1);
-                    }
-                }
-            }
-            catch
-            {
+            string address = await GetLink(code, key);
+            if (!address.StartsWith("http"))
                 return false;
-            }
 
-            return false;
+            return await Downloader.FileFromHttp(address, (Path.GetFileName(path) == string.Empty) ? path + Filename : path, threads, "sha1", sha1);
         }
 
         public static async Task<string> DownloadString(string code, string key)
