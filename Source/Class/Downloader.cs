@@ -286,7 +286,7 @@ namespace CSO2_ComboLauncher
                 File.Delete(path);
             }
 
-            return null;
+            return { };
         }
 
         public static async Task<string> OpenVpnServer(bool backup)
