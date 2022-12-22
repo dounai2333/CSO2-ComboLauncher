@@ -36,8 +36,8 @@
                 <DropShadowEffect Opacity="0.2" Direction="270"/>
             </Button.Effect>
         </Button>
-        <Label x:Name="version" Margin="250,368,10,0" Content="Version: 6" FontSize="13" />
-        <Button x:Name="launcherupdatecheck" Content="_update_check" IsEnabled="False" Height="19" Margin="174,373,231,0" VerticalAlignment="Top" FontSize="10" Click="LauncherUpdate_Click" Background="White" BorderBrush="{x:Null}" FontWeight="Bold" FontFamily="SimSun">
+        <Label x:Name="version" Margin="271,368,10,0" Content="Version: 6" FontSize="13" />
+        <Button x:Name="launcherupdatecheck" Content="_update_check" IsEnabled="False" Height="19" Margin="195,373,210,0" VerticalAlignment="Top" FontSize="10" Click="LauncherUpdate_Click" Background="White" BorderBrush="{x:Null}" FontWeight="Bold" FontFamily="SimSun">
             <Button.Effect>
                 <DropShadowEffect Opacity="0.2" Direction="270"/>
             </Button.Effect>
