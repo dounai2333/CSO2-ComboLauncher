@@ -8,6 +8,8 @@ namespace CSO2_ComboLauncher
     {
         public static string Filename { get; private set; }
 
+        public static string Mail5k { get; private set; }
+
         /// <summary>
         /// get download link from QQmail, if success global variable '<see cref="Filename"/>' will be set with the same filename from current link, else it's '<see cref="string.Empty"/>'.
         /// </summary>
@@ -15,12 +17,17 @@ namespace CSO2_ComboLauncher
         public static async Task<string> GetLink(string code, string key)
         {
             Filename = string.Empty;
+            Mail5k = string.Empty;
 
             using (Web Web = new Web())
             {
                 string page = await Web.Client.DownloadStringTaskAsync($"https://mail.qq.com/cgi-bin/ftnExs_download?t=exs_ftn_download&code={code}&k={key}");
-                Regex regex = new Regex("http[^\"]+");
 
+                Match mail5kmatch = new Regex("mail5k=[^;]+").Match(Web.Client.ResponseHeaders[System.Net.HttpResponseHeader.SetCookie]);
+                if (mail5kmatch.Success)
+                    Mail5k = mail5kmatch.Value;
+
+                Regex regex = new Regex("http[^\"]+");
                 foreach (Match address in regex.Matches(page))
                 {
                     if (address.Value.Contains("ftn.qq.com"))

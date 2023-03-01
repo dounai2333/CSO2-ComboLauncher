@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -45,13 +46,18 @@ namespace CSO2_ComboLauncher
         private string Link { get; set; }
 
         private int Threads { get; set; }
+
+        private WebHeaderCollection Headers { get; set; }
         
         public MultiThreadDownloader()
         {
+            using (Web Web = new Web())
+                Headers = Web.Client.Headers;
+
             RequestBuilder = new SimpleWebRequestBuilder();
             DlChecker = new DownloadChecker();
-            HttpDlBuilder = new SimpleDownloadBuilder(RequestBuilder, DlChecker);
-            ResumingDlBuilder = new ResumingDownloadBuilder(10000, 1000, 9999, HttpDlBuilder);
+            HttpDlBuilder = new SimpleDownloadBuilder(RequestBuilder, DlChecker, Headers);
+            ResumingDlBuilder = new ResumingDownloadBuilder(10000, 1000, 9999, HttpDlBuilder, Headers);
             AlreadyDownloadedRanges = null;
             SpeedMonitor = null /*new DownloadSpeedMonitor(256)*/;
             ProgressMonitor = new DownloadProgressMonitor();
@@ -80,7 +86,7 @@ namespace CSO2_ComboLauncher
             else
                 File.WriteAllText(path, string.Empty);
 
-            Download = new MultiPartDownload(new Uri(link), Buffer, threads, ResumingDlBuilder, RequestBuilder, DlChecker, AlreadyDownloadedRanges);
+            Download = new MultiPartDownload(new Uri(link), Buffer, threads, ResumingDlBuilder, RequestBuilder, DlChecker, AlreadyDownloadedRanges, Headers);
             Download.DownloadCompleted += MultiPartDownload_OnCompleted;
             //SpeedMonitor.Attach(Download);
             ProgressMonitor.Attach(Download);
@@ -164,7 +170,7 @@ namespace CSO2_ComboLauncher
             Download.DetachAllHandlers();
             Download.Dispose();
 
-            Download = new MultiPartDownload(new Uri(Link), Buffer, Threads, ResumingDlBuilder, RequestBuilder, DlChecker, AlreadyDownloadedRanges);
+            Download = new MultiPartDownload(new Uri(Link), Buffer, Threads, ResumingDlBuilder, RequestBuilder, DlChecker, AlreadyDownloadedRanges, Headers);
             Download.DownloadCompleted += MultiPartDownload_OnCompleted;
             //SpeedMonitor.Attach(Download);
             ProgressMonitor.Attach(Download);
