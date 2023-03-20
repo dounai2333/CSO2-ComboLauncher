@@ -10,7 +10,7 @@ This launcher is current working with CSO2 China server (server owner "晴雪 (Q
 .NET Framework 4.7.2 or newer version.
 
 ### Todo
-1. Refactoring 'Verify game file' feature, make the code look better, works better.
+1. Refactoring '[Verify game file](https://github.com/dounai2333/CSO2-ComboLauncher/blob/master/Source/GUI/Main.xaml.cs#L551)' feature, make the code look better, works better.
 
 2. Rewrite the main gui to the V7 style. (A old dead project, no longer used)
 
