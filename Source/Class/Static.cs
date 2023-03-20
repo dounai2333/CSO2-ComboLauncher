@@ -28,6 +28,8 @@ namespace CSO2_ComboLauncher
 
         public static bool started = false;
 
+        public static bool newadapterinstalled = false;
+
         public static string[] blacklist = {};
 
         public static string netadapter = "TAP-Windows Adapter V9";

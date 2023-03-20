@@ -221,7 +221,11 @@ namespace CSO2_ComboLauncher
                 {
                     File.Delete(path);
                     if (await ProgramHelper.StartAndGetExitCode("Bin\\OpenVPN\\TAP-Windows\\tapinstall.exe", install ? "install \"Bin\\OpenVPN\\TAP-Windows\\tap0901.inf\" tap0901" : "remove tap0901", true) == 0)
+                    {
+                        if (install)
+                            Static.newadapterinstalled = true; // there should be only 1 adapter installed per instance.
                         return true;
+                    }
                 }
             }
 

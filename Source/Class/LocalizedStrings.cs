@@ -274,21 +274,21 @@ namespace CSO2_ComboLauncher
                 AddKeyWords("schinese", "_connect_to_server_failed", "尝试连接服务器失败!\n服务器当前可能离线, 你可以稍后再试.");
                 AddKeyWords("tchinese", "_connect_to_server_failed", "嘗試連接伺服器失敗!\n伺服器當前可能離線, 你可以稍後再試.");
 
-                AddKeyWords("english", "_connect_to_server_failed_openvpnexited_fatalerror_notapwindows", "Tried to start OpenVPN but process reported \"No TAP-Windows adapter found\"!\n\nProgram will now exit.");
-                AddKeyWords("schinese", "_connect_to_server_failed_openvpnexited_fatalerror_notapwindows", "尝试了启动OpenVPN但收到了\"未找到TAP-Windows网卡\"错误!\n\n程序将自动退出.");
-                AddKeyWords("tchinese", "_connect_to_server_failed_openvpnexited_fatalerror_notapwindows", "嘗試了啟動OpenVPN但收到了\"未找到TAP-Windows網卡\"錯誤!\n\n程式將會自動退出.");
+                AddKeyWords("english", "_connect_to_server_failed_openvpnexited_fatalerror_notapwindows", "OpenVPN exited with fatal error!\nThere is no TAP-Windows adapter found.");
+                AddKeyWords("schinese", "_connect_to_server_failed_openvpnexited_fatalerror_notapwindows", "OpenVPN出现致命错误!\n未找到任何TAP-Windows网卡.");
+                AddKeyWords("tchinese", "_connect_to_server_failed_openvpnexited_fatalerror_notapwindows", "OpenVPN出錯了!\n沒有找到TAP-Windows網卡.");
 
                 AddKeyWords("english", "_connect_to_server_failed_openvpnexited_fatalerror_alltapwindowsinuse", "OpenVPN exited with fatal error!\nThere is no TAP-Windows adapter available.");
                 AddKeyWords("schinese", "_connect_to_server_failed_openvpnexited_fatalerror_alltapwindowsinuse", "OpenVPN出现致命错误!\n现在没有空闲的TAP-Windows网卡.");
                 AddKeyWords("tchinese", "_connect_to_server_failed_openvpnexited_fatalerror_alltapwindowsinuse", "OpenVPN出錯了!\n現在沒有空閒的TAP-Windows網卡.");
 
-                AddKeyWords("english", "_connect_to_server_failed_openvpnexited_fatalerror", "OpenVPN exited with fatal error!\nYour system may having problem with OpenVPN.");
-                AddKeyWords("schinese", "_connect_to_server_failed_openvpnexited_fatalerror", "OpenVPN出现致命错误!\n你的系统可能跟OpenVPN有些兼容性问题.");
-                AddKeyWords("tchinese", "_connect_to_server_failed_openvpnexited_fatalerror", "OpenVPN出錯了!\n你的系統可能跟OpenVPN有一些兼容性問題.");
+                AddKeyWords("english", "_connect_to_server_failed_openvpnexited_fatalerror", "OpenVPN exited with fatal error!\nYour system may having problem with OpenVPN.\nCheck 'cso2_launcher.log' for more information.");
+                AddKeyWords("schinese", "_connect_to_server_failed_openvpnexited_fatalerror", "OpenVPN出现致命错误!\n你的系统可能跟OpenVPN有些兼容性问题.\n查看'cso2_launcher.log'获取更多关于错误的详细信息.");
+                AddKeyWords("tchinese", "_connect_to_server_failed_openvpnexited_fatalerror", "OpenVPN出錯了!\n你的系統可能跟OpenVPN有一些兼容性問題.\n查看'cso2_launcher.log'獲取錯誤的詳細訊息.");
 
-                AddKeyWords("english", "_connect_to_server_failed_openvpnexited", "OpenVPN exited too early!\nPlease check your anti-virus and see if it killed OpenVpn process.");
-                AddKeyWords("schinese", "_connect_to_server_failed_openvpnexited", "OpenVPN过早退出!\n请检查你的杀毒软件是否进行了拦截.");
-                AddKeyWords("tchinese", "_connect_to_server_failed_openvpnexited", "OpenVPN太早退出!\n請檢查你的殺毒軟體是否攔下了它.");
+                AddKeyWords("english", "_connect_to_server_failed_openvpnexited", "OpenVPN exited before finish the connection!\nCheck 'cso2_launcher.log' for more information.");
+                AddKeyWords("schinese", "_connect_to_server_failed_openvpnexited", "OpenVPN因未知错误已停止运行!\n查看'cso2_launcher.log'获取更多关于错误的详细信息.");
+                AddKeyWords("tchinese", "_connect_to_server_failed_openvpnexited", "OpenVPN出現未知錯誤已經退出!\n查看'cso2_launcher.log'獲取錯誤的詳細訊息.");
 
                 AddKeyWords("english", "_connect_to_server_halfway", "Connect success, confirming data from server...");
                 AddKeyWords("schinese", "_connect_to_server_halfway", "连接成功, 正在确认数据...");

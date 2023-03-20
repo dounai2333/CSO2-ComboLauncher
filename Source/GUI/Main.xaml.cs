@@ -283,21 +283,15 @@ namespace CSO2_ComboLauncher
             {
                 if (OpenVpn.ExitedWithFatalError)
                 {
-                    if (OpenVpn.NoTapWindowsExist)
+                    if (OpenVpn.NoTapWindowsExist || OpenVpn.NoTapWindowsAvailable)
                     {
-                        App.HideAllWindow();
-                        MessageBox.Show(LStr.Get("_connect_to_server_failed_openvpnexited_fatalerror_notapwindows"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
-                        App.Exit(1);
-                    }
-                    else if (OpenVpn.NoTapWindowsAvailable)
-                    {
-                        if (await Downloader.TapWindows())
+                        if (!Static.newadapterinstalled && await Downloader.TapWindows())
                         {
                             Reconnect_Click(null, null);
                             return;
                         }
 
-                        Log.Write(LStr.Get("_connect_to_server_failed_openvpnexited_fatalerror_alltapwindowsinuse"), "red");
+                        Log.Write(LStr.Get("_connect_to_server_failed_openvpnexited_fatalerror_" + (OpenVpn.NoTapWindowsExist ? "notapwindows" : "alltapwindowsinuse")), "red");
                     }
                     else
                     {
