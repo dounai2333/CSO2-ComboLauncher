@@ -256,19 +256,19 @@ namespace CSO2_ComboLauncher
             OpenVpn.Start("Bin\\OpenVPN\\openvpn.exe", path);
             Log.Write(LStr.Get("_start_openvpn_and_connect"));
 
-            int time = 0;
+            int count = 0;
             OpenVpn.OnConnected += () =>
             {
                 Log.Write(LStr.Get("_connect_to_server_halfway"));
                 File.Delete(path);
-                time = 0;
+                count = 0;
             };
 
             while (!OpenVpn.Process.HasExited && !OpenVpn.IsProgressCompleted)
             {
                 await Misc.Sleep(100);
-                time++;
-                if (time >= 150) // 15sec
+                count++;
+                if (count >= 150) // 15sec
                 {
                     Log.Write(LStr.Get("_connect_to_server_failed"), "red");
                     await OpenVpn.Kill(true);
