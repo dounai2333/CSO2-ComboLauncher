@@ -350,9 +350,9 @@ namespace CSO2_ComboLauncher
                 AddKeyWords("schinese", "_start_name_convertfailed", "你的游戏名称出现了损坏: {0}\n使用损坏的名称无法进入游戏!\n但请不要慌张, 出现此错误, 并不代表无法解决, 请跟着以下步骤排错:\n\n奇数的中文名是无法使用的(例如: 我爱所有人)\n你可以考虑添加一个\"丶\"或\"｜\"来解决此问题(例如: 我爱所有人丶)\n偶数的中文名被隔开变成了奇数(例如:我K爱大家、我 爱大家(有空格))\n你可以考虑删除导致中文被隔开的罪魁祸首, 或者想办法让奇数的字有个伴!\n\n解决以上问题后, 将可以正常进入游戏!\n以下示例文字是没有问题的, 可以进行参考:\n世界上最帅气的人、脸皮挡子弹丶、xX灭神Xx、夜影o夜空、豆奶233");
                 AddKeyWords("tchinese", "_start_name_convertfailed", "你的遊戲名稱損壞了: {0}\n你不能用壞掉了的名稱開始遊戲!\n但是不要擔心, 出現這個問題, 並不代表不能解決, 請跟著以下步驟嘗試排除錯誤:\n\n你無法使用基數的名稱(如: 我愛所有人)\n你可以添加\"丶\"或\"｜\"解決這個問題(如: 我愛所有人丶)\n偶數的名稱被割開變成了基數(如:我K愛大家、我 愛大家(空格符號))\n你可以把那些字符刪除掉, 或者把中文字符改成偶數!\n\n解決這些問題之後, 你就可以正常開始遊戲了!\n下面的示例名稱是沒有問題的, 可以參考一下:\n世界上最帅气的人、脸皮挡子弹丶、xX灭神Xx、夜影o夜空、豆奶233");
 
-                AddKeyWords("english", "_update_check_main_server_offline", "Main server is currently offline, cannot run the update check.");
-                AddKeyWords("schinese", "_update_check_main_server_offline", "主服务器当前离线, 无法运行更新检查.");
-                AddKeyWords("tchinese", "_update_check_main_server_offline", "主要伺服器當前離線, 無法運行更新檢查.");
+                AddKeyWords("english", "_unavailable_main_server_offline", "Main server is currently offline, this feature will not working without it!");
+                AddKeyWords("schinese", "_unavailable_main_server_offline", "主服务器当前离线, 此功能无法运行!");
+                AddKeyWords("tchinese", "_unavailable_main_server_offline", "主要伺服器當前離線, 此功能無法使用!");
 
                 AddKeyWords("english", "_update_check_passed", "Update done, total {0} check(s), {1} check(s) passed.");
                 AddKeyWords("schinese", "_update_check_passed", "更新完成, 总共{0}项检查, {1}项检查通过.");
@@ -362,13 +362,13 @@ namespace CSO2_ComboLauncher
                 AddKeyWords("schinese", "_file_check_cancel", "取消检查");
                 AddKeyWords("tchinese", "_file_check_cancel", "取消檢查");
 
-                AddKeyWords("english", "_file_check_confirm", "Are you sure you want to verify game files?\nIt may take while, depends with your PC hardware.\n\nNote: this function will only check \"pkg\" files within \"Data\" folder.\n\nContinue?");
-                AddKeyWords("schinese", "_file_check_confirm", "你是否确定想检查游戏完整性?\n这可能需要一段时间, 具体取决于你的电脑配置如何.\n\n注意: 此功能只会检查\"Data\"文件夹里的\"pkg\"文件.\n\n是否继续?");
-                AddKeyWords("tchinese", "_file_check_confirm", "你是否確定想檢查遊戲文件?\n這可能需要一些時間, 取決于你的電腦配置.\n\n此功能只會檢查\"Data\"資料夾裡的\"pkg\"文件.\n\n是否繼續?");
+                AddKeyWords("english", "_file_check_confirm", "Notice: This feature only does 'checking' but not 'fixing'!\nIt may take a while, depend on your PC hardware.\nYou can cancel the process anytime while it's checking.\n\nContinue?");
+                AddKeyWords("schinese", "_file_check_confirm", "注意: 此功能只负责'检查'但不进行'修复'!\n这可能需要一段时间, 具体取决于您的电脑配置如何.\n您可以在检查过程中, 随时进行取消.\n\n是否继续?");
+                AddKeyWords("tchinese", "_file_check_confirm", "注意: 這個功能只進行'檢查'不會做'修復'!\n可能需要一些時間, 具體要看您的PC硬件.\n您可以在檢查的過程中, 隨時取消.\n\n是否繼續?");
 
-                AddKeyWords("english", "_file_check_req_file_wrong", "The requirement file doesn't match what we expected. Verify failed.");
-                AddKeyWords("schinese", "_file_check_req_file_wrong", "需求文件不符合预期. 检查失败.");
-                AddKeyWords("tchinese", "_file_check_req_file_wrong", "需求的文件不符合預期. 檢查失敗.");
+                AddKeyWords("english", "_file_check_downloading_needed_file", "Downloading file hashes data, it may take a while, please wait...");
+                AddKeyWords("schinese", "_file_check_downloading_needed_file", "正在下载文件哈希值数据, 这可能需要一段时间, 请耐心等待...");
+                AddKeyWords("tchinese", "_file_check_downloading_needed_file", "正在下載文件的hash值數據, 這可能需要一些時間, 請耐心等待...");
 
                 AddKeyWords("english", "_file_check_progress", "Progress: {0} / {1} files.");
                 AddKeyWords("schinese", "_file_check_progress", "进度: {0}/{1}个文件.");
@@ -390,17 +390,17 @@ namespace CSO2_ComboLauncher
                 AddKeyWords("schinese", "_file_check_file_missing_text", "以下文件已缺失:");
                 AddKeyWords("tchinese", "_file_check_file_missing_text", "這些文件不見了:");
 
-                AddKeyWords("english", "_file_check_md5_notmatch_text", "Below file(s) md5 is not matches, probable broken:");
-                AddKeyWords("schinese", "_file_check_md5_notmatch_text", "以下文件MD5值不匹配, 可能已损坏:");
-                AddKeyWords("tchinese", "_file_check_md5_notmatch_text", "這些文件MD5值不對, 可能被破壞了:");
+                AddKeyWords("english", "_file_check_hash_notmatch_text", "Below file(s) hash is not matches, probable broken:");
+                AddKeyWords("schinese", "_file_check_hash_notmatch_text", "以下文件哈希值不匹配, 可能已损坏:");
+                AddKeyWords("tchinese", "_file_check_hash_notmatch_text", "這些文件hash值不對, 可能被破壞了:");
 
                 AddKeyWords("english", "_file_check_filename", "Verify_Result_{0}.txt");
                 AddKeyWords("schinese", "_file_check_filename", "检查结果_{0}.txt");
                 AddKeyWords("tchinese", "_file_check_filename", "檢查結果_{0}.txt");
 
-                AddKeyWords("english", "_file_check_file_error_detected", "File verify is completed, detected {0} file(s) doesn't matches.\nA result file has been generated \"{1}\", go check it for more info.");
-                AddKeyWords("schinese", "_file_check_file_error_detected", "文件检查已完成, 检测到{0}个文件不匹配.\n已生成结果文件\"{1}\", 打开可以检查更多信息.");
-                AddKeyWords("tchinese", "_file_check_file_error_detected", "文件檢查已完成, 檢測到{0}個文件不匹配.\n已生成結果文件\"{1}\", 打開可以檢查更多訊息.");
+                AddKeyWords("english", "_file_check_file_error_detected", "File verify is completed, detected some file(s) doesn't matches.\nA result file has been saved as \"{0}\", check it for more info.");
+                AddKeyWords("schinese", "_file_check_file_error_detected", "文件检查已完成, 检测到部分文件发生错误!\n已生成结果文件\"{0}\", 打开可以检查更多信息.");
+                AddKeyWords("tchinese", "_file_check_file_error_detected", "文件檢查已完成, 檢測到一些文件有錯誤.\n已生成結果文件\"{0}\", 打開可以檢查更多訊息.");
 
                 AddKeyWords("english", "_file_check_file_all_good", "File verify is completed, all files is good and without error!\nkeep them good forever as much as you can!");
                 AddKeyWords("schinese", "_file_check_file_all_good", "文件检查已完成, 所有文件均未出现错误!\n尽量保持它们的良好状态!");

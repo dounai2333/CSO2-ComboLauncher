@@ -31,7 +31,7 @@
                 <DropShadowEffect Opacity="0.1" Direction="200"/>
             </Button.Effect>
         </Button>
-        <Button x:Name="verify" Content="_verify_file" Visibility="Hidden" Height="30" Margin="346,153,10,0" IsEnabled="False" VerticalAlignment="Top" FontSize="14" Click="Verify_Click" Background="White" BorderBrush="{x:Null}">
+        <Button x:Name="verify" Content="_verify_file" Height="30" Margin="346,153,10,0" IsEnabled="False" VerticalAlignment="Top" FontSize="14" Click="Verify_Click" Background="White" BorderBrush="{x:Null}">
             <Button.Effect>
                 <DropShadowEffect Opacity="0.2" Direction="270"/>
             </Button.Effect>

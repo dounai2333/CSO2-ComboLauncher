@@ -510,7 +510,7 @@ namespace CSO2_ComboLauncher
                 }
             };
 
-            process.OutputDataReceived += (se, ee) =>
+            process.OutputDataReceived += (_, ee) =>
             {
                 try
                 {
@@ -523,7 +523,7 @@ namespace CSO2_ComboLauncher
                 catch { }
             };
 
-            process.Exited += (se, ee) =>
+            process.Exited += (_, __) =>
             {
                 MainButtonStatus(true);
 
@@ -552,122 +552,116 @@ namespace CSO2_ComboLauncher
             }
             else
             {
-                MessageBoxResult box = MessageBox.Show(LStr.Get("_file_check_confirm"), Static.CWindow, MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (box == MessageBoxResult.Yes)
+                if (Static.mainserveronline)
                 {
-                    MainButtonStatus(false, false);
-                    OpenVpn.Kill();
-
-                    string path = await Downloader.FileCheckReq();
-                    string[] md5array = File.ReadAllLines(path + "\\md5list.txt");
-                    string[] filearray = File.ReadAllLines(path + "\\namelist.txt");
-                    int rightpkgcount = 2058;
-
-                    if (md5array.Count() != filearray.Count()
-                        || md5array.Count() != rightpkgcount || filearray.Count() != rightpkgcount
-                        || filearray[0] != "003b0173d4e20ba1efa0b9f142180d70.pkg" || md5array[0] != "25301B69497BD13A0FB3A2F9E2179DDA")
+                    MessageBoxResult box = MessageBox.Show(LStr.Get("_file_check_confirm"), Static.CWindow, MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    if (box == MessageBoxResult.Yes)
                     {
-                        Log.Write(LStr.Get("_file_check_req_file_wrong"), "red");
-                        Directory.Delete(path, true);
+                        MainButtonStatus(false, false);
+                        OpenVpn.Kill();
 
-                        MainButtonStatus(true);
-                        return;
-                    }
-                    else
-                    {
-                        Directory.Delete(path, true);
-
-                        verify.IsEnabled = true;
-                        verify.Content = LStr.Get("_file_check_cancel");
-
-                        List<string> filemissinglist = new List<string>();
-                        List<string> md5wronglist = new List<string>();
-
-                        List<string> pkgfiles = new List<string>();
-                        string[] pkgfiles1 = Directory.GetFiles("Data");
-                        for (int i = 0; i < pkgfiles1.Count(); i++)
-                            if (Path.GetExtension(pkgfiles1[i]) == ".pkg")
-                                pkgfiles.Add(pkgfiles1[i].Replace("Data\\", ""));
-
+                        string wrongfiles = string.Empty;
+                        string missingfiles = string.Empty;
                         bool shouldend = false;
+
                         await Task.Run(async () =>
                         {
-                            for (int i = 0; i < rightpkgcount; i++)
-                            {
-                                string content = "";
-                                Dispatcher.Invoke(new Action(delegate { content = (string)verify.Content; }));
-                                if (content == LStr.Get("_verify_file"))
-                                {
-                                    shouldend = true;
-                                    break;
-                                }
-
-                                int localindex = pkgfiles.IndexOf(filearray[i]);
-                                if (localindex == -1)
-                                {
-                                    filemissinglist.Add(filearray[i]);
-                                    continue;
-                                }
-
-                                FileInfo fi = new FileInfo("Data\\" + pkgfiles[localindex]);
-                                string filesize = Misc.ConvertByteTo(fi.Length, "best", true);
-
-                                Log.Clear();
-                                Log.Write(LStr.Get("_file_check_progress", i, rightpkgcount));
-                                Log.Write(LStr.Get("_file_check_progress_file", fi.Name, filesize));
-
-                                if (await Misc.GetHash("Data\\" + pkgfiles[localindex], "MD5") != md5array[i])
-                                    md5wronglist.Add(fi.Name);
-                            }
-
                             Log.Clear();
+                            Log.Write(LStr.Get("_file_check_downloading_needed_file"));
+
+                            string[][] hasheslist =
+                            {
+                                Misc.SplitString(await Downloader.StringFromMainServer("verify_hashes_Bin.txt")),
+                                Misc.SplitString(await Downloader.StringFromMainServer("verify_hashes_custom.txt")),
+                                Misc.SplitString(await Downloader.StringFromMainServer("verify_hashes_Data.txt"))
+                            };
+
                             Dispatcher.Invoke(new Action(delegate
                             {
-                                verify.IsEnabled = false;
-                                verify.Content = LStr.Get("_verify_file");
+                                verify.IsEnabled = true;
+                                verify.Content = LStr.Get("_file_check_cancel");
                             }));
 
-                            if (!shouldend)
+                            // todo: 多线程 Bin用1个线程 Data用2个线程 custom用4个线程
+                            // 由当前线程负责每500毫秒输出检查过程 其他线程修改变量报告状态
+
+                            for (int i = 0; i < hasheslist.Count(); i++)
                             {
-                                Log.Write(LStr.Get("_file_check_done_check_messagebox"));
-
-                                if (filemissinglist.Count() > 0 || md5wronglist.Count() > 0)
+                                int allfilescount = hasheslist[i].Count() - 1; // the last empty line should be ignored.
+                                for (int j = 0; j < allfilescount; j++)
                                 {
-                                    List<string> testfiles = new List<string>();
-                                    int filecount = filemissinglist.Count() + md5wronglist.Count();
-                                    string time = DateTime.Now.ToString("yyyy/MM/dd, HH:mm:ss");
-                                    string timeo = DateTime.Now.ToString("yyyy-MM-dd--HH-mm-ss");
-
-                                    testfiles.Add(LStr.Get("_file_check_file_message_text", time));
-                                    testfiles.Add("");
-
-                                    if (filemissinglist.Count() > 0)
+                                    string content = "";
+                                    Dispatcher.Invoke(new Action(delegate { content = (string)verify.Content; }));
+                                    if (content == LStr.Get("_verify_file"))
                                     {
-                                        testfiles.Add(LStr.Get("_file_check_file_missing_text"));
-                                        for (int i = 0; i < filemissinglist.Count(); i++)
-                                            testfiles.Add(filemissinglist[i]);
-                                    }
-                                    if (md5wronglist.Count() > 0)
-                                    {
-                                        if (filemissinglist.Count() > 0)
-                                            testfiles.Add("");
-                                        testfiles.Add(LStr.Get("_file_check_md5_notmatch_text"));
-                                        for (int i = 0; i < md5wronglist.Count(); i++)
-                                            testfiles.Add(md5wronglist[i]);
+                                        shouldend = true;
+                                        break;
                                     }
 
-                                    string file = LStr.Get("_file_check_filename", timeo);
-                                    File.WriteAllLines(file, testfiles, Encoding.UTF8);
-                                    MessageBox.Show(LStr.Get("_file_check_file_error_detected", filecount, file), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Warning);
-                                }
-                                else
-                                {
-                                    MessageBox.Show(LStr.Get("_file_check_file_all_good"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Information);
+                                    string[] fileinfo = hasheslist[i][j].Split(new string[] { " => " }, StringSplitOptions.None);
+                                    string file = fileinfo[0];
+                                    string md5 = fileinfo[1];
+                                    FileInfo fi = new FileInfo(file);
+
+                                    if (fi.Exists)
+                                    {
+                                        Log.Clear();
+                                        Log.Write(LStr.Get("_file_check_progress", j, allfilescount)
+                                            + "\n" + LStr.Get("_file_check_progress_file", file, Misc.ConvertByteTo(fi.Length, "best", true)));
+
+                                        if (await Misc.GetHash(file, "md5") != md5)
+                                            wrongfiles += file + Environment.NewLine;
+
+                                        await Misc.Sleep(1);
+                                    }
+                                    else
+                                    {
+                                        missingfiles += file + Environment.NewLine;
+                                    }
                                 }
                             }
                         });
+
+                        if (!shouldend)
+                        {
+                            verify.IsEnabled = false;
+                            verify.Content = LStr.Get("_verify_file");
+
+                            Log.Clear();
+                            Log.Write(LStr.Get("_file_check_done_check_messagebox"));
+
+                            if (!string.IsNullOrEmpty(wrongfiles) || !string.IsNullOrEmpty(missingfiles))
+                            {
+                                string time = DateTime.Now.ToString("yyyy/MM/dd, HH:mm:ss");
+                                string timeo = DateTime.Now.ToString("yyyy-MM-dd--HH-mm-ss");
+
+                                string text = LStr.Get("_file_check_file_message_text", time) + Environment.NewLine + Environment.NewLine;
+                                if (!string.IsNullOrEmpty(missingfiles))
+                                {
+                                    text += LStr.Get("_file_check_file_missing_text") + Environment.NewLine + missingfiles;
+                                }
+                                if (!string.IsNullOrEmpty(wrongfiles))
+                                {
+                                    if (!string.IsNullOrEmpty(missingfiles))
+                                        text += Environment.NewLine;
+                                    text += LStr.Get("_file_check_hash_notmatch_text") + Environment.NewLine + wrongfiles;
+                                }
+
+                                string file = LStr.Get("_file_check_filename", timeo);
+                                File.WriteAllText(file, text, Encoding.UTF8);
+                                MessageBox.Show(LStr.Get("_file_check_file_error_detected", file), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Warning);
+                            }
+                            else
+                            {
+                                MessageBox.Show(LStr.Get("_file_check_file_all_good"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Information);
+                            }
+                        }
                         Reconnect_Click(null, null);
                     }
+                }
+                else
+                {
+                    MessageBox.Show(LStr.Get("_unavailable_main_server_offline"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -732,7 +726,7 @@ namespace CSO2_ComboLauncher
 
             if (!Static.mainserveronline)
             {
-                MessageBox.Show(LStr.Get("_update_check_main_server_offline"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(LStr.Get("_unavailable_main_server_offline"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
                 MainButtonStatus(true);
                 return;
             }

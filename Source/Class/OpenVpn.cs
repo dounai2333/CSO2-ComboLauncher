@@ -125,7 +125,7 @@ namespace CSO2_ComboLauncher
             };
             Process.OutputDataReceived += OnDataReceived;
             Process.ErrorDataReceived += OnDataReceived;
-            Process.Exited += (s, e) =>
+            Process.Exited += (_, __) =>
             {
                 Main.Log.WriteToFile("OpenVPN: exited with exitcode " + Misc.DecimalToHex(Process.ExitCode));
             };
