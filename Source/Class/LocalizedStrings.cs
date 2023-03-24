@@ -166,9 +166,9 @@ namespace CSO2_ComboLauncher
                 AddKeyWords("tchinese", "_version_info", "啟動器版本: V{0} | 遊戲: V{1}");
                 // GUI end
 
-                AddKeyWords("english", "_copyright", "Copyright of cso2 (Counter-Strike Online 2):\nCopyright © 2008(2013) NEXON Korea Corporation & Valve Corporation. All Rights Reserved.\nValve, Counter-Strike and Counter-Strike Online are trademarks, registered trademarks or applied trademarks of Valve Corporation.");
-                AddKeyWords("schinese", "_copyright", "cso2(反恐精英Online2)的版权:\n版权所有© 2008(2013) NEXON Korea Corporation & Valve Corporation. 保留所有权利.\nValve, Counter-Strike和Counter-Strike Online是Valve Corporation的商标, 注册商标或申请商标.");
-                AddKeyWords("tchinese", "_copyright", "cso2(絕對武力Online2)的版權:\n版權所有© 2008(2013) NEXON Korea Corporation & Valve Corporation. 保留所有權利.\nValve, Counter-Strike和Counter-Strike Online是Valve Corporation的商標, 註冊商標或申請商標.");
+                AddKeyWords("english", "_copyright", "Copyright of cso2 (Counter-Strike Online 2):\nCopyright © 2008(2013) NEXON Korea Corporation & Valve Corporation. All Rights Reserved.\nValve, Counter-Strike and Counter-Strike Online are trademarks, registered trademarks or applied trademarks of Valve Corporation.\n\nToqe.Downloader (MIT License)\ngithub.com/Toqe/Downloader/blob/master/LICENSE");
+                AddKeyWords("schinese", "_copyright", "cso2(反恐精英Online2)的版权:\n版权所有© 2008(2013) NEXON Korea Corporation & Valve Corporation. 保留所有权利.\nValve, Counter-Strike和Counter-Strike Online是Valve Corporation的商标, 注册商标或申请商标.\n\nToqe.Downloader (MIT许可)\ngithub.com/Toqe/Downloader/blob/master/LICENSE");
+                AddKeyWords("tchinese", "_copyright", "cso2(絕對武力Online2)的版權:\n版權所有© 2008(2013) NEXON Korea Corporation & Valve Corporation. 保留所有權利.\nValve, Counter-Strike和Counter-Strike Online是Valve Corporation的商標, 註冊商標或申請商標.\n\nToqe.Downloader (MIT許可)\ngithub.com/Toqe/Downloader/blob/master/LICENSE");
 
                 AddKeyWords("english", "_author_and_helper", "CSO2 Combo Launcher:\n- Made by GEEKiDoS\n- Secondary development by leang97 and dounai2333\n- Sakura Frp for main server hosting");
                 AddKeyWords("schinese", "_author_and_helper", "CSO2 Combo Launcher:\n- GEEKiDoS编写\n- leang97及dounai2333二次开发\n- 由Sakura Frp提供主服务器");
