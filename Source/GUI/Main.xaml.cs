@@ -571,9 +571,9 @@ namespace CSO2_ComboLauncher
 
                             string[][] hasheslist =
                             {
-                                Misc.SplitString(await Downloader.StringFromMainServer("verify_hashes_Bin.txt")),
-                                Misc.SplitString(await Downloader.StringFromMainServer("verify_hashes_custom.txt")),
-                                Misc.SplitString(await Downloader.StringFromMainServer("verify_hashes_Data.txt"))
+                                Misc.SplitString(Misc.Decrypt(await Downloader.StringFromMainServer("verify_hashes_Bin.txt"))),
+                                Misc.SplitString(Misc.Decrypt(await Downloader.StringFromMainServer("verify_hashes_custom.txt"))),
+                                Misc.SplitString(Misc.Decrypt(await Downloader.StringFromMainServer("verify_hashes_Data.txt")))
                             };
 
                             Dispatcher.Invoke(new Action(delegate
