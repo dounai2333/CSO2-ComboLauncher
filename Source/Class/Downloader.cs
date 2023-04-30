@@ -157,14 +157,7 @@ namespace CSO2_ComboLauncher
                 }
 
                 if (currentversion == latestversion)
-                {
-                    Static.SetGameVersion(latestversion);
-                    Main.Instance.Dispatcher.Invoke(new Action(delegate
-                    {
-                        Main.Instance.version.Content = LStr.Get("_version_info", Static.CVersion, latestversion);
-                    }));
                     return true;
-                }
             }
             else if (latestversion < currentversion)
             {
