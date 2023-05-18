@@ -154,7 +154,7 @@ namespace CSO2_ComboLauncher
         {
             Username = userName.Text;
         }
-        
+
         private void PassWord_PasswordChanged(object sender, RoutedEventArgs e)
         {
             Password = passWord.Password;

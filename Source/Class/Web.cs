@@ -28,7 +28,7 @@ namespace CSO2_ComboLauncher
         }
 
         public WebClient Client { get; private set; }
-        
+
         public TimeoutWebClient TimeoutClient { get; private set; }
 
         public bool msgpassivemode { get; set; }
@@ -36,13 +36,13 @@ namespace CSO2_ComboLauncher
         private Thread counter { get; set; }
 
         private bool shouldoutput { get; set; }
-        
+
         private long logbyte { get; set; }
 
         private int ProgressPercentage { get; set; }
 
         private long TotalBytesToReceive { get; set; }
-        
+
         private long BytesReceived { get; set; }
 
         public Web(bool passiveoutput = false, int clienttimeout = 5000)
@@ -145,7 +145,7 @@ namespace CSO2_ComboLauncher
             });
             counter.Start();
         }
-        
+
         private void Downloader_AsyncCompleted(object sender, AsyncCompletedEventArgs e)
         {
             logbyte = 0;

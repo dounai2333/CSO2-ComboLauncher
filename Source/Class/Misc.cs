@@ -283,7 +283,7 @@ namespace CSO2_ComboLauncher
                 using (FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Read))
                     fb = ((HashAlgorithm)CryptoConfig.CreateFromName(type)).ComputeHash(fs);
             });
-            
+
             string hash = BitConverter.ToString(fb).Replace("-", "");
             return uppertext ? hash.ToUpper() : hash.ToLower();
         }

@@ -68,7 +68,7 @@ namespace CSO2_ComboLauncher
                 throw new Exception("version must be 3 length!");
 
             byte[] file = File.ReadAllBytes("Bin\\tier0.dll");
-            for (int i=0;i<ver.Length;i++)
+            for (int i = 0; i < ver.Length; i++)
                 file[versionarray[i]] = (byte)ver[i];
             File.WriteAllBytes("Bin\\tier0.dll", file);
         }

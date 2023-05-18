@@ -48,7 +48,7 @@ namespace CSO2_ComboLauncher
         private int Threads { get; set; }
 
         private WebHeaderCollection Headers { get; set; }
-        
+
         public MultiThreadDownloader()
         {
             using (Web Web = new Web())
