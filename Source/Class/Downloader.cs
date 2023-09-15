@@ -155,9 +155,6 @@ namespace CSO2_ComboLauncher
                         return false;
                     }
                 }
-
-                if (currentversion == latestversion)
-                    return true;
             }
             else if (latestversion < currentversion)
             {
