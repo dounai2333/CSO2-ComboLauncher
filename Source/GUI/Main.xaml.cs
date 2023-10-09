@@ -175,6 +175,7 @@ namespace CSO2_ComboLauncher
                 Http.Start();
                 Http.AddResponse("test", "ok", false);
 
+                /*
                 Http.AddResponse("username", Config.Username, false);
                 _ = Task.Run(() =>
                 {
@@ -184,6 +185,7 @@ namespace CSO2_ComboLauncher
                         Http.RefreshResponse("username", Config.NoAutoLogin ? "" : Config.Username, false);
                     }
                 });
+                */
             }
 
             await Misc.Sleep(250);
