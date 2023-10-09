@@ -23,6 +23,8 @@ namespace CSO2_ComboLauncher
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
             LStr.InitLocalizedStrings();
 
             string missing = "";
@@ -115,8 +117,6 @@ namespace CSO2_ComboLauncher
             Download.StartLoop();
             new ZipWorker();
             ZipWorker.StartLoop();
-
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
         }
 
         public static void HideAllWindow()
@@ -144,7 +144,7 @@ namespace CSO2_ComboLauncher
 
             HideAllWindow();
 
-            //Static.logfile.Dispose(); // the program will exit in a short time anyway ¯\_(ツ)_/¯
+            Static.logfile.Dispose();
 
             Static.icon.Visible = false;
             Static.icon.Dispose();
@@ -177,18 +177,18 @@ namespace CSO2_ComboLauncher
         {
             Exception ex = e.ExceptionObject as Exception;
 
-            HideAllWindow();
-
-            Static.icon.Visible = false;
-            Static.icon.Dispose();
-
-            OpenVpn.Kill();
-
             string time = DateTime.Now.ToString("yyyy/MM/dd, HH:mm:ss");
             string timeo = DateTime.Now.ToString("yyyy-MM-dd--HH-mm-ss");
 
-            CSO2_ComboLauncher.Main.Log.WriteToFile($"Error: uncatched exception happens. detail saved to errorminidumps/error_{timeo}.mdmp.");
-            //Static.logfile.Dispose(); // the program will exit in a short time anyway ¯\_(ツ)_/¯
+            OpenVpn.Kill();
+
+            HideAllWindow();
+
+            CSO2_ComboLauncher.Main.Log.WriteToFile($"Error: Uncatched exception. Detail saved to errorminidumps/error_{timeo}.mdmp.");
+            Static.logfile.Dispose();
+
+            Static.icon.Visible = false;
+            Static.icon.Dispose();
 
             if (!Directory.Exists("errorminidumps"))
                 Directory.CreateDirectory("errorminidumps");

@@ -58,8 +58,6 @@ namespace CSO2_ComboLauncher
                 Server = _server == "Shanghai" ? _server : Server;
                 DisableSomeCheck = (_disablesomecheck != "True" && _disablesomecheck != "False") ? DisableSomeCheck : _disablesomecheck.ToString() != DisableSomeCheck.ToString();
                 Secret = string.IsNullOrEmpty(_secret) ? Secret : _secret;
-
-                SaveConfig();
             }
             else
             {
@@ -108,8 +106,7 @@ namespace CSO2_ComboLauncher
                 passWord.IsEnabled = false;
             }
 
-            if (!File.Exists(Static.Config))
-                ShowDialog();
+            SaveConfig();
         }
 
         public bool CheckLangExists(string langfile)
