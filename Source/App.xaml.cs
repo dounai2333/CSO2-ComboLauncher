@@ -63,27 +63,6 @@ namespace CSO2_ComboLauncher
                 }
             }
 
-            bool network = false;
-            foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
-            {
-                if ((ni.OperationalStatus != OperationalStatus.Up) || (ni.NetworkInterfaceType == NetworkInterfaceType.Loopback) || (ni.NetworkInterfaceType == NetworkInterfaceType.Tunnel))
-                    continue;
-                if (ni.Speed < 10000000) // 10M
-                    continue;
-                if (ni.Name.ToLower().Contains("virtual") || ni.Description.ToLower().Contains("virtual"))
-                    continue;
-                if (ni.Description.Equals("Microsoft Loopback Adapter", StringComparison.OrdinalIgnoreCase))
-                    continue;
-
-                network = true;
-                break;
-            }
-            if (!network && !NetworkInterface.GetIsNetworkAvailable())
-            {
-                MessageBox.Show(LStr.Get("_no_network_connection"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
-                Environment.Exit(1);
-            }
-
             if (!Static.CheckSingleMutex())
             {
                 MessageBox.Show(LStr.Get("_no_multi_start"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
