@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Drawing;
+using System.Threading;
 using System.Diagnostics;
 using System.Windows.Forms;
 
@@ -20,6 +21,8 @@ namespace CSO2_ComboLauncher
         public static bool mainserveronline = true;
 
         public static string gameserver = "10.8.0.1";
+
+        public static Mutex instance = null;
 
         public static string Config = "cso2_launcher.ini";
         public static string Log = "cso2_launcher.log";
@@ -42,6 +45,22 @@ namespace CSO2_ComboLauncher
             icon.Text = CWindow;
             icon.Visible = false;
             icon.Icon = Icon.ExtractAssociatedIcon(CurrentProcess.MainModule.FileName);
+        }
+
+        public static bool CheckSingleMutex()
+        {
+            if (instance == null)
+                instance = new Mutex(false, "CSO2_ComboLauncher");
+
+            try
+            {
+                return instance.WaitOne(0, false);
+            }
+            catch (AbandonedMutexException)
+            {
+                instance.ReleaseMutex();
+                return instance.WaitOne(0, false);
+            }
         }
 
         public static string AuthorAndLibraryOutput()

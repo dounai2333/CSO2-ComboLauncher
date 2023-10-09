@@ -49,7 +49,7 @@ namespace CSO2_ComboLauncher
             using (RegistryKey ndpKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey("SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v4\\Full\\"))
             {
                 int releaseKey = Convert.ToInt32(ndpKey.GetValue("Release"));
-                if (releaseKey < 461808)
+                if (releaseKey < 461808) // .NET Framework 4.7.2
                 {
                     Task.Run(() =>
                     {
@@ -84,7 +84,7 @@ namespace CSO2_ComboLauncher
                 Environment.Exit(1);
             }
 
-            if (!Misc.IsFileAvailable(Static.Log))
+            if (!Static.CheckSingleMutex())
             {
                 MessageBox.Show(LStr.Get("_no_multi_start"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
                 Environment.Exit(1);
@@ -144,6 +144,9 @@ namespace CSO2_ComboLauncher
 
             HideAllWindow();
 
+            Static.instance.ReleaseMutex();
+            Static.instance.Dispose();
+
             Static.logfile.Dispose();
 
             Static.icon.Visible = false;
@@ -183,6 +186,9 @@ namespace CSO2_ComboLauncher
             OpenVpn.Kill();
 
             HideAllWindow();
+
+            Static.instance.ReleaseMutex();
+            Static.instance.Dispose();
 
             CSO2_ComboLauncher.Main.Log.WriteToFile($"Error: Uncatched exception. Detail saved to errorminidumps/error_{timeo}.mdmp.");
             Static.logfile.Dispose();
