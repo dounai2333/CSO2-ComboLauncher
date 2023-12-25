@@ -129,6 +129,13 @@
     <EmbeddedResource Include="Library\Toqe.Downloader.Business.dll" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resource\OpenVPN.zip" />
+    <EmbeddedResource Include="Resource\Shanghai.zip" />
+    <EmbeddedResource Include="Resource\TAP-Windows.zip" />
+    <EmbeddedResource Include="Resource\TAP-Windows_x86.zip" />
+    <EmbeddedResource Include="Resource\word_blacklist.zip" />
+  </ItemGroup>
+  <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -166,5 +173,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

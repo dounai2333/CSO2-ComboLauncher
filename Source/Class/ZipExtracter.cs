@@ -12,18 +12,28 @@ namespace CSO2_ComboLauncher
             return await Extract(FileToArchive(file), unzippath, allowoverwrite);
         }
 
-        /// <returns>'true' if extract is done, 'false' if error or something. the source archive will be disposed whatever the result.</returns>
-        public static async Task<bool> Extract(ZipArchive file, string unzippath, bool allowoverwrite = true)
+        /// <param name="stream">Stream will be disposed.</param>
+        public static async Task<bool> Extract(Stream stream, string unzippath, bool allowoverwrite = true)
         {
-            if (file == null)
+            using (ZipArchive ZipArchive = new ZipArchive(stream))
+            {
+                return await Extract(ZipArchive, unzippath, allowoverwrite);
+            }
+        }
+
+        /// <param name="archive">Archive will be disposed.</param>
+        /// <returns>'true' if extract is done, 'false' if error or something.</returns>
+        public static async Task<bool> Extract(ZipArchive archive, string unzippath, bool allowoverwrite = true)
+        {
+            if (archive == null)
                 return false;
 
             ZipWorker.Instance.Show();
 
-            int totalfiles = file.Entries.Count();
+            int totalfiles = archive.Entries.Count();
             for (int i = 0; i < totalfiles; i++)
             {
-                ZipArchiveEntry target = file.Entries[i];
+                ZipArchiveEntry target = archive.Entries[i];
                 if (string.IsNullOrEmpty(target.Name))
                     continue;
 
@@ -40,13 +50,13 @@ namespace CSO2_ComboLauncher
                 catch
                 {
                     ZipWorker.ResetStatus();
-                    file.Dispose();
+                    archive.Dispose();
                     return false;
                 }
             }
 
             ZipWorker.ResetStatus();
-            file.Dispose();
+            archive.Dispose();
             return true;
         }
 

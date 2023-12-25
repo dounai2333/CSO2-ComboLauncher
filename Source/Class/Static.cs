@@ -2,6 +2,7 @@
 using System.IO;
 using System.Drawing;
 using System.Threading;
+using System.Reflection;
 using System.Diagnostics;
 using System.Windows.Forms;
 
@@ -39,6 +40,8 @@ namespace CSO2_ComboLauncher
         public static string netadapterintername = "tap0901";
 
         public static Process CurrentProcess = Process.GetCurrentProcess();
+
+        public static Assembly ExecutingAssembly = Assembly.GetExecutingAssembly();
 
         public static void SetupIcon()
         {

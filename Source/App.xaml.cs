@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -7,8 +8,6 @@ using System.Reflection;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
-using System.Net;
-using System.Net.NetworkInformation;
 
 using Microsoft.Win32;
 
@@ -136,7 +135,6 @@ namespace CSO2_ComboLauncher
 
         private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs e)
         {
-            Assembly executingAssembly = Assembly.GetExecutingAssembly();
             AssemblyName assemblyName = new AssemblyName(e.Name);
             if (assemblyName.Name.EndsWith(".resources"))
                 return null;
@@ -144,7 +142,7 @@ namespace CSO2_ComboLauncher
                 return null;
 
             string path = "CSO2_ComboLauncher.Library." + assemblyName.Name + ".dll";
-            using (Stream stream = executingAssembly.GetManifestResourceStream(path))
+            using (Stream stream = Static.ExecutingAssembly.GetManifestResourceStream(path))
             {
                 if (stream == null)
                     return null;
