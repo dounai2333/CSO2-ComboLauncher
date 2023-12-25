@@ -28,19 +28,15 @@ namespace CSO2_ComboLauncher
 
                 AddKeyWords("english", "_net_framework_lower_version", "Your .NET Framework version is lower than 4.7.2!\nTo avoid compatibility issues, you must install .NET Framework 4.7.2 or newer version.\n\nClick 'Yes' to open official website to download the .NET Framework 4.8.\nClick 'No' to ignore this and keep try run this program.");
                 AddKeyWords("schinese", "_net_framework_lower_version", "你的.NET Framework版本低于4.7.2!\n为避免兼容性问题, 你必须安装.NET Framework 4.7.2或更新的版本.\n\n点击'是'打开官网以下载.NET Framework 4.8.\n点击'否'忽略并继续尝试运行此程序.");
-                AddKeyWords("tchinese", "_net_framework_lower_version", "你的.NET Framework版本低於4.7.2!\n為了避免兼容性問題, 你必須安裝.NET Framework 4.7.2或更新的版本.\n\n點擊'是'打開官方網站以下載.NET Framework 4.8.\n點擊'否'忽略並繼續嘗試運行此程序.");
+                AddKeyWords("tchinese", "_net_framework_lower_version", "你的.NET Framework版本低於4.7.2!\n為了避免兼容性問題, 你必須安裝.NET Framework 4.7.2或更新的版本.\n\n點擊'是'打開官方網站以下載.NET Framework 4.8.\n點擊'否'忽略並繼續嘗試運行此程式.");
 
                 AddKeyWords("english", "_no_multi_start", "Another launcher is already running, this program will not start!");
                 AddKeyWords("schinese", "_no_multi_start", "另一个启动器已在运行中, 此程序将不会运行!");
-                AddKeyWords("tchinese", "_no_multi_start", "另一個啟動器已經在運行著, 這個程序將不會啟動!");
-
-                AddKeyWords("english", "_no_network_connection", "You need a working network connection to start this program.");
-                AddKeyWords("schinese", "_no_network_connection", "你需要一个正常的网络才能启动此程序.");
-                AddKeyWords("tchinese", "_no_network_connection", "你需要一個正常的網路才能啟動這個程式.");
+                AddKeyWords("tchinese", "_no_multi_start", "另一個啟動器已經在運行著, 這個程式將不會啟動!");
 
                 AddKeyWords("english", "_error_msg", "OH NO! The software encountered a fatal error!");
                 AddKeyWords("schinese", "_error_msg", "哦不!程序发生了一个致命错误!");
-                AddKeyWords("tchinese", "_error_msg", "哦天哪!程序發生了一個致命的錯誤!");
+                AddKeyWords("tchinese", "_error_msg", "哦天哪!程式發生了一個致命的錯誤!");
 
                 AddKeyWords("english", "_error_time", "Error time: ");
                 AddKeyWords("schinese", "_error_time", "错误时间: ");
@@ -60,7 +56,7 @@ namespace CSO2_ComboLauncher
 
                 AddKeyWords("english", "_error_hint", "Some related files have been placed in the errorminidumps folder.");
                 AddKeyWords("schinese", "_error_hint", "如果您需要帮助,请记得截图此页面!\n此外,在errorminidumps文件夹内生成了一些错误的相关资料!");
-                AddKeyWords("tchinese", "_error_hint", "程序保留了一些訊息生成在了errorminidumps資料夾內,請記得查看!");
+                AddKeyWords("tchinese", "_error_hint", "程式保留了一些訊息生成在了errorminidumps資料夾內,請記得查看!");
             }
 
             // Config strings
@@ -108,9 +104,9 @@ namespace CSO2_ComboLauncher
                 AddKeyWords("tchinese", "_enable_console", "開啟遊戲控制台");
                 // GUI end
 
-                AddKeyWords("english", "_user_agreement", "Before you use this program, you must allow this program to do couple things in your PC:\n- Install OpenVPN (for virtual LAN)\n- Install TAP-Windows (network adapter that OpenVPN needed)\n- Scan Dhcp service status (enable it if necessary)\n\nOpenVPN may read your system information to generate a unique key to connect to the server.\nWhen you have connected to the server you will be exposed to a virtual LAN network which everybody in the same network can access your PC.\nWe highly recommended enabling your firewall or keep anti-virus open to avoid being affected by malicious activities in the network!\n\nIf you do not agree with any of them, you can click 'No' to exit program, your PC will keep untouched.\nClicking 'Yes' means that you agree to all the above content and assume possible potential risks.\nyou should be responsible for the security of your own PC!");
-                AddKeyWords("schinese", "_user_agreement", "在你使用此程序之前, 你必须允许程序在你的电脑上做一些事情:\n- 安装OpenVPN (建立虚拟局域网)\n- 安装TAP-Windows (OpenVPN所需要的网络适配器)\n- 扫描Dhcp服务状态 (如有需要则启用)\n\nOpenVPN可能会收集你电脑的信息并生成唯一标识密钥用于连接服务器.\n当你连接服务器后, 你将暴露在一个虚拟局域网中, 任何人都可以通过此网络访问你的电脑.\n我们强烈推荐你启用防火墙或保持杀软开启以避免受到网络中恶意活动的影响!\n\n如果你不同意其中任何一条, 你可以点击'否'退出程序, 你的电脑将保持原状.\n点击'是'即代表你同意以上所有内容并愿意承担可能存在的风险.\n你应对自己的电脑安全负责!");
-                AddKeyWords("tchinese", "_user_agreement", "在你使用此程式之前, 你必須允許程式在你的電腦上做一些事情:\n- 安裝OpenVPN (建立虛擬局域網)\n- 安裝TAP-Windows (OpenVPN所需要的網路適配器)\n- 掃描Dhcp服務狀態 (如有需要則啟用)\n\nOpenVPN可能會收集你電腦的信息並生成唯一標識密鑰用來連接伺服器.\n當你連接伺服器後, 你將暴露在一個虛擬局域網中, 任何人都可以通過該網路訪問你的電腦.\n我們強烈推薦你啟用防火墻或讓殺毒軟體一直開著以避免受到網路中惡意活動的影響!\n\n如果你不同意其中任何一條, 你可以點擊'否'退出程式, 你的電腦將保持原狀.\n點擊'是'就代表你同意以上所有內容並願意承擔可能存在的風險.\n你應該對自己的電腦安全負責!");
+                AddKeyWords("english", "_user_agreement", "Thank you for using CSO2 Combo Launcher!\n\nThis program are having the following sensitive operations:\n- Install OpenVPN and Virtual Network Adapter (TAP-Windows)\n-- Use the OpenVPN and VNA to connect to the Virtual LAN\n- Detect and modification the status of DHCP Client service\n\nOpenVPN may collect some information of your PC and generate a 'Unique ID'.\nIn some case, we'll save your ID to our server without asking or inform.\n\n");
+                AddKeyWords("schinese", "_user_agreement", "欢迎使用CSO2 Combo Launcher!\n\n为了使游戏正常运行, 此程序将会自动执行以下敏感操作:\n- 安装OpenVPN及其虚拟网卡(TAP-Windows)\n-- 使用以上软件及虚拟网卡连接虚拟局域网\n- 检测并修改DHCP Client服务运行状态\n\nOpenVPN可能会收集您的电脑的部分信息并生成唯一标识符.\n我们可能会在未通知您的情况下, 将您的唯一标识符保存至我们的服务器.\n\nOpenVPN成功连接服务器后, 您将暴露在虚拟局域网环境中,\n虚拟局域网内的任何人均可以通过该渠道直接访问您的电脑.\n我们强烈建议您在游玩过程中不要关闭防火墙及杀毒软件,\n否则您将可能遭受恶意网络攻击并导致您的电脑瘫痪!\n\n点击'是'即代表您已阅读并同意以上内容.\n点击'否'不同意, 此程序将会退出.");
+                AddKeyWords("tchinese", "_user_agreement", "歡迎使用CSO2 Combo Launcher!\n\n為了保證遊戲正常運行, 此程式會運行以下敏感操作:\n- 安裝OpenVPN和虛擬網卡(TAP-Windows)\n-- 使用以上軟體和虛擬網卡連接虛擬網路\n- 檢測並修改DHCP Client服務運行狀態\n\nOpenVPN可能會收集您的電腦的部分信息並生成唯一識別碼.\n我們可能會在不通知您的時候, 將您的唯一識別碼保存到我們的伺服器.\n\nOpenVPN成功連接伺服器之後, 您將會處於虛擬網路中,\n虛擬網路裡的任何人都可以通過它直接訪問您的電腦.\n我們強烈建議您在遊玩過程中不要關閉防火墻和殺毒軟體,\n不然您將可能遭受網路攻擊, 您的電腦可能會因此而癱瘓!\n\n點擊'是'即代表您已閱讀並同意以上內容.\n點擊'否'不同意, 此程式將會退出.");
 
                 AddKeyWords("english", "_lang_file_not_exist", "The file for the currently selected language could not be found, please change to other language, otherwise you will hit errors when launching the game!\n\nIf you want to use the language of your choice, please download the files by yourself.");
                 AddKeyWords("schinese", "_lang_file_not_exist", "无法找到当前选择的语言的文件, 请修改语言, 否则启动游戏将会导致报错!\n\n如果你希望使用这个语言,请自行寻找相关的语言包!");
@@ -236,7 +232,7 @@ namespace CSO2_ComboLauncher
 
                 AddKeyWords("english", "_self_checking_launcherupdate_failed", "Launcher update failed!\nProgram will ignore the update for now so you can update it later.");
                 AddKeyWords("schinese", "_self_checking_launcherupdate_failed", "启动器更新失败!\n程序将忽略此次更新以便你之后进行更新.");
-                AddKeyWords("tchinese", "_self_checking_launcherupdate_failed", "啟動器更新失敗!\n程序將忽略這次更新讓你之後再進行更新.");
+                AddKeyWords("tchinese", "_self_checking_launcherupdate_failed", "啟動器更新失敗!\n程式將忽略這次更新讓你之後再進行更新.");
 
                 AddKeyWords("english", "_self_checking_download_resource", "Downloading resource from {0} server...");
                 AddKeyWords("schinese", "_self_checking_download_resource", "正在从{0}服务器下载资源...");
