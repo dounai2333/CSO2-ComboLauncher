@@ -277,7 +277,7 @@ namespace CSO2_ComboLauncher
             if (!IsFileAvailable(file, FileAccess.Read))
                 return "";
 
-            byte[] fb = {};
+            byte[] fb = { };
             await Task.Run(() =>
             {
                 using (FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Read))

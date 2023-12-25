@@ -468,7 +468,7 @@ namespace CSO2_ComboLauncher
             {
                 lStrings.Add(new KeyValuePair<string, string>(lang, value), content);
             }
-            catch {}
+            catch { }
         }
 
         public static string Get(string strCode, params object[] args)
