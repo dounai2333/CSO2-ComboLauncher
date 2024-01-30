@@ -76,8 +76,7 @@ namespace CSO2_ComboLauncher
                             {
                                 byte[] data = File.ReadAllBytes(localpath);
 
-                                context.Response.StatusCode = 200;
-                                context.Response.StatusDescription = "Success (200)";
+                                context.Response.StatusCode = (int)HttpStatusCode.OK;
                                 context.Response.ContentType = MediaTypeNames.Application.Octet;
 
                                 context.Response.ContentLength64 = data.Length;
@@ -103,8 +102,7 @@ namespace CSO2_ComboLauncher
                                     {
                                         byte[] data = File.ReadAllBytes(RequestUrlList_Response[i]);
 
-                                        context.Response.StatusCode = 200;
-                                        context.Response.StatusDescription = "Success (200)";
+                                        context.Response.StatusCode = (int)HttpStatusCode.OK;
                                         context.Response.ContentType = MediaTypeNames.Application.Octet;
 
                                         context.Response.ContentLength64 = data.Length;
@@ -116,8 +114,7 @@ namespace CSO2_ComboLauncher
                                 }
                                 else
                                 {
-                                    context.Response.StatusCode = 200;
-                                    context.Response.StatusDescription = "Success (200)";
+                                    context.Response.StatusCode = (int)HttpStatusCode.OK;
                                     context.Response.ContentType = MediaTypeNames.Text.Plain;
 
                                     using (StreamWriter sw = new StreamWriter(context.Response.OutputStream, Encoding.UTF8))
@@ -132,12 +129,11 @@ namespace CSO2_ComboLauncher
                     if (needcontinue)
                         continue;
 
-                    context.Response.StatusCode = 404;
-                    context.Response.StatusDescription = "Not Found (404)";
+                    context.Response.StatusCode = (int)HttpStatusCode.NotFound;
                     context.Response.ContentType = MediaTypeNames.Text.Plain;
 
                     using (StreamWriter sw = new StreamWriter(context.Response.OutputStream, Encoding.UTF8))
-                        sw.Write("Not Found (404)");
+                        sw.Write("404 Not Found");
                     context.Response.Close();
                 }
             });
