@@ -55,7 +55,7 @@ namespace CSO2_ComboLauncher
                         MessageBoxResult box = MessageBox.Show(LStr.Get("_net_framework_lower_version"), Static.CWindow, MessageBoxButton.YesNo, MessageBoxImage.Warning);
                         if (box == MessageBoxResult.Yes)
                         {
-                            Process.Start("https://dotnet.microsoft.com/download/dotnet-framework/thank-you/net48-offline-installer");
+                            Process.Start("https://dotnet.microsoft.com/download/dotnet-framework/thank-you/net481-offline-installer");
                             Environment.Exit(1);
                         }
                     }).Wait();
