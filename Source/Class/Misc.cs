@@ -201,6 +201,16 @@ namespace CSO2_ComboLauncher
             return exist;
         }
 
+        public static void ShuffleArray<T>(ref T[] array)
+        {
+            Random random = new Random();
+            for (int i = array.Count() - 1; i > 0; i--)
+            {
+                int r = random.Next(0, i);
+                (array[i], array[r]) = (array[r], array[i]);
+            }
+        }
+
         public static bool IsFileAvailable(string file, FileAccess fa = FileAccess.ReadWrite)
         {
             try

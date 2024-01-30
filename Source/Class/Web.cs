@@ -50,7 +50,7 @@ namespace CSO2_ComboLauncher
             Client = new WebClient
             {
                 Proxy = null,
-                Encoding = Encoding.GetEncoding("GBK"),
+                Encoding = Encoding.GetEncoding("GBK")
             };
             Client.Headers[HttpRequestHeader.UserAgent] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.6045.200 Safari/537.36";
             Client.Headers[HttpRequestHeader.AcceptLanguage] = "zh-CN,zh;q=0.9";

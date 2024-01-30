@@ -1,4 +1,6 @@
 ﻿using System.IO;
+using System.Net;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 
@@ -19,41 +21,46 @@ namespace CSO2_ComboLauncher
             Filename = string.Empty;
             Mail5k = string.Empty;
 
-            using (Web Web = new Web())
+            try
             {
-                string page = await Web.Client.DownloadStringTaskAsync($"https://mail.qq.com/cgi-bin/ftnExs_download?t=exs_ftn_download&code={code}&k={key}");
+                HttpWebRequest httpWebRequest = WebRequest.Create($"https://wx.mail.qq.com/ftn/download?func=4&code={code}&key={key}") as HttpWebRequest;
+                httpWebRequest.Proxy = null;
+                httpWebRequest.Method = WebRequestMethods.Http.Head;
+                httpWebRequest.Timeout = 10000;
+                httpWebRequest.AllowAutoRedirect = false;
 
-                Match mail5kmatch = new Regex("mail5k=[^;]+").Match(Web.Client.ResponseHeaders[System.Net.HttpResponseHeader.SetCookie]);
-                if (mail5kmatch.Success)
-                    Mail5k = mail5kmatch.Value;
+                httpWebRequest.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.6045.200 Safari/537.36";
+                httpWebRequest.Headers[HttpRequestHeader.AcceptLanguage] = "zh-CN,zh;q=0.9";
 
-                Regex regex = new Regex("http[^\"]+");
-                foreach (Match address in regex.Matches(page))
+                using (HttpWebResponse httpWebResponse = (HttpWebResponse)await httpWebRequest.GetResponseAsync())
                 {
-                    if (address.Value.Contains("ftn.qq.com"))
-                    {
-                        Match filenameMatch = new Regex("(?<=fname=).+?(?=&)").Match(address.Value);
-                        if (filenameMatch.Success)
-                        {
-                            Filename = FixFilename(filenameMatch.Value);
-                        }
-                        else
-                        {
-                            filenameMatch = new Regex("(?<=\"ft_d_filename\">).+?(?=</div>)").Match(page);
-                            if (filenameMatch.Success)
-                                Filename = filenameMatch.Value;
-                        }
+                    // we only need header info, not the response stream.
+                    httpWebResponse.GetResponseStream().Dispose();
 
-                        return address.Value;
+                    if (httpWebResponse.StatusCode == HttpStatusCode.Redirect)
+                    {
+                        string address = httpWebResponse.Headers.Get("Location");
+                        if (!string.IsNullOrEmpty(address))
+                        {
+                            Match mail5kmatch = new Regex("mail5k=[^;]+").Match(httpWebResponse.Headers.Get("Set-Cookie"));
+                            if (mail5kmatch.Success)
+                                Mail5k = mail5kmatch.Value;
+
+                            Match filenameMatch = new Regex("(?<=fname=).+?(?=&)").Match(address);
+                            if (filenameMatch.Success)
+                                Filename = FixFilename(filenameMatch.Value);
+
+                            return address;
+                        }
                     }
                 }
-
-                Match messageMatch = new Regex("(?<=\"ft_d_error infobar error\" ><p>).+?(?=</p>)|(?<=\"ft_d_error infobar error\"><p>).+?(?=</p>)").Match(page);
-                if (messageMatch.Success)
-                    return messageMatch.Value.Replace("<br />", "\n").Replace("<br>", "\n");
-
-                return "address is not found.";
             }
+            catch /*(WebException webEx)*/
+            {
+                //HttpWebResponse httpWebResponse = webEx.Response as HttpWebResponse;
+            }
+
+            return "address is not found.";
         }
 
         /// <param name="path">if a folder is given, file name will be from QQmail server.</param>
@@ -66,6 +73,27 @@ namespace CSO2_ComboLauncher
             return await Downloader.FileFromHttp(address, (Path.GetFileName(path) == string.Empty) ? path + Filename : path, threads, "sha1", sha1);
         }
 
+        public static async Task<bool> DownloadFile(string path, int threads, string[] code, string sha1, string[] key)
+        {
+            if (code.Count() != key.Count())
+                return false;
+
+            int[] indexes = new int[key.Count()];
+            for (int i = 0; i < indexes.Length; i++)
+                indexes[i] = i;
+
+            Misc.ShuffleArray(ref indexes);
+
+            for (int i = 0; i < indexes.Count(); i++)
+            {
+                Main.Log.Write(indexes[i]);
+                if (await DownloadFile(path, threads, code[indexes[i]], sha1, key[indexes[i]]))
+                    return true;
+            }
+
+            return false;
+        }
+
         public static async Task<string> DownloadString(string code, string key)
         {
             string address = await GetLink(code, key);
@@ -73,6 +101,28 @@ namespace CSO2_ComboLauncher
                 return null;
 
             return await Downloader.StringFromHttp(address);
+        }
+
+        public static async Task<string> DownloadString(string[] code, string[] key)
+        {
+            if (code.Count() != key.Count())
+                return null;
+
+            int[] indexes = new int[key.Count()];
+            for (int i = 0; i < indexes.Length; i++)
+                indexes[i] = i;
+
+            Misc.ShuffleArray(ref indexes);
+
+            for (int i = 0; i < indexes.Count(); i++)
+            {
+                Main.Log.Write(indexes[i]);
+                string result = await DownloadString(code[indexes[i]], key[indexes[i]]);
+                if (result != null)
+                    return result;
+            }
+
+            return null;
         }
 
         private static string FixFilename(string filename)
