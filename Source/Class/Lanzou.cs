@@ -84,8 +84,6 @@ namespace CSO2_ComboLauncher
             if (!address.StartsWith("http"))
                 return false;
 
-            Main.Log.Write(address);
-
             return await Downloader.FileFromHttp(address, (Path.GetFileName(path) == string.Empty) ? path + Filename : path, threads, hashchecktype, hash);
         }
 
