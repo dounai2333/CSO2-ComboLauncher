@@ -15,7 +15,7 @@ namespace CSO2_ComboLauncher
         /// <summary>
         /// get download link from QQmail, if success global variable '<see cref="Filename"/>' will be set with the same filename from current link, else it's '<see cref="string.Empty"/>'.
         /// </summary>
-        /// <returns>download link or error message.</returns>
+        /// <returns>download link or "address is not found."</returns>
         public static async Task<string> GetLink(string code, string key)
         {
             Filename = string.Empty;
@@ -29,8 +29,8 @@ namespace CSO2_ComboLauncher
                 httpWebRequest.Timeout = 10000;
                 httpWebRequest.AllowAutoRedirect = false;
 
-                httpWebRequest.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.6045.200 Safari/537.36";
                 httpWebRequest.Headers[HttpRequestHeader.AcceptLanguage] = "zh-CN,zh;q=0.9";
+                httpWebRequest.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.6045.200 Safari/537.36";
 
                 using (HttpWebResponse httpWebResponse = (HttpWebResponse)await httpWebRequest.GetResponseAsync())
                 {

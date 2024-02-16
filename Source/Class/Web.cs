@@ -50,21 +50,24 @@ namespace CSO2_ComboLauncher
             Client = new WebClient
             {
                 Proxy = null,
-                Encoding = Encoding.GetEncoding("GBK")
+                Encoding = Encoding.UTF8
             };
-            Client.Headers[HttpRequestHeader.UserAgent] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.6045.200 Safari/537.36";
             Client.Headers[HttpRequestHeader.AcceptLanguage] = "zh-CN,zh;q=0.9";
-            Client.Headers[HttpRequestHeader.Cookie] = QQMail.Mail5k; // temp workaround
+            Client.Headers[HttpRequestHeader.UserAgent] = "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Mobile Safari/537.36";
+
+            Client.Headers[HttpRequestHeader.Cookie] = string.IsNullOrEmpty(QQMail.Mail5k) ? null : QQMail.Mail5k; // temp workaround
+            Client.Headers[HttpRequestHeader.Referer] = string.IsNullOrEmpty(Lanzou.Referer) ? null : Lanzou.Referer; // temp workaround
+
             Client.DownloadProgressChanged += Downloader_AsyncProgressChanged;
             Client.DownloadFileCompleted += Downloader_AsyncCompleted;
 
             TimeoutClient = new TimeoutWebClient(clienttimeout)
             {
                 Proxy = Client.Proxy,
-                Encoding = Client.Encoding,
+                Encoding = Client.Encoding
             };
-            TimeoutClient.Headers[HttpRequestHeader.UserAgent] = Client.Headers[HttpRequestHeader.UserAgent];
             TimeoutClient.Headers[HttpRequestHeader.AcceptLanguage] = Client.Headers[HttpRequestHeader.AcceptLanguage];
+            TimeoutClient.Headers[HttpRequestHeader.UserAgent] = Client.Headers[HttpRequestHeader.UserAgent];
 
             msgpassivemode = passiveoutput;
             shouldoutput = false;

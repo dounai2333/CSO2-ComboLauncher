@@ -75,6 +75,7 @@
     <Compile Include="Class\HttpListenerHelper.cs" />
     <Compile Include="Class\IniFile.cs" />
     <Compile Include="Class\JsonParser.cs" />
+    <Compile Include="Class\Lanzou.cs" />
     <Compile Include="Class\LocalizedStrings.cs" />
     <Compile Include="Class\Misc.cs" />
     <Compile Include="Class\MultiThreadDownloader.cs" />
