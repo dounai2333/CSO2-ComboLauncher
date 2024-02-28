@@ -49,6 +49,7 @@ namespace CSO2_ComboLauncher
                         httpWebRequest.Timeout = 10000;
                         httpWebRequest.AllowAutoRedirect = false;
 
+                        // Lanzou return code 302 when no User-Agent is given.
                         httpWebRequest.Headers[HttpRequestHeader.AcceptLanguage] = Web.Client.Headers[HttpRequestHeader.AcceptLanguage];
                         httpWebRequest.Headers[HttpRequestHeader.Cookie] = "down_ip=1"; // Remove?
 
