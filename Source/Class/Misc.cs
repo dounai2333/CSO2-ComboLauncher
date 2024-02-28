@@ -298,58 +298,92 @@ namespace CSO2_ComboLauncher
             return uppertext ? hash.ToUpper() : hash.ToLower();
         }
 
-        public static string Encrypt(string content)
-        {
-            if (string.IsNullOrEmpty(content))
-                return "";
-
-            string str = "";
-            string[] line = SplitString(content);
-            for (int i = 0; i < line.Count(); i++)
-            {
-                if (i == line.Count() - 1)
-                    str += Convert.ToBase64String(Encoding.UTF8.GetBytes(line[i]));
-                else
-                    str += Convert.ToBase64String(Encoding.UTF8.GetBytes(line[i])) + Environment.NewLine;
-            }
-            return Convert.ToBase64String(Encoding.UTF8.GetBytes(str));
-        }
-
-        public static string Decrypt(string content)
-        {
-            if (string.IsNullOrEmpty(content) || !IsBase64String(content))
-                return "";
-
-            string str = "";
-            string temp = Encoding.UTF8.GetString(Convert.FromBase64String(content));
-            string[] line = SplitString(temp);
-            for (int i = 0; i < line.Count(); i++)
-            {
-                if (i == line.Count() - 1)
-                    str += Encoding.UTF8.GetString(Convert.FromBase64String(line[i]));
-                else
-                    str += Encoding.UTF8.GetString(Convert.FromBase64String(line[i])) + Environment.NewLine;
-            }
-            return str;
-        }
-
         public static bool IsBase64String(string content)
         {
             content = content.Trim();
             return (content.Length % 4 == 0) && new Regex(@"^[a-zA-Z0-9\+/]*={0,3}$").IsMatch(content);
         }
 
-        public static bool EncryptFile(string file, string newfile)
+        public static byte[] AesCrypto(byte[] bytes, Func<Aes, ICryptoTransform> crypto)
+        {
+            using (Aes aes = Aes.Create())
+            {
+                Rfc2898DeriveBytes derivedBytes = new Rfc2898DeriveBytes(UnicodeToString("\\u0054\\u0068\\u0069\\u0073\\u0020\\u0073\\u002a\\u0069\\u0074"), new byte[] { 0x64, 0x6F, 0x75, 0x6E, 0x61, 0x69, 0x32, 0x33, 0x33, 0x33 });
+                aes.Key = derivedBytes.GetBytes(32);
+                aes.IV = derivedBytes.GetBytes(16);
+
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, crypto(aes), CryptoStreamMode.Write))
+                        cs.Write(bytes, 0, bytes.Length);
+
+                    return ms.ToArray();
+                }
+            }
+        }
+
+        public static string Encrypt(string content, bool aescrypto = false)
+        {
+            if (string.IsNullOrEmpty(content))
+                return "";
+
+            if (aescrypto)
+            {
+                byte[] contentbytes = Encoding.UTF8.GetBytes(content);
+                return Convert.ToBase64String(AesCrypto(contentbytes, aes => aes.CreateEncryptor()));
+            }
+            else
+            {
+                string str = "";
+                string[] line = SplitString(content);
+                for (int i = 0; i < line.Count(); i++)
+                {
+                    if (i == line.Count() - 1)
+                        str += Convert.ToBase64String(Encoding.UTF8.GetBytes(line[i]));
+                    else
+                        str += Convert.ToBase64String(Encoding.UTF8.GetBytes(line[i])) + Environment.NewLine;
+                }
+                return Convert.ToBase64String(Encoding.UTF8.GetBytes(str));
+            }
+        }
+
+        public static string Decrypt(string content, bool aescrypto = false)
+        {
+            if (string.IsNullOrEmpty(content) || !IsBase64String(content))
+                return "";
+
+            if (aescrypto)
+            {
+                byte[] contentbytes = Convert.FromBase64String(content);
+                return Encoding.UTF8.GetString(AesCrypto(contentbytes, aes => aes.CreateDecryptor()));
+            }
+            else
+            {
+                string str = "";
+                string temp = Encoding.UTF8.GetString(Convert.FromBase64String(content));
+                string[] line = SplitString(temp);
+                for (int i = 0; i < line.Count(); i++)
+                {
+                    if (i == line.Count() - 1)
+                        str += Encoding.UTF8.GetString(Convert.FromBase64String(line[i]));
+                    else
+                        str += Encoding.UTF8.GetString(Convert.FromBase64String(line[i])) + Environment.NewLine;
+                }
+                return str;
+            }
+        }
+
+        public static bool EncryptFile(string file, string newfile, bool aescrypto = false)
         {
             if (!File.Exists(file))
                 return false;
 
-            string encrypted = Encrypt(File.ReadAllText(file, Encoding.UTF8));
+            string encrypted = Encrypt(File.ReadAllText(file, Encoding.UTF8), aescrypto);
             File.WriteAllText(newfile, encrypted, Encoding.UTF8);
             return true;
         }
 
-        public static bool DecryptFile(string file, string newfile)
+        public static bool DecryptFile(string file, string newfile, bool aescrypto = false)
         {
             if (!File.Exists(file))
                 return false;
@@ -357,7 +391,7 @@ namespace CSO2_ComboLauncher
             string text = File.ReadAllText(file, Encoding.UTF8);
             if (IsBase64String(text))
             {
-                string decrypted = Decrypt(text);
+                string decrypted = Decrypt(text, aescrypto);
                 File.WriteAllText(newfile, decrypted, Encoding.UTF8);
                 return true;
             }
