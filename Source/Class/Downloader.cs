@@ -8,7 +8,6 @@ namespace CSO2_ComboLauncher
 {
     static class Downloader
     {
-        private static readonly Config Config = Config.Instance;
         private static Ftp Ftp = new Ftp(Static.service, Static.account, Static.password);
 
         public static async Task<string> StringFromMainServer(string file)
@@ -271,7 +270,7 @@ namespace CSO2_ComboLauncher
 
         public static async Task<string> OpenVpnServer(bool backup)
         {
-            switch (Config.Server)
+            switch (Config.Instance.Server)
             {
                 case "Shanghai":
                     return await OpenVpnServer_Shanghai(backup);
