@@ -18,7 +18,6 @@ namespace CSO2_ComboLauncher
         public bool EnableConsole = false;
         public string Server = "Shanghai";
         public bool DisableSomeCheck = false;
-        public string Secret = "";
 
         public Config()
         {
@@ -47,7 +46,6 @@ namespace CSO2_ComboLauncher
                 string _enableconsole = ini.GetSetting("Game", "EnableConsole");
                 string _server = ini.GetSetting("Launcher", "Server");
                 string _disablesomecheck = ini.GetSetting("Launcher", "DisableSomeCheck");
-                string _secret = ini.GetSetting("Launcher", "Secret");
 
                 Username = string.IsNullOrEmpty(_name) ? Username : ((_name.Length > userName.MaxLength) ? _name.Substring(0, userName.MaxLength) : _name);
                 Password = string.IsNullOrEmpty(_password) ? Password : ((_password.Length > passWord.MaxLength) ? _password.Substring(0, passWord.MaxLength) : _password);
@@ -57,7 +55,6 @@ namespace CSO2_ComboLauncher
                 EnableConsole = (_enableconsole != "True" && _enableconsole != "False") ? EnableConsole : (_enableconsole.ToString() != EnableConsole.ToString());
                 Server = _server == "Shanghai" ? _server : Server;
                 DisableSomeCheck = (_disablesomecheck != "True" && _disablesomecheck != "False") ? DisableSomeCheck : _disablesomecheck.ToString() != DisableSomeCheck.ToString();
-                Secret = string.IsNullOrEmpty(_secret) ? Secret : _secret;
             }
             else
             {
@@ -133,7 +130,6 @@ namespace CSO2_ComboLauncher
             ini.AddSetting("Game", "EnableConsole", EnableConsole.ToString());
             ini.AddSetting("Launcher", "Server", Server);
             ini.AddSetting("Launcher", "DisableSomeCheck", DisableSomeCheck.ToString());
-            ini.AddSetting("Launcher", "Secret", Secret);
             ini.SaveSettings();
 
             Misc.EncryptFile(Static.Config, Static.Config);
