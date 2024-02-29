@@ -71,7 +71,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class\Downloader.cs" />
-    <Compile Include="Class\FtpDownloader.cs" />
     <Compile Include="Class\HttpListenerHelper.cs" />
     <Compile Include="Class\IniFile.cs" />
     <Compile Include="Class\JsonParser.cs" />
@@ -131,7 +130,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resource\OpenVPN.zip" />
-    <EmbeddedResource Include="Resource\Shanghai.zip" />
     <EmbeddedResource Include="Resource\TAP-Windows.zip" />
     <EmbeddedResource Include="Resource\TAP-Windows_x86.zip" />
     <EmbeddedResource Include="Resource\word_blacklist.zip" />
@@ -146,6 +144,7 @@
       <SubType>Code</SubType>
     </Compile>
     <None Include="icon.ico" />
+    <EmbeddedResource Include="Resource\PromoImage.zip" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\app.manifest">

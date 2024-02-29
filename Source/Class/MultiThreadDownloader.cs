@@ -69,9 +69,9 @@ namespace CSO2_ComboLauncher
             StartCounter();
         }
 
-        public async Task<bool> DownloadFile(string link, string path, int threads, string hashchecktype = "", string hash = "")
+        public async Task<bool> DownloadFile(string link, string path, int threads, string hashchecktype = "", string hash = "", int retry = 0)
         {
-            if (CSO2_ComboLauncher.Download.Instance.IsVisible)
+            if (CSO2_ComboLauncher.Download.Instance.IsVisible || retry == 4)
                 return false;
 
             Link = link;
@@ -118,12 +118,12 @@ namespace CSO2_ComboLauncher
                 if (hashchecktype != "" && await Misc.GetHash(path, hashchecktype) != hash)
                 {
                     File.Delete(path);
-                    return false;
+                    return await DownloadFile(link, path, threads, hashchecktype, hash, retry + 1);
                 }
             }
             else
             {
-                return false;
+                return await DownloadFile(link, path, threads, hashchecktype, hash, retry + 1);
             }
 
             return true;

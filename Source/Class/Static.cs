@@ -15,12 +15,6 @@ namespace CSO2_ComboLauncher
         public static string CVersion = "6.5.6"; // 启动器版本 (记得也换程序集信息)
         public static string CWindow = "CSO2 Combo Launcher V" + CVersion;
 
-        public static string service = "frp-egg.top:49971"; // hosted on Sakura Frp (www.natfrp.com)
-        public static string account = "Ghost";
-        public static string password = "made by dounai2333.";
-
-        public static bool mainserveronline = true;
-
         public static string gameserver = "10.8.0.1";
 
         public static Mutex instance = null;
@@ -42,6 +36,8 @@ namespace CSO2_ComboLauncher
         public static Process CurrentProcess = Process.GetCurrentProcess();
 
         public static Assembly ExecutingAssembly = Assembly.GetExecutingAssembly();
+
+        public static byte[] server = new byte[] { 0x62, 0x2f, 0x66, 0x4d, 0x78, 0x2b, 0x5a, 0x44, 0x64, 0x69, 0x44, 0x2f, 0x42, 0x58, 0x71, 0x45, 0x68, 0x4b, 0x33, 0x39, 0x4a, 0x77, 0x68, 0x68, 0x74, 0x66, 0x79, 0x64, 0x64, 0x6f, 0x71, 0x44, 0x31, 0x57, 0x77, 0x78, 0x37, 0x44, 0x32, 0x7a, 0x2b, 0x70, 0x72, 0x4a, 0x64, 0x30, 0x32, 0x75, 0x42, 0x34, 0x72, 0x44, 0x6b, 0x44, 0x36, 0x7a, 0x42, 0x34, 0x6f, 0x75, 0x42, 0x45, 0x4f, 0x36 };
 
         public static void SetupIcon()
         {
@@ -80,7 +76,7 @@ namespace CSO2_ComboLauncher
             if (int.TryParse(version, out int ver))
                 return ver;
             else
-                return 100;
+                return 200;
         }
 
         public static void SetGameVersion(int version)

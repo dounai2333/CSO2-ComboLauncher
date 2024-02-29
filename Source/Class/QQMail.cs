@@ -64,16 +64,16 @@ namespace CSO2_ComboLauncher
         }
 
         /// <param name="path">if a folder is given, file name will be from QQmail server.</param>
-        public static async Task<bool> DownloadFile(string path, int threads, string code, string sha1, string key)
+        public static async Task<bool> DownloadFile(string path, int threads, string code, string key, string hashchecktype = "", string hash = "")
         {
             string address = await GetLink(code, key);
             if (!address.StartsWith("http"))
                 return false;
 
-            return await Downloader.FileFromHttp(address, (Path.GetFileName(path) == string.Empty) ? path + Filename : path, threads, "sha1", sha1);
+            return await Downloader.FileFromHttp(address, (Path.GetFileName(path) == string.Empty) ? path + Filename : path, threads, hashchecktype, hash);
         }
 
-        public static async Task<bool> DownloadFile(string path, int threads, string[] code, string sha1, string[] key)
+        public static async Task<bool> DownloadFile(string path, int threads, string[] code, string[] key, string hashchecktype = "", string hash = "")
         {
             if (code.Count() != key.Count())
                 return false;
@@ -85,11 +85,8 @@ namespace CSO2_ComboLauncher
             Misc.ShuffleArray(ref indexes);
 
             for (int i = 0; i < indexes.Count(); i++)
-            {
-                Main.Log.Write(indexes[i]);
-                if (await DownloadFile(path, threads, code[indexes[i]], sha1, key[indexes[i]]))
+                if (await DownloadFile(path, threads, code[indexes[i]], key[indexes[i]], hashchecktype, hash))
                     return true;
-            }
 
             return false;
         }
@@ -116,7 +113,6 @@ namespace CSO2_ComboLauncher
 
             for (int i = 0; i < indexes.Count(); i++)
             {
-                Main.Log.Write(indexes[i]);
                 string result = await DownloadString(code[indexes[i]], key[indexes[i]]);
                 if (result != null)
                     return result;

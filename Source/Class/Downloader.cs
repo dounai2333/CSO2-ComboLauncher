@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using System.Windows;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -8,22 +9,12 @@ namespace CSO2_ComboLauncher
 {
     static class Downloader
     {
-        private static Ftp Ftp = new Ftp(Static.service, Static.account, Static.password);
-
-        public static async Task<string> StringFromMainServer(string file)
-        {
-            return await Ftp.DownloadString(file);
-        }
-
-        public static async Task<bool> FileFromMainServer(string path, string serverpath)
-        {
-            return await Ftp.DownloadFile(path, serverpath);
-        }
-
         public static async Task<string> StringFromHttp(string link)
         {
             using (Web Web = new Web())
+            {
                 return await Web.Client.DownloadStringTaskAsync(link);
+            }
         }
 
         public static async Task<bool> FileFromHttp(string link, string path, int threads, string checkhashtype = "", string hash = "")
@@ -54,31 +45,23 @@ namespace CSO2_ComboLauncher
 
         public static async Task LauncherUpdate()
         {
-            string latestversion = await StringFromMainServer("updates/launcher/latest.txt");
+            string latestinfo = Misc.Decrypt(await StringFromHttp(Misc.Decrypt(Encoding.UTF8.GetString(Static.server), true) + "update/launcher/launcher.txt"), true);
+            string[] infoarray = Misc.SplitString(latestinfo);
 
+            string latestversion = infoarray[0];
             if (latestversion != Static.CVersion)
             {
-                string latestinfo = Misc.Decrypt(await StringFromMainServer($"updates/launcher/version/{latestversion}.txt"));
-                string[] infoarray = Misc.SplitString(latestinfo);
+                string md5 = infoarray[1];
 
-                string key = infoarray[0];
-                string code = infoarray[1];
-                string sha1 = infoarray[2];
-
-                int logcount = int.Parse(infoarray[3]);
+                int logcount = int.Parse(infoarray[2]);
                 string logmessage = "";
-                for (int i = 4; i < (logcount + 4); i++)
-                {
-                    if (i == (logcount + 4 - 1))
-                        logmessage += "- " + infoarray[i];
-                    else
-                        logmessage += "- " + infoarray[i] + "\n";
-                }
+                for (int i = 3; i < (logcount + 3); i++)
+                    logmessage += "- " + infoarray[i] + "\n";
 
                 MessageBoxResult box = MessageBox.Show(LStr.Get("_self_checking_launcherupdate_needed", latestversion, logmessage), Static.CWindow, MessageBoxButton.YesNo, MessageBoxImage.Information);
                 if (box == MessageBoxResult.Yes)
                 {
-                    if (await QQMail.DownloadFile($"CSO2 Launcher V{latestversion}.exe", 2, code, sha1, key))
+                    if (await FileFromHttp(Misc.Decrypt(Encoding.UTF8.GetString(Static.server), true) + $"update/launcher/CSO2 Launcher V{latestversion}.exe", $"CSO2 Launcher V{latestversion}.exe", 2, "md5", md5))
                     {
                         App.HideAllWindow();
                         if (Static.CurrentProcess.ProcessName.StartsWith("CSO2 Launcher V"))
@@ -98,38 +81,62 @@ namespace CSO2_ComboLauncher
 
         public static async Task<bool> GameClientUpdate()
         {
-            string gameclientinfo = Misc.Decrypt(await StringFromMainServer("updates/game/gameclient.txt"));
+            string gameclientinfo = Misc.Decrypt(await StringFromHttp(Misc.Decrypt(Encoding.UTF8.GetString(Static.server), true) + "update/gameclient.txt"), true);
             string[] infoarray = Misc.SplitString(gameclientinfo);
 
-            string key = infoarray[0];
-            string code = infoarray[1];
-            string sha1 = infoarray[2];
+            string filemd5hash = infoarray[0];
+            string subdomain = infoarray[1];
+            string code = infoarray[2];
+            string md5 = infoarray[3];
+            string path = Path.GetTempPath() + "CounterStrikeOnline2.zip";
 
             if (File.Exists("Bin\\CounterStrikeOnline2.exe"))
-                if (await Misc.GetHash("Bin\\CounterStrikeOnline2.exe", "sha1") == sha1)
+                if (await Misc.GetHash("Bin\\CounterStrikeOnline2.exe", "md5") == filemd5hash)
                     return true;
 
-            return await QQMail.DownloadFile("Bin\\CounterStrikeOnline2.exe", 2, code, sha1, key);
+            if (await Lanzou.DownloadFile(path, 2, subdomain, code, "md5", md5))
+            {
+                if (await Zip.Extract(path, "Bin"))
+                {
+                    File.Delete(path);
+                    return true;
+                }
+            }
+
+            File.Delete(path);
+            return false;
         }
 
         public static async Task<bool> GameUpdate()
         {
             int currentversion = Static.GetGameVersion();
-            int latestversion = int.Parse(await StringFromMainServer("updates/game/latest.txt"));
-
+            int latestversion = int.Parse(Misc.Decrypt(await StringFromHttp(Misc.Decrypt(Encoding.UTF8.GetString(Static.server), true) + "update/game/latest.txt"), true));
             if (latestversion > currentversion)
             {
                 for (int i = currentversion + 1; i <= latestversion; i++)
                 {
-                    string latestinfo = Misc.Decrypt(await StringFromMainServer($"updates/game/version/{i}.txt"));
+                    string latestinfo = Misc.Decrypt(await StringFromHttp(Misc.Decrypt(Encoding.UTF8.GetString(Static.server), true) + $"update/game/version/{i}.txt"), true);
                     string[] infoarray = Misc.SplitString(latestinfo);
 
-                    string key = infoarray[0];
-                    string code = infoarray[1];
-                    string sha1 = infoarray[2];
+                    string from = infoarray[0];
+
+                    string keyorsubdomain = infoarray[1];
+                    string code = infoarray[2];
+                    string md5 = infoarray[3];
                     string path = $"{Path.GetTempPath()}update_{i}.zip";
 
-                    if (await QQMail.DownloadFile(path, 8, code, sha1, key))
+                    bool result = false;
+                    switch (from.ToLower())
+                    {
+                        case "qqmail":
+                            result = await QQMail.DownloadFile(path, 8, code, keyorsubdomain, "md5", md5);
+                            break;
+                        case "lanzou":
+                            result = await Lanzou.DownloadFile(path, 4, keyorsubdomain, code, "md5", md5);
+                            break;
+                    }
+
+                    if (result)
                     {
                         if (await Zip.Extract(path, ".\\"))
                         {
@@ -214,87 +221,7 @@ namespace CSO2_ComboLauncher
         {
             try
             {
-                int index = int.Parse(await StringFromMainServer("image/images.txt"));
-                List<string> list = new List<string>();
-                for (int i = 0; i < index; i++)
-                {
-                    string file = i.ToString("00") + ".jpg";
-                    await FileFromMainServer(Path.GetTempPath() + "_" + file, "image/" + file);
-                    list.Add(file);
-                }
-                return list;
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        public static async Task<string[]> BlackList(bool backup)
-        {
-            if (!backup)
-            {
-                try
-                {
-                    string text = await StringFromMainServer("word_blacklist.txt");
-                    return Misc.SplitString(Misc.Decrypt(text));
-                }
-                catch
-                {
-                    return null;
-                }
-            }
-            else
-            {
-                string resourcepath = "CSO2_ComboLauncher.Resource.world_blacklist.zip";
-                string path = Path.GetTempPath() + "word_blacklist.txt";
-
-                using (Stream stream = Static.ExecutingAssembly.GetManifestResourceStream(resourcepath))
-                {
-                    if (stream == null)
-                        return Array.Empty<string>();
-
-                    if (await Zip.Extract(stream, Path.GetTempPath()))
-                    {
-                        Misc.DecryptFile(path, path);
-                        string[] list = File.ReadAllLines(path);
-
-                        File.Delete(path);
-                        return list;
-                    }
-                }
-            }
-
-            return Array.Empty<string>();
-        }
-
-        public static async Task<string> OpenVpnServer(bool backup)
-        {
-            switch (Config.Instance.Server)
-            {
-                case "Shanghai":
-                    return await OpenVpnServer_Shanghai(backup);
-                default:
-                    return null;
-            }
-        }
-
-        public static async Task<string> OpenVpnServer_Shanghai(bool backup)
-        {
-            string path = Path.GetTempPath() + Path.GetRandomFileName();
-
-            if (!backup)
-            {
-                string text = await StringFromMainServer("server/Shanghai.txt");
-                if (!string.IsNullOrEmpty(text))
-                {
-                    File.WriteAllText(path, Misc.Decrypt(text));
-                    return path;
-                }
-            }
-            else
-            {
-                string resourcepath = "CSO2_ComboLauncher.Resource.Shanghai.zip";
+                string resourcepath = "CSO2_ComboLauncher.Resource.PromoImage.zip";
 
                 using (Stream stream = Static.ExecutingAssembly.GetManifestResourceStream(resourcepath))
                 {
@@ -303,14 +230,56 @@ namespace CSO2_ComboLauncher
 
                     if (await Zip.Extract(stream, Path.GetTempPath()))
                     {
-                        Misc.DecryptFile(Path.GetTempPath() + "Shanghai.txt", path);
-                        File.Delete(Path.GetTempPath() + "Shanghai.txt");
-                        return path;
+                        int index = int.Parse(File.ReadAllText(Path.GetTempPath() + "images.txt"));
+                        File.Delete(Path.GetTempPath() + "images.txt");
+
+                        List<string> list = new List<string>();
+                        for (int i = 0; i < index; i++)
+                        {
+                            string file = i.ToString("00") + ".jpg";
+                            File.Copy(Path.GetTempPath() + file, Path.GetTempPath() + "_" + file, true);
+                            File.Delete(Path.GetTempPath() + file);
+                            list.Add(file);
+                        }
+                        return list;
                     }
                 }
             }
+            catch { }
 
             return null;
+        }
+
+        public static async Task<string[]> BlackList()
+        {
+            string resourcepath = "CSO2_ComboLauncher.Resource.word_blacklist.zip";
+            string path = Path.GetTempPath() + "word_blacklist.txt";
+
+            using (Stream stream = Static.ExecutingAssembly.GetManifestResourceStream(resourcepath))
+            {
+                if (stream == null)
+                    return Array.Empty<string>();
+
+                if (await Zip.Extract(stream, Path.GetTempPath()))
+                {
+                    Misc.DecryptFile(path, path, true);
+                    string[] list = File.ReadAllLines(path);
+
+                    File.Delete(path);
+                    return list;
+                }
+            }
+
+            return Array.Empty<string>();
+        }
+
+        public static async Task<string> OpenVpnServer()
+        {
+            string path = Path.GetTempPath() + Path.GetRandomFileName();
+
+            string server = await StringFromHttp(Misc.Decrypt(Encoding.UTF8.GetString(Static.server), true) + $"server/{Config.Instance.Server}.txt");
+            File.WriteAllText(path, Misc.Decrypt(server, true));
+            return path;
         }
     }
 }

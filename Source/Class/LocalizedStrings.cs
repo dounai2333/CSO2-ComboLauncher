@@ -166,9 +166,9 @@ namespace CSO2_ComboLauncher
                 AddKeyWords("schinese", "_copyright", "cso2(反恐精英Online2)的版权:\n版权所有© 2008(2013) NEXON Korea Corporation & Valve Corporation. 保留所有权利.\nValve, Counter-Strike和Counter-Strike Online是Valve Corporation的商标, 注册商标或申请商标.\n\nToqe.Downloader (MIT许可)\ngithub.com/Toqe/Downloader/blob/master/LICENSE");
                 AddKeyWords("tchinese", "_copyright", "cso2(絕對武力Online2)的版權:\n版權所有© 2008(2013) NEXON Korea Corporation & Valve Corporation. 保留所有權利.\nValve, Counter-Strike和Counter-Strike Online是Valve Corporation的商標, 註冊商標或申請商標.\n\nToqe.Downloader (MIT許可)\ngithub.com/Toqe/Downloader/blob/master/LICENSE");
 
-                AddKeyWords("english", "_author_and_helper", "CSO2 Combo Launcher:\n- Made by GEEKiDoS\n- Secondary development by leang97 and dounai2333\n- Sakura Frp for main server hosting");
-                AddKeyWords("schinese", "_author_and_helper", "CSO2 Combo Launcher:\n- GEEKiDoS编写\n- leang97及dounai2333二次开发\n- 由Sakura Frp提供主服务器");
-                AddKeyWords("tchinese", "_author_and_helper", "CSO2 Combo Launcher:\n- GEEKiDoS製作\n- leang97和dounai2333二次開發\n- 由Sakura Frp提供主服务器");
+                AddKeyWords("english", "_author_and_helper", "CSO2 Combo Launcher:\n- Made by GEEKiDoS\n- Secondary development by leang97 and dounai2333");
+                AddKeyWords("schinese", "_author_and_helper", "CSO2 Combo Launcher:\n- GEEKiDoS编写\n- leang97及dounai2333二次开发");
+                AddKeyWords("tchinese", "_author_and_helper", "CSO2 Combo Launcher:\n- GEEKiDoS製作\n- leang97和dounai2333二次開發");
 
                 AddKeyWords("english", "_third_party_library", "Third-Party Library(s):\n- Toqe.Downloader as Multi-Threaded Downloader\n- Chsword.JDynamic as JSON Parser");
                 AddKeyWords("schinese", "_third_party_library", "第三方库:\n- Toqe.Downloader(多线程下载器)\n- Chsword.JDynamic(JSON解析器)");
@@ -189,6 +189,18 @@ namespace CSO2_ComboLauncher
                 AddKeyWords("english", "_self_checking_gamefilepkg_failed", "Detected pkg file(s) missing!\nYou only got {0} pkg files, but normally you should having {1} files.\n\nIt's better to re-install your game or you may see bugs in the game or cannot start!\n\nIgnore this warning and continue?");
                 AddKeyWords("schinese", "_self_checking_gamefilepkg_failed", "检测到pkg文件缺失!\n你只有{0}个pkg文件, 而正常情况下你应该有{1}个.\n\n最好还是重装你的游戏, 不然可能会出现BUG或无法启动!\n\n忽略此警告, 并继续?");
                 AddKeyWords("tchinese", "_self_checking_gamefilepkg_failed", "發現pkg文件少了!\n你只有{0}個pkg文件, 而正常情況下你應該有{1}個.\n\n最好還是重裝你的遊戲你的遊戲, 不然可能會出現BUG或無法啟動!\n\n忽略此警告, 並繼續?");
+
+                AddKeyWords("english", "_self_checking_launcherupdate", "Checking if launcher are having update...");
+                AddKeyWords("schinese", "_self_checking_launcherupdate", "正在检查启动器是否需要更新...");
+                AddKeyWords("tchinese", "_self_checking_launcherupdate", "正在校驗啟動器是否需要更新...");
+
+                AddKeyWords("english", "_self_checking_launcherupdate_needed", "We got a new version of launcher!\nNewer version: {0} , Update log:\n{1}\nWould you like to update now?");
+                AddKeyWords("schinese", "_self_checking_launcherupdate_needed", "启动器有新的版本了!\n新版本: {0} , 更新日志:\n{1}\n你想现在更新吗?");
+                AddKeyWords("tchinese", "_self_checking_launcherupdate_needed", "啟動器有新的版本了!\n新版本: {0} , 更新日誌:\n{1}\n你想現在更新嗎?");
+
+                AddKeyWords("english", "_self_checking_launcherupdate_failed", "Launcher update failed!\nProgram will ignore the update for now so you can update it later.");
+                AddKeyWords("schinese", "_self_checking_launcherupdate_failed", "启动器更新失败!\n程序将忽略此次更新以便你之后进行更新.");
+                AddKeyWords("tchinese", "_self_checking_launcherupdate_failed", "啟動器更新失敗!\n程式將忽略這次更新讓你之後再進行更新.");
 
                 AddKeyWords("english", "_self_checking_openvpnfile", "Checking if OpenVPN files is missing...");
                 AddKeyWords("schinese", "_self_checking_openvpnfile", "正在检查OpenVPN文件是否缺失...");
@@ -218,25 +230,9 @@ namespace CSO2_ComboLauncher
                 AddKeyWords("schinese", "_self_checking_httplistener", "正在检查http服务是否可以运行...");
                 AddKeyWords("tchinese", "_self_checking_httplistener", "正在校驗http服務是否可以運行...");
 
-                AddKeyWords("english", "_self_checking_mainserverconnection", "Checking if main server is online...");
-                AddKeyWords("schinese", "_self_checking_mainserverconnection", "正在检查主服务器是否在线...");
-                AddKeyWords("tchinese", "_self_checking_mainserverconnection", "正在校驗主要伺服器是否在線...");
-
-                AddKeyWords("english", "_self_checking_launcherupdate", "Checking if launcher are having update...");
-                AddKeyWords("schinese", "_self_checking_launcherupdate", "正在检查启动器是否需要更新...");
-                AddKeyWords("tchinese", "_self_checking_launcherupdate", "正在校驗啟動器是否需要更新...");
-
-                AddKeyWords("english", "_self_checking_launcherupdate_needed", "We got a new version of launcher!\nNewer version: {0} , Update log:\n{1}\n\nWould you like to update now?");
-                AddKeyWords("schinese", "_self_checking_launcherupdate_needed", "启动器有新的版本了!\n新版本: {0} , 更新日志:\n{1}\n\n你想现在更新吗?");
-                AddKeyWords("tchinese", "_self_checking_launcherupdate_needed", "啟動器有新的版本了!\n新版本: {0} , 更新日誌:\n{1}\n\n你想現在更新嗎?");
-
-                AddKeyWords("english", "_self_checking_launcherupdate_failed", "Launcher update failed!\nProgram will ignore the update for now so you can update it later.");
-                AddKeyWords("schinese", "_self_checking_launcherupdate_failed", "启动器更新失败!\n程序将忽略此次更新以便你之后进行更新.");
-                AddKeyWords("tchinese", "_self_checking_launcherupdate_failed", "啟動器更新失敗!\n程式將忽略這次更新讓你之後再進行更新.");
-
-                AddKeyWords("english", "_self_checking_download_resource", "Downloading resource from {0} server...");
-                AddKeyWords("schinese", "_self_checking_download_resource", "正在从{0}服务器下载资源...");
-                AddKeyWords("tchinese", "_self_checking_download_resource", "正在從{0}伺服器下載資源...");
+                AddKeyWords("english", "_self_checking_unpack_resource", "Unpacking resource...");
+                AddKeyWords("schinese", "_self_checking_unpack_resource", "正在解压资源...");
+                AddKeyWords("tchinese", "_self_checking_unpack_resource", "正在解壓資源...");
 
                 AddKeyWords("english", "_openvpn_message", "Disclaimer: OpenVPN is only been used to make virtual LAN.");
                 AddKeyWords("schinese", "_openvpn_message", "声明: OpenVPN仅用于创建虚拟局域网.");
@@ -246,17 +242,9 @@ namespace CSO2_ComboLauncher
                 AddKeyWords("schinese", "_open_source_link", "CSO2 Combo Launcher现已开源并可免费阅览.\ngithub.com/dounai2333/CSO2-ComboLauncher");
                 AddKeyWords("tchinese", "_open_source_link", "CSO2 Combo Launcher現在已開源並可以免費查看.\ngithub.com/dounai2333/CSO2-ComboLauncher");
 
-                AddKeyWords("english", "_server_main", "main");
-                AddKeyWords("schinese", "_server_main", "主");
-                AddKeyWords("tchinese", "_server_main", "主要");
-
-                AddKeyWords("english", "_server_backup", "backup");
-                AddKeyWords("schinese", "_server_backup", "备用");
-                AddKeyWords("tchinese", "_server_backup", "備用");
-
-                AddKeyWords("english", "_download_server_info", "Getting information from {0} server...");
-                AddKeyWords("schinese", "_download_server_info", "正在从{0}服务器获取信息...");
-                AddKeyWords("tchinese", "_download_server_info", "正在從{0}伺服器獲取訊息...");
+                AddKeyWords("english", "_download_server_info", "Getting information from server...");
+                AddKeyWords("schinese", "_download_server_info", "正在从服务器获取信息...");
+                AddKeyWords("tchinese", "_download_server_info", "正在從伺服器獲取訊息...");
 
                 AddKeyWords("english", "_download_server_info_failed", "Information download failed! May check your net connection?");
                 AddKeyWords("schinese", "_download_server_info_failed", "信息下载失败! 也许你的网络出现了问题?");
@@ -341,10 +329,6 @@ namespace CSO2_ComboLauncher
                 AddKeyWords("english", "_start_name_convertfailed", "Your nickname has broken: {0}\nYou can't start game with a broken name!\nBut please don't panic, this error does not mean that it cannot be resolve, please follow the steps below:\n\nYou can not use the singular texts (example: 我爱所有人)\nYou can add \"丶\" or \"｜\"to solve this problem (example: 我爱所有人丶)\nDuel texts has been cut to singular texts (example: 我K爱大家、我 爱大家(space character))\nYou can delete them, or try to add more non-ASCII texts!\n\nWhen you solved problems, you can start the game normally!\nThe following sample text has no problem:\n世界上最帅气的人、脸皮挡子弹丶、xX灭神Xx、夜影o夜空、豆奶233");
                 AddKeyWords("schinese", "_start_name_convertfailed", "你的游戏名称出现了损坏: {0}\n使用损坏的名称无法进入游戏!\n但请不要慌张, 出现此错误, 并不代表无法解决, 请跟着以下步骤排错:\n\n奇数的中文名是无法使用的(例如: 我爱所有人)\n你可以考虑添加一个\"丶\"或\"｜\"来解决此问题(例如: 我爱所有人丶)\n偶数的中文名被隔开变成了奇数(例如:我K爱大家、我 爱大家(有空格))\n你可以考虑删除导致中文被隔开的罪魁祸首, 或者想办法让奇数的字有个伴!\n\n解决以上问题后, 将可以正常进入游戏!\n以下示例文字是没有问题的, 可以进行参考:\n世界上最帅气的人、脸皮挡子弹丶、xX灭神Xx、夜影o夜空、豆奶233");
                 AddKeyWords("tchinese", "_start_name_convertfailed", "你的遊戲名稱損壞了: {0}\n你不能用壞掉了的名稱開始遊戲!\n但是不要擔心, 出現這個問題, 並不代表不能解決, 請跟著以下步驟嘗試排除錯誤:\n\n你無法使用基數的名稱(如: 我愛所有人)\n你可以添加\"丶\"或\"｜\"解決這個問題(如: 我愛所有人丶)\n偶數的名稱被割開變成了基數(如:我K愛大家、我 愛大家(空格符號))\n你可以把那些字符刪除掉, 或者把中文字符改成偶數!\n\n解決這些問題之後, 你就可以正常開始遊戲了!\n下面的示例名稱是沒有問題的, 可以參考一下:\n世界上最帅气的人、脸皮挡子弹丶、xX灭神Xx、夜影o夜空、豆奶233");
-
-                AddKeyWords("english", "_unavailable_main_server_offline", "Main server is currently offline, this feature will not working without it!");
-                AddKeyWords("schinese", "_unavailable_main_server_offline", "主服务器当前离线, 此功能无法运行!");
-                AddKeyWords("tchinese", "_unavailable_main_server_offline", "主要伺服器當前離線, 此功能無法使用!");
 
                 AddKeyWords("english", "_update_check_passed", "Update done, total {0} check(s), {1} check(s) passed.");
                 AddKeyWords("schinese", "_update_check_passed", "更新完成, 总共{0}项检查, {1}项检查通过.");

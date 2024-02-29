@@ -101,6 +101,16 @@ namespace CSO2_ComboLauncher
 
             await Misc.Sleep(250);
 
+            // check program itself for updates (ignored if 'No Unnecessary Checks' is checked)
+            if (!Config.DisableSomeCheck)
+            {
+                Log.Clear();
+                Log.Write(LStr.Get("_self_checking_launcherupdate") + Static.AuthorAndLibraryOutput());
+                await Downloader.LauncherUpdate();
+
+                await Misc.Sleep(250);
+            }
+
             // check and download OpenVPN if necessary
             Log.Clear();
             Log.Write(LStr.Get("_self_checking_openvpnfile") + Static.AuthorAndLibraryOutput());
@@ -190,41 +200,16 @@ namespace CSO2_ComboLauncher
 
             await Misc.Sleep(250);
 
-            // check if main server is online and ok for transfer data
+            // unpack promotional images for let game showing it and text blacklist for banning insulting or inappropriate username
             Log.Clear();
-            Log.Write(LStr.Get("_self_checking_mainserverconnection") + Static.AuthorAndLibraryOutput());
-            try
-            {
-                Static.mainserveronline = await Downloader.StringFromMainServer("test") == "ok";
-            }
-            catch
-            {
-                Static.mainserveronline = false;
-            }
+            Log.Write(LStr.Get("_self_checking_unpack_resource") + Static.AuthorAndLibraryOutput());
 
-            await Misc.Sleep(250);
+            List<string> files = await Downloader.PromoImage();
+            if (files != null && files.Count() >= 1)
+                for (int i = 0; i < files.Count(); i++)
+                    Http.AddResponse(files[i], Path.GetTempPath() + "_" + files[i], true);
 
-            // check program itself for updates (ignored if 'No Unnecessary Checks' is checked or main server is offline)
-            if (!Config.DisableSomeCheck && Static.mainserveronline)
-            {
-                Log.Clear();
-                Log.Write(LStr.Get("_self_checking_launcherupdate") + Static.AuthorAndLibraryOutput());
-                await Downloader.LauncherUpdate();
-
-                await Misc.Sleep(250);
-            }
-
-            // download promotional images for let game showing it (ignored if main server is offline) and text blacklist for banning insulting or inappropriate username
-            Log.Clear();
-            Log.Write(LStr.Get("_self_checking_download_resource", LStr.Get(Static.mainserveronline ? "_server_main" : "_server_backup")) + Static.AuthorAndLibraryOutput());
-            if (Static.mainserveronline)
-            {
-                List<string> files = await Downloader.PromoImage();
-                if (files != null && files.Count() >= 1)
-                    for (int i = 0; i < files.Count(); i++)
-                        Http.AddResponse(files[i], Path.GetTempPath() + "_" + files[i], true);
-            }
-            Static.blacklist = await Downloader.BlackList(!Static.mainserveronline);
+            Static.blacklist = await Downloader.BlackList();
 
             await Misc.Sleep(250);
 
@@ -245,8 +230,8 @@ namespace CSO2_ComboLauncher
             await OpenVpn.Kill(true);
             await Misc.ResetNetAdapter(Static.netadapter);
 
-            Log.Write(LStr.Get("_download_server_info", LStr.Get(Static.mainserveronline ? "_server_main" : "_server_backup")));
-            string path = await Downloader.OpenVpnServer(!Static.mainserveronline);
+            Log.Write(LStr.Get("_download_server_info"));
+            string path = await Downloader.OpenVpnServer();
             if (string.IsNullOrEmpty(path))
             {
                 Log.Write(LStr.Get("_download_server_info_failed"), "red");
@@ -456,7 +441,7 @@ namespace CSO2_ComboLauncher
 
             MainButtonStatus(false, false);
 
-            if (!Config.DisableSomeCheck && Static.mainserveronline)
+            if (!Config.DisableSomeCheck)
             {
                 try
                 {
@@ -523,8 +508,9 @@ namespace CSO2_ComboLauncher
             Min_Click(null, null);
         }
 
-        private async void Verify_Click(object sender, RoutedEventArgs e)
+        private /*async*/ void Verify_Click(object sender, RoutedEventArgs e)
         {
+            /*
             if ((string)verify.Content == LStr.Get("_file_check_cancel"))
             {
                 verify.IsEnabled = false;
@@ -533,118 +519,112 @@ namespace CSO2_ComboLauncher
             }
             else
             {
-                if (Static.mainserveronline)
+                MessageBoxResult box = MessageBox.Show(LStr.Get("_file_check_confirm"), Static.CWindow, MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (box == MessageBoxResult.Yes)
                 {
-                    MessageBoxResult box = MessageBox.Show(LStr.Get("_file_check_confirm"), Static.CWindow, MessageBoxButton.YesNo, MessageBoxImage.Question);
-                    if (box == MessageBoxResult.Yes)
+                    MainButtonStatus(false, false);
+                    OpenVpn.Kill();
+
+                    string wrongfiles = string.Empty;
+                    string missingfiles = string.Empty;
+                    bool shouldend = false;
+
+                    await Task.Run(async () =>
                     {
-                        MainButtonStatus(false, false);
-                        OpenVpn.Kill();
+                        Log.Clear();
+                        Log.Write(LStr.Get("_file_check_downloading_needed_file"));
 
-                        string wrongfiles = string.Empty;
-                        string missingfiles = string.Empty;
-                        bool shouldend = false;
-
-                        await Task.Run(async () =>
+                        string[][] hasheslist =
                         {
-                            Log.Clear();
-                            Log.Write(LStr.Get("_file_check_downloading_needed_file"));
+                            Misc.SplitString(Misc.Decrypt(await Downloader.StringFromMainServer("verify_hashes_Bin.txt"))),
+                            Misc.SplitString(Misc.Decrypt(await Downloader.StringFromMainServer("verify_hashes_custom.txt"))),
+                            Misc.SplitString(Misc.Decrypt(await Downloader.StringFromMainServer("verify_hashes_Data.txt")))
+                        };
 
-                            string[][] hasheslist =
-                            {
-                                Misc.SplitString(Misc.Decrypt(await Downloader.StringFromMainServer("verify_hashes_Bin.txt"))),
-                                Misc.SplitString(Misc.Decrypt(await Downloader.StringFromMainServer("verify_hashes_custom.txt"))),
-                                Misc.SplitString(Misc.Decrypt(await Downloader.StringFromMainServer("verify_hashes_Data.txt")))
-                            };
-
-                            Dispatcher.Invoke(new Action(delegate
-                            {
-                                verify.IsEnabled = true;
-                                verify.Content = LStr.Get("_file_check_cancel");
-                            }));
-
-                            // todo: 多线程 Bin用1个线程 Data用2个线程 custom用4个线程
-                            // 由当前线程负责每500毫秒输出检查过程 其他线程修改变量报告状态
-
-                            for (int i = 0; i < hasheslist.Count(); i++)
-                            {
-                                int allfilescount = hasheslist[i].Count() - 1; // the last empty line should be ignored.
-                                for (int j = 0; j < allfilescount; j++)
-                                {
-                                    string content = "";
-                                    Dispatcher.Invoke(new Action(delegate { content = (string)verify.Content; }));
-                                    if (content == LStr.Get("_verify_file"))
-                                    {
-                                        shouldend = true;
-                                        break;
-                                    }
-
-                                    string[] fileinfo = hasheslist[i][j].Split(new string[] { " => " }, StringSplitOptions.None);
-                                    string file = fileinfo[0];
-                                    string md5 = fileinfo[1];
-                                    FileInfo fi = new FileInfo(file);
-
-                                    if (fi.Exists)
-                                    {
-                                        Log.Clear();
-                                        Log.Write(LStr.Get("_file_check_progress", j, allfilescount)
-                                            + "\n" + LStr.Get("_file_check_progress_file", file, Misc.ConvertByteTo(fi.Length, "best", true)));
-
-                                        if (await Misc.GetHash(file, "md5") != md5)
-                                            wrongfiles += file + Environment.NewLine;
-
-                                        await Misc.Sleep(1);
-                                    }
-                                    else
-                                    {
-                                        missingfiles += file + Environment.NewLine;
-                                    }
-                                }
-                            }
-                        });
-
-                        if (!shouldend)
+                        Dispatcher.Invoke(new Action(delegate
                         {
-                            verify.IsEnabled = false;
-                            verify.Content = LStr.Get("_verify_file");
+                            verify.IsEnabled = true;
+                            verify.Content = LStr.Get("_file_check_cancel");
+                        }));
 
-                            Log.Clear();
-                            Log.Write(LStr.Get("_file_check_done_check_messagebox"));
+                        // todo: 多线程 Bin用1个线程 Data用2个线程 custom用4个线程
+                        // 由当前线程负责每500毫秒输出检查过程 其他线程修改变量报告状态
 
-                            if (!string.IsNullOrEmpty(wrongfiles) || !string.IsNullOrEmpty(missingfiles))
+                        for (int i = 0; i < hasheslist.Count(); i++)
+                        {
+                            int allfilescount = hasheslist[i].Count() - 1; // the last empty line should be ignored.
+                            for (int j = 0; j < allfilescount; j++)
                             {
-                                string time = DateTime.Now.ToString("yyyy/MM/dd, HH:mm:ss");
-                                string timeo = DateTime.Now.ToString("yyyy-MM-dd--HH-mm-ss");
-
-                                string text = LStr.Get("_file_check_file_message_text", time) + Environment.NewLine + Environment.NewLine;
-                                if (!string.IsNullOrEmpty(missingfiles))
+                                string content = "";
+                                Dispatcher.Invoke(new Action(delegate { content = (string)verify.Content; }));
+                                if (content == LStr.Get("_verify_file"))
                                 {
-                                    text += LStr.Get("_file_check_file_missing_text") + Environment.NewLine + missingfiles;
-                                }
-                                if (!string.IsNullOrEmpty(wrongfiles))
-                                {
-                                    if (!string.IsNullOrEmpty(missingfiles))
-                                        text += Environment.NewLine;
-                                    text += LStr.Get("_file_check_hash_notmatch_text") + Environment.NewLine + wrongfiles;
+                                    shouldend = true;
+                                    break;
                                 }
 
-                                string file = LStr.Get("_file_check_filename", timeo);
-                                File.WriteAllText(file, text, Encoding.UTF8);
-                                MessageBox.Show(LStr.Get("_file_check_file_error_detected", file), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Warning);
-                            }
-                            else
-                            {
-                                MessageBox.Show(LStr.Get("_file_check_file_all_good"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Information);
+                                string[] fileinfo = hasheslist[i][j].Split(new string[] { " => " }, StringSplitOptions.None);
+                                string file = fileinfo[0];
+                                string md5 = fileinfo[1];
+                                FileInfo fi = new FileInfo(file);
+
+                                if (fi.Exists)
+                                {
+                                    Log.Clear();
+                                    Log.Write(LStr.Get("_file_check_progress", j, allfilescount)
+                                        + "\n" + LStr.Get("_file_check_progress_file", file, Misc.ConvertByteTo(fi.Length, "best", true)));
+
+                                    if (await Misc.GetHash(file, "md5") != md5)
+                                        wrongfiles += file + Environment.NewLine;
+
+                                    await Misc.Sleep(1);
+                                }
+                                else
+                                {
+                                    missingfiles += file + Environment.NewLine;
+                                }
                             }
                         }
-                        Reconnect_Click(null, null);
+                    });
+
+                    if (!shouldend)
+                    {
+                        verify.IsEnabled = false;
+                        verify.Content = LStr.Get("_verify_file");
+
+                        Log.Clear();
+                        Log.Write(LStr.Get("_file_check_done_check_messagebox"));
+
+                        if (!string.IsNullOrEmpty(wrongfiles) || !string.IsNullOrEmpty(missingfiles))
+                        {
+                            string time = DateTime.Now.ToString("yyyy/MM/dd, HH:mm:ss");
+                            string timeo = DateTime.Now.ToString("yyyy-MM-dd--HH-mm-ss");
+
+                            string text = LStr.Get("_file_check_file_message_text", time) + Environment.NewLine + Environment.NewLine;
+                            if (!string.IsNullOrEmpty(missingfiles))
+                            {
+                                text += LStr.Get("_file_check_file_missing_text") + Environment.NewLine + missingfiles;
+                            }
+                            if (!string.IsNullOrEmpty(wrongfiles))
+                            {
+                                if (!string.IsNullOrEmpty(missingfiles))
+                                    text += Environment.NewLine;
+                                text += LStr.Get("_file_check_hash_notmatch_text") + Environment.NewLine + wrongfiles;
+                            }
+
+                            string file = LStr.Get("_file_check_filename", timeo);
+                            File.WriteAllText(file, text, Encoding.UTF8);
+                            MessageBox.Show(LStr.Get("_file_check_file_error_detected", file), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                        else
+                        {
+                            MessageBox.Show(LStr.Get("_file_check_file_all_good"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
                     }
-                }
-                else
-                {
-                    MessageBox.Show(LStr.Get("_unavailable_main_server_offline"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
+                    Reconnect_Click(null, null);
                 }
             }
+            */
         }
 
         private async void Repair_Click(object sender, RoutedEventArgs e)
@@ -696,48 +676,31 @@ namespace CSO2_ComboLauncher
         private async void LauncherUpdate_Click(object sender, RoutedEventArgs e)
         {
             MainButtonStatus(false, false);
+
+            int totalchecks = 3;
+            int passedcheck = 0;
+
             try
             {
-                Static.mainserveronline = await Downloader.StringFromMainServer("test") == "ok";
+                await Downloader.LauncherUpdate();
+                passedcheck++;
             }
-            catch
+            catch { }
+            try
             {
-                Static.mainserveronline = false;
-            }
-
-            if (!Static.mainserveronline)
-            {
-                MessageBox.Show(LStr.Get("_unavailable_main_server_offline"), Static.CWindow, MessageBoxButton.OK, MessageBoxImage.Error);
-                MainButtonStatus(true);
-                return;
-            }
-            else
-            {
-                int totalchecks = 3;
-                int passedcheck = 0;
-
-                try
-                {
-                    await Downloader.LauncherUpdate();
+                if (await Downloader.GameClientUpdate())
                     passedcheck++;
-                }
-                catch { }
-                try
-                {
-                    if (await Downloader.GameClientUpdate())
-                        passedcheck++;
-                }
-                catch { }
-                try
-                {
-                    if (await Downloader.GameUpdate())
-                        passedcheck++;
-                }
-                catch { }
-
-                Log.Write(LStr.Get("_update_check_passed", totalchecks, passedcheck));
-                MainButtonStatus(true);
             }
+            catch { }
+            try
+            {
+                if (await Downloader.GameUpdate())
+                    passedcheck++;
+            }
+            catch { }
+
+            Log.Write(LStr.Get("_update_check_passed", totalchecks, passedcheck));
+            MainButtonStatus(true);
         }
 
         private async void Reconnect_Click(object sender, RoutedEventArgs e)

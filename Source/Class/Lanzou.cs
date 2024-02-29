@@ -30,7 +30,7 @@ namespace CSO2_ComboLauncher
 
                 Regex regex = new Regex("http[^']+");
                 foreach (Match address in regex.Matches(page))
-                    if (address.Value.Contains("download"))
+                    if (address.Value.Contains("//m-") && address.Value.Contains("/file/"))
                         url = address.Value;
 
                 Match match = new Regex(@"'\?[^;]+").Match(page);
