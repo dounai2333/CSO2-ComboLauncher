@@ -246,8 +246,8 @@ namespace CSO2_ComboLauncher
 
             if (path == "")
             {
-                Log.Write(LStr.Get("_download_server_info", LStr.Get(Static.mainserveronline ? "_server_main" : "_server_backup")));
-                path = await Downloader.OpenVpnServer(!Static.mainserveronline);
+                Log.Write(LStr.Get("_download_server_info"));
+                path = await Downloader.OpenVpnServer();
                 if (string.IsNullOrEmpty(path))
                 {
                     Log.Write(LStr.Get("_download_server_info_failed"), "red");
