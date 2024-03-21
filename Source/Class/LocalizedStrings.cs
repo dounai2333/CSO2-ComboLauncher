@@ -242,6 +242,10 @@ namespace CSO2_ComboLauncher
                 AddKeyWords("schinese", "_open_source_link", "CSO2 Combo Launcher现已开源并可免费阅览.\ngithub.com/dounai2333/CSO2-ComboLauncher");
                 AddKeyWords("tchinese", "_open_source_link", "CSO2 Combo Launcher現在已開源並可以免費查看.\ngithub.com/dounai2333/CSO2-ComboLauncher");
 
+                AddKeyWords("english", "_local_key_file", "OpenVPN key detected: \"{0}\"\nUsing this key to connect to the server, delete the key file if you don't want to.");
+                AddKeyWords("schinese", "_local_key_file", "当前目录存在OpenVPN密钥: \"{0}\"\n将使用此密钥连接服务器, 如不需要请删除密钥.");
+                AddKeyWords("tchinese", "_local_key_file", "遊戲資料夾裡有OpenVPN密鑰: \"{0}\"\n使用該密鑰連接伺服器, 不想要請刪除密鑰.");
+
                 AddKeyWords("english", "_download_server_info", "Getting information from server...");
                 AddKeyWords("schinese", "_download_server_info", "正在从服务器获取信息...");
                 AddKeyWords("tchinese", "_download_server_info", "正在從伺服器獲取訊息...");

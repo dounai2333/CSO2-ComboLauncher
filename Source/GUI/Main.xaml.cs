@@ -230,14 +230,31 @@ namespace CSO2_ComboLauncher
             await OpenVpn.Kill(true);
             await Misc.ResetNetAdapter(Static.netadapter);
 
-            Log.Write(LStr.Get("_download_server_info"));
-            string path = await Downloader.OpenVpnServer();
-            if (string.IsNullOrEmpty(path))
+            bool localfile = false;
+            string path = "";
+            foreach (string file in Directory.GetFiles(".", "*.ovpn"))
             {
-                Log.Write(LStr.Get("_download_server_info_failed"), "red");
-                connecterror = true;
-                MainButtonStatus(true);
-                return;
+                string content = File.ReadAllText(file);
+                if (content.Contains("remote "))
+                {
+                    localfile = true;
+                    path = file;
+                    Log.Write(LStr.Get("_local_key_file", path.Replace(".\\", "")));
+                    break;
+                }
+            }
+
+            if (path == "")
+            {
+                Log.Write(LStr.Get("_download_server_info", LStr.Get(Static.mainserveronline ? "_server_main" : "_server_backup")));
+                path = await Downloader.OpenVpnServer(!Static.mainserveronline);
+                if (string.IsNullOrEmpty(path))
+                {
+                    Log.Write(LStr.Get("_download_server_info_failed"), "red");
+                    connecterror = true;
+                    MainButtonStatus(true);
+                    return;
+                }
             }
 
             OpenVpn.Start("Bin\\OpenVPN\\openvpn.exe", path);
@@ -247,7 +264,8 @@ namespace CSO2_ComboLauncher
             OpenVpn.OnConnected += () =>
             {
                 Log.Write(LStr.Get("_connect_to_server_halfway"));
-                File.Delete(path);
+                if (!localfile)
+                    File.Delete(path);
                 count = 0;
             };
 
@@ -259,7 +277,8 @@ namespace CSO2_ComboLauncher
                 {
                     Log.Write(LStr.Get("_connect_to_server_failed"), "red");
                     await OpenVpn.Kill(true);
-                    File.Delete(path);
+                    if (!localfile)
+                        File.Delete(path);
                     connecterror = true;
                     MainButtonStatus(true);
                     return;
