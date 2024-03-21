@@ -28,20 +28,14 @@ namespace CSO2_ComboLauncher
                 string url = null;
                 string url2 = null;
 
-                File.WriteAllText("1.html", page);
-
                 Regex regex = new Regex("http[^']+");
                 foreach (Match address in regex.Matches(page))
                     if (address.Value.Contains("https://") && address.Value.Contains("/file/"))
                         url = address.Value;
 
-                Main.Log.Write("url is null?: " + (url is null) + " - " + url);
-
                 Match match = new Regex(@"'\?[^;]+").Match(page);
                 if (match.Success)
                     url2 = match.Value.Replace("'", "");
-
-                Main.Log.Write("url2 is null?: " + (url2 is null) + " - " + url2);
 
                 if (!string.IsNullOrEmpty(url) && !string.IsNullOrEmpty(url2))
                 {
