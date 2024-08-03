@@ -28,12 +28,13 @@ namespace CSO2_ComboLauncher
                 string url = null;
                 string url2 = null;
 
-                bool killdns = page.IndexOf("killdns") != -1;
+                // This detection still exists.
+                //bool killdns = page.IndexOf("killdns") != -1;
 
-                Regex regex = new Regex("http[^']+");
+                Regex regex = new Regex("'http[^;]+");
                 foreach (Match address in regex.Matches(page))
-                    if (address.Value.Contains(killdns ? "http://" : "https://") && address.Value.Contains("/file/"))
-                        url = address.Value;
+                    if (address.Value.Contains("/file/"))
+                        url = address.Value.Replace("'", "");
 
                 Match match = new Regex(@"'\?[^;]+").Match(page);
                 if (match.Success)
