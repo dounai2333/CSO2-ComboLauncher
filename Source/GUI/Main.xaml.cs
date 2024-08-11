@@ -129,7 +129,7 @@ namespace CSO2_ComboLauncher
                 }
             }
 
-            await Misc.Sleep(1000);
+            await Misc.Sleep(250);
 
             // check program itself for updates (ignored if 'No Unnecessary Checks' is checked)
             if (!Config.DisableSomeCheck)
