@@ -180,7 +180,7 @@ namespace CSO2_ComboLauncher
 
                 AddKeyWords("english", "_self_checking_gamefiledll_failed", "Detected these dll file(s) is missing:\n\"{0}\"\n\nIt's better to re-install your game or you may see bugs in the game or cannot start!\n\nIgnore this warning and continue?");
                 AddKeyWords("schinese", "_self_checking_gamefiledll_failed", "检测到这些dll文件已缺失:\n\"{0}\"\n\n最好还是重装你的游戏, 不然可能会出现BUG或无法启动!\n\n忽略此警告, 并继续?");
-                AddKeyWords("tchinese", "_self_checking_gamefiledll_failed", "發現這些dll文件少了:\n\"{0}\"\n\n最好還是重裝你的遊戲你的遊戲, 不然可能會出現BUG或無法啟動!\n\n忽略此警告, 並繼續?");
+                AddKeyWords("tchinese", "_self_checking_gamefiledll_failed", "發現這些dll文件少了:\n\"{0}\"\n\n最好還是重裝你的遊戲, 不然可能會出現BUG或無法啟動!\n\n忽略此警告, 並繼續?");
 
                 AddKeyWords("english", "_self_checking_gamefilepkg", "Checking if game pkg files is missing...");
                 AddKeyWords("schinese", "_self_checking_gamefilepkg", "正在检查游戏pkg文件是否缺失...");
@@ -188,7 +188,15 @@ namespace CSO2_ComboLauncher
 
                 AddKeyWords("english", "_self_checking_gamefilepkg_failed", "Detected pkg file(s) missing!\nYou only got {0} pkg files, but normally you should having {1} files.\n\nIt's better to re-install your game or you may see bugs in the game or cannot start!\n\nIgnore this warning and continue?");
                 AddKeyWords("schinese", "_self_checking_gamefilepkg_failed", "检测到pkg文件缺失!\n你只有{0}个pkg文件, 而正常情况下你应该有{1}个.\n\n最好还是重装你的游戏, 不然可能会出现BUG或无法启动!\n\n忽略此警告, 并继续?");
-                AddKeyWords("tchinese", "_self_checking_gamefilepkg_failed", "發現pkg文件少了!\n你只有{0}個pkg文件, 而正常情況下你應該有{1}個.\n\n最好還是重裝你的遊戲你的遊戲, 不然可能會出現BUG或無法啟動!\n\n忽略此警告, 並繼續?");
+                AddKeyWords("tchinese", "_self_checking_gamefilepkg_failed", "發現pkg文件少了!\n你只有{0}個pkg文件, 而正常情況下你應該有{1}個.\n\n最好還是重裝你的遊戲, 不然可能會出現BUG或無法啟動!\n\n忽略此警告, 並繼續?");
+
+                AddKeyWords("english", "_self_checking_pkg_file_size", "Checking if game pkg files size is 0...");
+                AddKeyWords("schinese", "_self_checking_pkg_file_size", "正在检查游戏pkg文件大小是否为0字节...");
+                AddKeyWords("tchinese", "_self_checking_pkg_file_size", "正在校驗遊戲pkg文件磁盤大小是不是0字節...");
+
+                AddKeyWords("english", "_self_checking_pkg_file_size_failed", "Detected {0} pkg files size is 0 byte!\nThis issue will cause your game loading progress stuck at 0% forever, it's better to re-install your game!\n0 byte file(s): \"{1}\"\n\nIgnore this warning and continue?");
+                AddKeyWords("schinese", "_self_checking_pkg_file_size_failed", "检测到{0}个pkg文件大小为0字节!\n这将会导致游戏加载进度永远卡在0%, 最好还是重装你的游戏!\n0字节文件: \"{1}\"\n\n忽略此警告, 并继续?");
+                AddKeyWords("tchinese", "_self_checking_pkg_file_size_failed", "發現有{0}個pkg文件大小為0字節!\n這會讓遊戲的加載進度永遠保持在0%, 最好還是重裝你的遊戲!\n0字節文件: \"{1}\"\n\n忽略此警告, 並繼續?");
 
                 AddKeyWords("english", "_self_checking_launcherupdate", "Checking if launcher are having update...");
                 AddKeyWords("schinese", "_self_checking_launcherupdate", "正在检查启动器是否需要更新...");

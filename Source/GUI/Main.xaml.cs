@@ -83,16 +83,13 @@ namespace CSO2_ComboLauncher
             // check if game pkg files count is match the expected number
             Log.Clear();
             Log.Write(LStr.Get("_self_checking_gamefilepkg") + Static.AuthorAndLibraryOutput());
-            int rightpkgcount = 2058;
-            List<string> pkgfiles = new List<string>();
-            string[] pkgfiles1 = Directory.GetFiles("Data");
-            for (int i = 0; i < pkgfiles1.Count(); i++)
-                if (Path.GetExtension(pkgfiles1[i]) == ".pkg")
-                    pkgfiles.Add(pkgfiles1[i]);
 
-            if (pkgfiles.Count() < rightpkgcount)
+            int CorrectPkgCount = 2058;
+            string[] PkgFiles = Directory.GetFiles("Data", "*.pkg");
+
+            if (PkgFiles.Count() < CorrectPkgCount)
             {
-                MessageBoxResult box = MessageBox.Show(LStr.Get("_self_checking_gamefilepkg_failed", pkgfiles.Count(), rightpkgcount), Static.CWindow, MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                MessageBoxResult box = MessageBox.Show(LStr.Get("_self_checking_gamefilepkg_failed", PkgFiles.Count(), CorrectPkgCount), Static.CWindow, MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if (box == MessageBoxResult.No)
                 {
                     App.Exit(1);
@@ -100,6 +97,39 @@ namespace CSO2_ComboLauncher
             }
 
             await Misc.Sleep(250);
+
+            // check if game pkg files size is exactly 0 byte
+            Log.Clear();
+            Log.Write(LStr.Get("_self_checking_pkg_file_size") + Static.AuthorAndLibraryOutput());
+
+            int LengthWrongPkgCount = 0;
+            List<string> LengthWrongPkgList = new List<string>();
+
+            foreach (string path in PkgFiles)
+            {
+                FileInfo fi = new FileInfo(path);
+                if (fi.Exists && fi.Length == 0)
+                {
+                    LengthWrongPkgCount++;
+                    LengthWrongPkgList.Add(path);
+                }
+            }
+
+            if (LengthWrongPkgCount != 0)
+            {
+                string list = "";
+                foreach (string path in LengthWrongPkgList)
+                    list += path + "  ";
+                list = list.Trim();
+
+                MessageBoxResult box = MessageBox.Show(LStr.Get("_self_checking_pkg_file_size_failed", LengthWrongPkgCount, list), Static.CWindow, MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (box == MessageBoxResult.No)
+                {
+                    App.Exit(1);
+                }
+            }
+
+            await Misc.Sleep(1000);
 
             // check program itself for updates (ignored if 'No Unnecessary Checks' is checked)
             if (!Config.DisableSomeCheck)
