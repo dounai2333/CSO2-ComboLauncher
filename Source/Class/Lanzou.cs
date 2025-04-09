@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Net;
-using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace CSO2_ComboLauncher
 {
@@ -21,59 +21,77 @@ namespace CSO2_ComboLauncher
             Filename = string.Empty;
             Referer = string.Empty;
 
+            string secondUrl = null;
+
             using (Web Web = new Web())
             {
-                string page = await Web.Client.DownloadStringTaskAsync($"https://{subdomain}.lanzoul.com/tp/{code}");
+                string downloadPage = await Web.Client.DownloadStringTaskAsync($"https://{subdomain}.lanzoul.com/{code}");
 
-                string url = null;
-                string url2 = null;
-
-                // This detection still exists.
-                //bool killdns = page.IndexOf("killdns") != -1;
-
-                Regex regex = new Regex("'http[^;]+");
-                foreach (Match address in regex.Matches(page))
-                    if (address.Value.Contains("/file/"))
-                        url = address.Value.Replace("'", "");
-
-                Match match = new Regex(@"'\?[^;]+").Match(page);
-                if (match.Success)
-                    url2 = match.Value.Replace("'", "");
-
-                if (!string.IsNullOrEmpty(url) && !string.IsNullOrEmpty(url2))
+                Regex regex = new Regex("(?<=href=\").+?(?=\")");
+                foreach (Match href in regex.Matches(downloadPage))
                 {
-                    Filename = new Regex("(?<=<title>).+?(?=</title>)").Match(page).Value;
-
-                    try
+                    if (href.Value.StartsWith("/tp"))
                     {
-                        HttpWebRequest httpWebRequest = WebRequest.Create(url + url2) as HttpWebRequest;
-                        httpWebRequest.Proxy = null;
-                        httpWebRequest.Method = WebRequestMethods.Http.Head;
-                        httpWebRequest.Timeout = 10000;
-                        httpWebRequest.AllowAutoRedirect = false;
+                        secondUrl = $"https://{subdomain}.lanzoul.com{href.Value}";
+                        break;
+                    }
+                }
+            }
 
-                        // Lanzou return code 302 when no User-Agent is given.
-                        httpWebRequest.Headers[HttpRequestHeader.AcceptLanguage] = Web.Client.Headers[HttpRequestHeader.AcceptLanguage];
-                        httpWebRequest.Headers[HttpRequestHeader.Cookie] = "down_ip=1"; // Remove?
+            if (secondUrl != null)
+            {
+                // We have to initialize again or it will bugged out.
+                using (Web Web = new Web())
+                {
+                    string secondPage = await Web.Client.DownloadStringTaskAsync(secondUrl);
 
-                        using (HttpWebResponse httpWebResponse = (HttpWebResponse)await httpWebRequest.GetResponseAsync())
+                    string url = null;
+                    string url2 = null;
+
+                    Regex regex = new Regex("'http[^;]+");
+                    foreach (Match address in regex.Matches(secondPage))
+                        if (address.Value.Contains("/file/"))
+                            url = address.Value.Trim('\'');
+
+                    Match match = new Regex(@"'\?[^;]+").Match(secondPage);
+                    if (match.Success)
+                        url2 = match.Value.Trim('\'');
+
+                    if (!string.IsNullOrEmpty(url) && !string.IsNullOrEmpty(url2))
+                    {
+                        Filename = new Regex("(?<=<title>).+?(?=</title>)").Match(secondPage).Value;
+
+                        try
                         {
-                            // we only need header info, not the response stream.
-                            httpWebResponse.GetResponseStream().Dispose();
+                            HttpWebRequest httpWebRequest = WebRequest.Create(url + url2) as HttpWebRequest;
+                            httpWebRequest.Proxy = null;
+                            httpWebRequest.Method = WebRequestMethods.Http.Head;
+                            httpWebRequest.Timeout = 10000;
+                            httpWebRequest.AllowAutoRedirect = false;
 
-                            if (httpWebResponse.StatusCode == HttpStatusCode.Redirect)
+                            // Lanzou return code 302 when no User-Agent is given.
+                            httpWebRequest.Headers[HttpRequestHeader.AcceptLanguage] = Web.Client.Headers[HttpRequestHeader.AcceptLanguage];
+                            httpWebRequest.Headers[HttpRequestHeader.Cookie] = "down_ip=1"; // Remove?
+
+                            using (HttpWebResponse httpWebResponse = (HttpWebResponse)await httpWebRequest.GetResponseAsync())
                             {
-                                Referer = url + url2;
+                                // we only need header info, not the response stream.
+                                httpWebResponse.GetResponseStream().Dispose();
 
-                                string address = httpWebResponse.Headers.Get("Location");
-                                if (!string.IsNullOrEmpty(address))
-                                    return address;
+                                if (httpWebResponse.StatusCode == HttpStatusCode.Redirect)
+                                {
+                                    Referer = url + url2;
+
+                                    string address = httpWebResponse.Headers.Get("Location");
+                                    if (!string.IsNullOrEmpty(address))
+                                        return address;
+                                }
                             }
                         }
-                    }
-                    catch // Cannot reach the final download link?
-                    {
-                        return url + url2;
+                        catch // Cannot reach the final download link?
+                        {
+                            return url + url2;
+                        }
                     }
                 }
             }
