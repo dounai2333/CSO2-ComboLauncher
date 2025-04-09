@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Net;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace CSO2_ComboLauncher
 {
