@@ -10,7 +10,7 @@ namespace CSO2_ComboLauncher
     {
         public static string Filename { get; private set; }
 
-        public static string Mail5k { get; private set; }
+        public static string Cookie { get; set; }
 
         /// <summary>
         /// get download link from QQmail, if success global variable '<see cref="Filename"/>' will be set with the same filename from current link, else it's '<see cref="string.Empty"/>'.
@@ -19,7 +19,7 @@ namespace CSO2_ComboLauncher
         public static async Task<string> GetLink(string code, string key)
         {
             Filename = string.Empty;
-            Mail5k = string.Empty;
+            Cookie = string.Empty;
 
             try
             {
@@ -44,7 +44,7 @@ namespace CSO2_ComboLauncher
                         {
                             Match mail5kmatch = new Regex("mail5k=[^;]+").Match(httpWebResponse.Headers.Get("Set-Cookie"));
                             if (mail5kmatch.Success)
-                                Mail5k = mail5kmatch.Value;
+                                Cookie = mail5kmatch.Value;
 
                             Match filenameMatch = new Regex("(?<=fname=).+?(?=&)").Match(address);
                             if (filenameMatch.Success)

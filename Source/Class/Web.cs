@@ -10,6 +10,19 @@ namespace CSO2_ComboLauncher
 {
     class Web : IDisposable
     {
+        public class DecompressWebClient : WebClient
+        {
+            protected override WebRequest GetWebRequest(Uri uri)
+            {
+                WebRequest w = base.GetWebRequest(uri);
+
+                if (w is HttpWebRequest httpWebRequest)
+                    httpWebRequest.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+
+                return w;
+            }
+        }
+
         public class TimeoutWebClient : WebClient
         {
             private int Timeoutms { get; set; }
@@ -27,7 +40,7 @@ namespace CSO2_ComboLauncher
             }
         }
 
-        public WebClient Client { get; private set; }
+        public DecompressWebClient Client { get; private set; }
 
         public TimeoutWebClient TimeoutClient { get; private set; }
 
@@ -47,15 +60,16 @@ namespace CSO2_ComboLauncher
 
         public Web(bool passiveoutput = false, int clienttimeout = 5000)
         {
-            Client = new WebClient
+            Client = new DecompressWebClient
             {
                 Proxy = null,
                 Encoding = Encoding.UTF8
             };
+            Client.Headers[HttpRequestHeader.AcceptEncoding] = "gzip, deflate";
             Client.Headers[HttpRequestHeader.AcceptLanguage] = "zh-CN,zh;q=0.9";
-            Client.Headers[HttpRequestHeader.UserAgent] = "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Mobile Safari/537.36";
+            Client.Headers[HttpRequestHeader.UserAgent] = "Mozilla/5.0 (Linux; Android 15; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36";
 
-            Client.Headers[HttpRequestHeader.Cookie] = string.IsNullOrEmpty(QQMail.Mail5k) ? null : QQMail.Mail5k; // temp workaround
+            Client.Headers[HttpRequestHeader.Cookie] = string.IsNullOrEmpty(QQMail.Cookie) ? null : QQMail.Cookie; // temp workaround
             Client.Headers[HttpRequestHeader.Referer] = string.IsNullOrEmpty(Lanzou.Referer) ? null : Lanzou.Referer; // temp workaround
 
             Client.DownloadProgressChanged += Downloader_AsyncProgressChanged;
